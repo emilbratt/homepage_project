@@ -1,0 +1,3 @@
+-Implement sqlite Logging instead of writing to file in image resize script
+-Implement login function for content managing
+-Implement a gallery page for photos

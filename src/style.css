@@ -1,0 +1,733 @@
+/*
+    PARENT BOX
+    ####################################
+    BOX
+    greybox = a new box with grey border
+    ####################################
+
+    GOES INTO greybox
+    ####################################
+    TITLE
+    greybox_title_left
+    greybox_title_right
+    greybox_title_center
+
+    TEXTFIELD
+    greyboxbody
+
+    IMAGE
+    greybox_img
+        greybox_img_center
+
+    IMAGE LEFT AND RIGHT SIDE
+    greybox_img
+        greybox_img_left
+        greybox_img_right
+    ####################################
+*/
+
+html {
+    /* min-height: 100%; */
+}
+body {
+    /* -webkit-text-size-adjust: none; */
+    min-height: 100%;
+    margin: 0;
+    max-width: 2200px;
+    margin-left: auto;
+    margin-right: auto;
+    /* background-color: #1f1e1d; */
+    /* background-color: #17171a; */
+    /* background-color: #1a1918; */
+    /* background-color: #18181a; */
+    background-color: #202020;
+}
+
+.topbar {
+    margin-top: 22px;
+}
+
+.bottombar {
+    margin-bottom: 24px;
+}
+
+.topbar,
+.bottombar {
+
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.navbar,
+.navbar_logo {
+    background-color: #282828;
+}
+
+
+.navbar a,
+.navbar_logo a {
+    display: inline-block;
+    color: #9195B1;
+    text-decoration: none;
+
+}
+.navbar a:hover,
+.navbar_logo a:hover {
+    background-color: #3F4258;
+    color: #9195B1;
+}
+#pageselector {
+    text-decoration: underline;
+    color: #B9C2CF;
+}
+
+
+
+.greybox_left,
+.greybox_right,
+.greybox {
+    margin-top: 22px;
+    /* margin-bottom: 22px; */
+    padding-top: 1px;
+    padding-bottom: 22px;
+    /* border: 1px solid #8C8C8C; */
+    background-color: #282828;
+    /*inserts line break if necessary*/
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.greybox {
+    text-align: center;
+    position: relative;
+    /* color: #CFC69E; */
+    color: #9195B1;
+    /* min-height: 200px; */
+
+}
+
+.greybox_left,
+.greybox_right {
+    /* min-height: 100px; */
+    /* color: #9195B1; */
+
+}
+
+/* .text_10px_from_left {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.text_10px_from_right {
+    text-align: right;
+    margin-right: 10px;
+} */
+
+.greybox_title_center {
+        text-align: center;
+}
+
+.greybox_title_left,
+.greybox_title_right,
+.greybox_title_center {
+    color: #B9C2CF;
+    font-size: 24px;
+    text-decoration: underline;
+
+}
+
+figcaption,
+.greyboxbody {
+    /*more fint */
+    /* color: #9195B1; */
+
+    /*more opaque*/
+    color: #A1B8C6;
+
+}
+
+.greyboxbody {
+    text-align: left;
+    width: 92%;
+    margin-left: 4%;
+    margin-right: 4%;
+
+}
+
+.greybox_menu {
+    width: 50%;
+    display: inline-block;
+    /* padding-top: 22px; */
+    position: relative;
+    overflow: hidden;
+    color: #B9C2CF;
+
+}
+
+
+
+
+.greybox_img {
+
+    /* width: 100%;
+    display: inline-block;
+    padding-top: 22px;
+    position: relative; */
+
+}
+
+.greybox_img_center {
+    width: 100%;
+}
+
+.greybox_img_center,
+.greybox_img_left,
+.greybox_img_right {
+    /* padding-top: 122px; */
+    /* margin-top: 42px; */
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+}
+
+.greybox_img_right,
+.greybox_img_left {
+    width: 50%;
+    display: inline-block;
+    /* padding-top: 22px; */
+    position: relative;
+    overflow: hidden;
+    color: #B9C2CF;
+}
+
+textarea {
+    width: 100%;
+}
+
+.log_table {
+
+}
+
+
+.log_table {
+    font-family: arial;
+    font-size: 12px;
+    border-collapse: collapse; /*no boarder between each cell*/
+    table-layout: auto;
+    /* width: 24%; /* take up whole horizontal space in browser */
+}
+
+
+.log_table caption,.log_table tr,.log_table td, .log_table th {
+    border: 4px solid #202020;
+    padding: 10px;
+
+}
+
+.log_table caption {
+    font-weight: 900;
+    /* background-color: #17171a; */
+    /* color: #17171a; */
+    font-style: oblique;
+
+}
+.log_table tr, .log_table th {
+    /* background-color: #1f1e1d; */
+
+}
+.log_table th {
+    font-style: normal;
+    /* color: #17171a; */
+}
+.log_table tr {
+    /* color: #001529; */
+
+}
+
+a[href^="mailto:"] {
+    text-decoration: none;
+    color: #9195B1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+}
+a:hover[href^="mailto:"] {
+    background-color: #3F4258;
+    color: #9195B1;
+}
+
+.standalone_link a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-decoration: none;
+    color: #9195B1;
+
+}
+.standalone_link a:hover {
+    background-color: #3F4258;
+    color: #9195B1;
+}
+
+/* GREATER THAN OR EQUAL TO MEDIUM SCREEN */
+@media all and (min-width: 1000px) {
+    #in_line_position_greyboxbody {
+        display: inline-block;
+        /* float: left; */
+        /* height: 200px; */
+        width: 49.5%;
+        /* text-align: left; */
+        /* position:static; */
+
+    }
+}
+
+/* LARGE SCREEN */
+@media all and (min-width: 1700px) {
+
+    .topbarmargin {
+    }
+
+    /* .bottombarmargin {
+        display: inline-block;
+        width: 100%;
+        height: 22px;
+    } */
+
+    .bottombar {
+        margin-top: 22px;
+    }
+
+    .navbar,
+    .navbar_logo {
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        width: 70%;
+    }
+
+    .navbar a,
+    .navbar_logo a {
+        text-align: center;
+        font-size: 100%;
+    }
+
+    .navbar a {
+        padding-top: 14px;
+        padding-bottom: 14px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+
+    .navbar_logo a {
+        padding-top: 11px;
+        padding-bottom: 9px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .logo_link {
+        height:24px;
+        width: auto;
+    }
+
+    .greybox {
+        margin-left: auto;
+        margin-right: auto;
+        /* min-height: 200px; */
+        width: 70%;
+        /* padding-bottom: 10px; */
+
+    }
+
+    .greybox_left,
+    .greybox_right {
+            display: inline-block;
+        width: 34%;
+        position: relative;
+    }
+
+    .greybox_left {
+        margin-left: 15%;
+
+    }
+
+    .greybox_right {
+        margin-left: 1.8%;
+
+
+    }
+
+    .greybox_title_center,
+    .greybox_title_left,
+    .greybox_title_right {
+
+    }
+
+    .greybox_title_center {
+
+    }
+
+    .greybox_title_left {
+        text-align: left;
+        width: 43%;
+        margin-left: 3%;
+        display: inline-block;
+
+    }
+
+    .greybox_title_right {
+        text-align: right;
+        width: 43%;
+        margin-right: 3%;
+        display: inline-block;
+
+    }
+
+    .greyboxbody {
+        /* text-align: left; */
+        font-size: 18px;
+        /* width: 92%; */
+        /* margin-left: 4%; */
+        /* margin-right: 4%; */
+
+    }
+
+
+
+    .greybox_img_center {
+        max-width: 94%;
+        height: auto;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+
+    .greybox_img_left,
+    .greybox_img_right {
+        width: 46.4%;
+        /* border: 6px solid #8C8C8C; */
+        height: auto;
+        /* display: inline-block; */
+
+    }
+
+    .greybox_img_left {
+        /* float: left; */
+        margin-left: 3%;
+        margin-right: 0.6%;
+
+
+    }
+    .greybox_img_right {
+        /* float: right; */
+        margin-left: 0.6%;
+        margin-right: 3%;
+    }
+
+
+    .blog_post_box {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .blog_post_title,
+    .blog_post_body
+    .blog_post_image {
+        width: 100%;
+        background-color: blue;
+    }
+
+    textarea {
+        font-size: 22px;
+        height: 600px;
+        /* overflow: auto; */
+    }
+
+
+
+    .increae_input_width {
+        width: 400px;
+        font-size: 18px;
+    }
+
+
+    select, button {
+        width: 450px;
+        /* text-align: center; */
+        font-size: 18px;
+    }
+
+
+}
+
+/* MEDIUM SCREEN */
+@media all and (max-width: 1700px) {
+    .topbar {
+        margin-top: 24px;
+    }
+
+
+
+
+    .bottombar {
+        margin-top: 34px;
+    }
+    .bottombarmargin {
+        /* margin-bottom: 45px; */
+    }
+    .navbar,
+    .navbar_logo {
+        width: 93%;
+        text-align: center;
+        display: inline-block;
+        overflow: hidden;
+        background-color: #282828;
+    }
+
+    .navbar a,
+    .navbar_logo a {
+        text-align: center;
+        font-size: 150%;
+    }
+
+    .navbar a {
+        padding-top: 14px;
+        padding-bottom: 14px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
+
+    .navbar_logo a {
+        padding-top:14px;
+        padding-bottom: 6px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .logo_link {
+        height:36px;
+        width: auto;
+    }
+
+    .greybox,
+    .greybox_left,
+    .greybox_right {
+        margin-left: auto;
+        margin-right: auto;
+        width: 93%;
+
+    }
+
+    .greybox_left,
+    .greybox_right {
+        display: block;
+        margin-left: auto;
+        margin-left: auto;
+        /* margin-left: 3%; */
+        /* margin-right: 3%; */
+    }
+
+
+    .greybox_title_center,
+    .greybox_title_left,
+    .greybox_title_right {
+    }
+
+    .greybox_title_center {
+        width: 100%;
+    }
+
+    .greybox_title_left {
+        text-align: left;
+        margin-left: 3%;
+        width: 47%;
+        display: inline-block;
+
+    }
+
+    .greybox_title_right {
+        width: 47%;
+        margin-right: 3%;
+        text-align: right;
+        display: inline-block;
+
+    }
+
+
+
+    .greyboxbody {
+        /* width: 94%; */
+        /* margin-right: 3%; */
+        /* margin-left: 3%; */
+        position: relative;
+        font-size: 22px;
+
+    }
+
+
+    .greybox_img_center,
+    .greybox_img_left,
+    .greybox_img_right {
+        width: 94%;
+        height: auto;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+
+    .greybox_img_left,
+    .greybox_img_right {
+        margin-top: 22px;
+    }
+
+    header, footer {
+        position: relative;
+        overflow: hidden;
+        font-size: 120%;
+    }
+
+    .blog_post_box {
+        width: 93%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .blog_post_title,
+    .blog_post_body
+    .blog_post_image {
+        width: 100%;
+        background-color: blue;
+    }
+
+    textarea {
+        font-size: 28px;
+        height: 800px;
+    }
+
+    .increae_input_width {
+        width: 50%;
+    }
+
+    input, select, button  {
+        height: 50px;
+        font-size: 28px;
+    }
+    select, button {
+        width: 50%;
+        text-align: center;
+
+    }
+
+}
+
+/* SMALL SCREEN */
+@media all and (max-width: 1000px) {
+
+  .topbarmargin {
+      /* margin-bottom: 35px; */
+  }
+  .bottombarmargin {
+      /* margin-bottom: 46px; */
+  }
+
+
+    .navbar {
+        background-color: #282828;
+        width: 93%;
+    }
+
+    .navbar a,
+    .navbar_logo a {
+        font-size: 24px;
+        /* height: 50px; */
+        width: 20%;
+    }
+
+    .navbar a {
+        padding-top: 24px;
+        padding-bottom: 24px;
+        padding-left: 0px;
+        padding-right: 0px;
+
+    }
+
+    .navbar_logo a {
+        padding-top: 12px;
+        padding-bottom: 8px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .logo_link {
+        height:50px;
+        width: auto;
+    }
+
+
+    .greybox, {
+        /* margin-left: auto;
+        margin-right: auto; */
+        /* min-height: 200px; */
+        width: 93%;
+        overflow: hidden;
+
+    }
+
+    .greybox_title_center,
+    .greybox_title_left {
+        font-size: 32px;
+
+    }
+
+    .greybox_title_left {
+        display: block;
+        width: 97%;
+        margin-left: 3%;
+
+    }
+
+    .greybox_title_right {
+        text-align: left;
+        display: block;
+        width: 97%;
+        margin-top: -20px;
+        margin-left: 3%;
+        font-size: 24px;
+
+    }
+    .greyboxbody {
+        font-size: 28px;
+
+    }
+
+
+    figcaption {
+        font-size: 24px;
+    }
+
+    .blog_post_main_title,
+    .blog_post_title,
+    .blog_post_body,
+    .blog_post_image {
+
+    }
+
+
+    .increae_input_width {
+        width: 97%;
+    }
+
+
+    input,select, button {
+        width: 80%;
+        text-align: center;
+        font-size: 28px;
+        height: 50px;
+    }
+
+}

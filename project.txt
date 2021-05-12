@@ -1,0 +1,417 @@
+
+Website project by Emil Bratt Børsting.
+
+DESCRIPTION:
+------------------------------------------------------------
+As a student I have been introduced to web-developement and databases in several of
+the courses I am enrolled in. I don`t feel like we are diving deep enough into
+the topics and this is obviously not because the courses are bad, it has more to
+do with my investment into becomming a developer.
+Easter is right around the corner. I have decided to self quarantine and use the
+extra time I have in spare to teach myself alot more about what it takes to create a
+functioning website with the most common features. Especially back-end processes.
+So to keep myself busy I figured it was a good time to see if I could start out a new
+pet project of mine, but this time; a much larger one. So, a pet; but one that
+will see a growth over time. I expect to invest hundreds++ of hours into this.
+
+PROJECT DETAILS:
+------------------------------------------------------------
+I have decided to build a website and doing so following 1 rule.
+I have to build it from the ground up.
+Now, this does not mean that I am going to write cpu op-codes.
+It means that I will build it from scratch using the toolsets available for web-dev.
+I will avoid copying code found on stack overflow.
+I will restrict myself to the bounderies of my own experience and my ability to
+read and understand documentation provided on the internet for the tools I use.
+
+Disclaimer: there will be (at times) googling of issues that might
+come up during developement. No feasibility study where made so I will allow
+my self to bend that one rule if it`s a matter of finishing the project or not.
+
+What I will focus on:
+Security will be (despite by my limitations of hacker knowledge) something I will
+try to take very seriously. Password-hashing is one of the houshold names.
+I will focus on performance. It should be able to handle many requests without
+crashing into a brick wall.
+Functionality. The website should have basic functions as posting images, writing articles and
+handle users with login. Navigating the site and browsing images should be easy.
+I might consider making a client side application that handles adding content through
+a direct ssl encrypted connection to the database backend instead adding content
+through the web browser.
+The website should reliably log most of the user activity such as image uploads, errors etc..
+The interface should look fairly professional and somewhat "up-to-date".
+I don`t expect the codebase to look nice, but I will put some effort into
+following programming guidelines, best practices and principles.
+This means including code re-use and avoiding god-objects at the same time.
+Coding conventions might occasionally have to step aside since this is mainly
+something that I do to teach myself the "how does it work" about the underlaying
+stack of a website. I actually do intend to finish this website and have it up and
+running when I reach the end of the project.
+
+What i will not focus on:
+Scalability will not be taken into account as this will only serve as a
+personal website. The website is not gonna save the world..
+This is not to say that I will give naming conventions my middle finger by
+mindlessly naming variables with bogus names or avoid commenting code for the sake
+if keeping thinks lean. As long as I do not allow the infamous spaghetti-hetti code to
+take control over the whole project messing up the code-base, I`ll find myself satisfied.
+I will try to meet the middleground of coding-taste and coding-time.
+
+What tools am I to use for this project?
+I will use the good old LAMP-stack which includes PHP. There are 3 reasons as to why.
+1. PHP is the language I am tought as a student at this moment in time.
+2. My dev. environment can run entirely on Linux.
+   LAMPs (and PHPs) integration with UNIX is a perfect choice as I`m a 10 + year Linux
+   user with experience with desktops and headless servers. I prefer using the terminal
+   for everything related to administration and it does not scare me the way it used to
+   when I started out learning about system administration.
+3. PHP has been around a long time, it is proven and has a large toolset.
+
+Disclaimer: There might be some bits and bytes of python in there
+too for the purpose of image processing.
+
+
+
+DEVELOPER LOG:
+------------------------------------------------------------
+02.04.2021
+Starting Out With Dev Environment:
+I have been sitting this whole week figuring out how to set up my environment.
+I have a dedicated server for testing running debian stable. I havealso done some coding.
+I`ve made the layput for the page which includes a html start, head, body and end part.
+Since I want the ability to upload images and show them, I`ve worked on a python script
+that resizes images into smaller sizes.
+I have done a great deal off CSS coding and trying to make it look good on different screen-sizes.
+An on going issue is the retina displays on pretty much every handhield device nowadays.
+I`ll have to see if I can meet a middleground since my CSS experience is very limited
+and I do not have much experience in what goes into high dpi fonts that retina displays use.
+Might just use media query based on the screen width in pixels.
+
+
+03.04.2021
+Limit Bandwidth Usage:
+I finally found out how I can save bandwidth on handhield devices using media query with the <source> tag.
+    This will improved the loading time for handhield devices, especially on mobile connections.
+Here is the syntax I use.
+<picture >
+    <!-- LOADS IF SCREEN WIDTH > 1200px -->
+    <source media="(min-width:1200px)" loading="lazy" srcset="path/to/large_image.png">
+    <!-- LOADS IF SCREEN WIDTH > 800px AND SCREEN WIDTH < 1200p -->
+    <source media="(min-width:800px)" loading="lazy" srcset="path/to/medium_image.png">
+    <!-- LOADS IF SCREEN WIDTH < 800px -->
+    <img class="responsive_image" src="path/to/small_image.png" loading="lazy">
+</picture>
+This is very convenient as I am alread working on a python script that will batch
+resize images to preferred sizes. So now I need to make a script that when I upload an image,
+it is resized to 3 different sizes (one for each) that will render well on the website.
+
+
+04.04.2021
+Formating the webpage:
+Learned alot about how to use CSS today.
+I found out that using the width function in CSS and set it with a "%" along with setting margins
+had the images and text align properly in each div box.
+Using position: absolute; will ignore other content around it, so I had to use position: relative;
+to make sure the rendering looked good on all screen sizes
+
+Another life saver in CSS is forcing text to continue on new line if it overflows.
+overflow-wrap: anywhere; ..worked on all devices except iOS devices
+word-break: break-word; ..worked on iOS devices
+
+
+07.03.21
+A Growing Codebase and Classes/Methods:
+I learned about creating "static methods" (functions) and "static properties" (variables)
+and reference them in the html output is very handy.
+This will help me to navigate the codebase as it grows.
+Started on the SQL database backend.
+Finding a way to design the database so that the website can be scaled or at least modified is hard.
+
+
+09.04.21
+Webserver Doing Image Resizing:
+The batch resizing script is under developement and I have made a fully working
+script that resizes alle the images in resolutions that I have set.
+Each image is distributed based on size and then category.
+
+Base folder -> root folder for images
+    Category folder -> nature, portraits etc..
+        Resoltuion folder -> folder same name as the images long pixel edge that reside in it.
+            Image files.
+
+basefolder/
+│
+├─── landscapes/
+│    ├─── 400/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    ├─── 800/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    └─── 1400/
+│         │
+│         ├─── photo1.png
+│         ├─── photo2.png
+│         └─── photo3.png
+├─── portraits/
+│    ├─── 400/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    ├─── 800/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    └─── 1400/
+│         │
+│         ├─── photo1.png
+│         ├─── photo2.png
+│         └─── photo3.png
+└─── resize_script.py
+
+
+Time will tell if this was a smart way of storing the images.
+Started to implement a blog post function where everything written is stored in the databse and
+images are referenced by their respective paths.
+
+
+12.04.21
+How To Store Images On Server:
+I decided that the folder hierarchy for images was dum.
+I rewrote the python script to have the resolution folders as first sub-dir and the category folders
+resides inside the resolution folders. This makes way more sense. I will have to tweak the database
+so that it will work with this folder hierarchy.
+So the new hierarchy will look like this:
+
+basefolder/
+│
+├─── 400/
+│    ├─── portraits/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    └─── landscapes/
+│         │
+│         ├─── photo1.png
+│         ├─── photo2.png
+│         └─── photo3.png
+├─── 800/
+│    ├─── portraits/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    └─── landscapes/
+│         ├─── photo1.png
+│         ├─── photo2.png
+│         └─── photo3.png
+├─── 1400/
+│    ├─── portraits/
+│    │    ├─── photo1.png
+│    │    ├─── photo2.png
+│    │    └─── photo3.png
+│    └─── landscapes/
+│         ├─── photo1.png
+│         ├─── photo2.png
+│         └─── photo3.png
+└─── resize_script.py
+
+
+13.04.21
+Working on the Image Processing script.
+Website is looking good so far. Added lots of code into the blog_admin and blog_create scripts.
+It will be an interactive experience where content for each blog post can be
+added/changed or removed.
+Im almost done with the python image batch resize script and will try to implement it
+into the website.
+I am still doing some mariadb database implementation into the script to save data
+about each image that is resized.
+
+
+15.04.21
+Choice of backend Database:
+I am concidering doing an sqlite database instead of mariadb because python ships
+sqlite as part of its standard libraries.
+Quite some time is going into how I want to design the script and I feel
+like this is taking forever to figure out.
+
+
+17.04.21
+Image Processing:
+Pretty much done with the resize batch script and it finally fits my usecase.
+I will probably post the source (a general purpose and user friendly version)
+on github as I can see it being very handy to have for other web-developers.
+
+
+19.04.21
+Responsiveness And Loading:
+I have no intention of implementing ajax and media query for HDPI screens at this point in time.
+As of now, I keep this page as simple as possible. I might re-write the backend to
+use only sqlite instead of mariadb just because I see no reason why it would not be
+less convenient in the long term.
+Using a self-contained and file-based database like sqlite means alot less moving parts
+going into the webserver as a whole.
+I will have to forget about the idea of having a client side cms where I run an application on my end
+that connects directly to the backend database through a secure ssl connection.
+I will try to implement ways of adding content through the browser.
+Despite the trade-off, less dependencies is key for the sake of keeping it simple.
+
+
+20.04.21
+Classes and Objects:
+Trying to avoid creating god-objects and in this case I create another class for blog content.
+The class Blogcontent uses functions from the Blogpost class. Might concider extending the Blogpost
+class. For now, I just rely on public static functions.
+I also decided to rewrite the database to use sqlite instead of mariadb.
+I`ve read up on the documentation for sqlite and this this database seems like a good choice.
+To list a few reasons:
+There will most likely only be one connection at a time with a write instance (or at least very few)
+and the performance for read and fetching data on a small website negligible (if not the same or faster)
+compared to a Client/Server RDBMS like MySQL and Mariadb.
+Since I will not have any over the network connections this makes more sense in this project.
+You can read more about sqlite here: https://www.sqlite.org/whentouse.html.
+
+The SQLite database:
+The transition to sqlite went smooth as butter and its probably thanks to the fact
+that I was using PHP`s data object (PDO) from the very start..
+It was essentially a matter of getting the sqlite dependencies and some minor debugging/research.
+Pretty much all the queries written for mariadb worked o.o.t.b on sqlite.
+The original sql script that I wrote for mariadb was 99% compatible with sqlite. The only thing
+The minor issue was how the primary keys attributes and the auto increment worked in sqlite when
+I created the tables.
+It took half an hour to sort out and now everythings working as it did with mariadb.
+Another convinient factor is that the python script I made for batch image resizing has
+sqlite3 build into its standard library making it super easy to have python connecting to it.
+
+
+21.04.21
+PHP to Python Image Processing.
+I implemented the python script that does the batch resizing of images into the sqlite
+database that I already use with the webserver.
+The script connects to database and adds data like aspect ratio, resolutions image-paths.
+
+
+22.04.21
+User Option for Title:
+Working on implementing a quick way of changing the title for the blog post.
+I made a button that will show on blog_create.php so that you can change the title.
+The date will show on the right side (on large screens) as default and it will
+fetch the date that is appropriate (date started, modified and posted) based
+on what is the latest inserted date.
+
+
+23.04.21
+Uploading Images:
+Image upload script started. Images will be uploaded to as an original (full size).
+The upload will also have to trigger the python batch resize script so that
+copies with smaller resoultions can be rendered on the users screen.
+I will also have to find a way for php to scan all the resized images
+when they are added manually if they are already resized.
+I have troubles with php and setting the:
+<input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+to limit image file size upload before uploading starts.
+The config file "php.ini" works as intended, but this is meant to
+notify the user before the file has been uploaded to warn about the
+file being to big so that the user does not have to wait for it to finish.
+I made a logging script that inserts logs directly to the database. This has proven
+to be very convinient during developement and it is something I have learned that
+might be something I should have had ready from the get go when I started out
+building the website.
+
+
+24.04.21
+Handeling configs behind the scenes:
+I implemented a way for scripts to fetch config values.
+Only hosts that are allowed will have access, which in my case means loopback addresses.
+I did some reseach about how php (or the sapi -> server api) might handle the global
+$_SERVER['REMOTE_ADDR'] variable. I run an apache http server in my test env. and as of now,
+I could not find any issues with this way of checking if the host is valid and everything
+works as intended looking from a security perspective.
+It is setup in a way where if you do a GET['config'] request it will return values based on
+the value you pass into 'config'.
+I ran GET requests from multiple devices -> hostname/admin/config.inc.php?config=IMAGE_RES
+and it only returned the json file if the connection came from the server it self.
+The only script so far that utilize this is the python batch resize script to fetch
+the long edge pixel value for resizing.
+
+Image uploads:
+I also finally have an upload function that lets me upload images for the blog.
+Oh boy was this a real headeache to make working. Joining tables in the database
+to bring up the resized low res versions and also making sure only to show the valid ones
+on the web page based on the long edge pixel res was challenging.
+For now only uploading works, I need to find a way to chose already existing images and
+to delete images from the server as well as removing the image data from the database.
+
+
+03.05.21
+Content management:
+Last couple of weeks have been filled with exam work. I have not been able to do alot
+because I had to focus on preparing to the 2 exams that I completed in the end of April.
+I still have 2 exams left, but the first one is not until May 11th, second one May 25th.
+I have squeezed in about 20 hours the last 3 days figuring out how to do some back-end
+work regarding blog posts. This includes swapping content, deleting content, uploading
+images etc.. I now have a working interface for these tasks. I don`t know if I`m going
+to implement AJAX or somethign similar to avoid unneeded loadings, we`ll see how much
+time and effort I end up investing in this project. As for now, my head is exhausted.
+The site, as of now; can handle adding blogposts, editing and deleting them and rendering
+them correctly according to content type (text, title or image etc.).
+
+
+04.05.21
+Only low res images are loaded. Debugging gets real:
+Today I can say that I have really felt what it feels like when debugging for 8 hours
+when the problem is simple and stupid. I noticed when looking at the network monitor in
+Firefox and Chrome that my page loaded only the smallest version of some of the images
+I uploaded. I added a mediaquery to restrict loading large images if the screen width is
+under specified lengtjs in pixels. However, some of the images just would not load the
+full size despite loading the webpage with a full screen window on a 2560*1440 monitor.
+First, I noticed it only happened to images with the norwegian letters æ, ø and å.
+This led me to believe there might have been UTF-8 to ISO-8859-1 encoding issues.
+I started digging after solutions. I tried setting the characterset in the html
+header field to see if this solved the problem. No luck..
+So I tried renaming them to english letters. Still no luck? Okay, obviosly nothing
+to do with encodings or source target. But then I looked closer to the networking monitor
+and I noticed that long filenames had been changed. I jumped into the database file
+with the sqlite3 cli tool that I have been using for debugging.
+I had set a file name character size of max 36 characters. So basiaclly all the images
+I`ve uploaded that cointains more than 36 characters would not load with the media query.
+The reace towards performance have taken to much of a toll and I will never underestimate
+the chances of having long file names again. After reading a bit about datatypes and
+the VARCHAR datatype it looks like modern filesystems with large block sizes might still
+not benefit from very small VARCHARS and someone suggested a 255 character minimum.
+I upped the max limits of several columns in my database to see if the issue was fixed.
+Nope, still the same problem. I started to really lose patience, but I did not want
+to give up just yet. After a couple more hours I finally found out what the problem was.
+Any filename with a whitespace would not be openend with the mediaquery inside the <source>
+tag in html. What happened is that the reference url to the image got broken and even
+though the browsere did an encode from " " to "%", whatever image in the <source> tag inside
+the attribute srcset would not get loaded into the website. It fixed this easily using the
+string replace method on any file that is uploaded. Replacing whitespace with underscores.
+Now everything works like a charm, finally!
+
+
+11.05.2021
+I`ve been quite busy the last 2 weeks preparing for our exam in databases. Even though this
+project has kept teaching me how to design a database I still needed to dig into transactions,
+deadlocks, normalizations, ACID and more so. I`m finally back and I`ve spent the some time
+implementing a way to hav esocial network icons show up as hyperlinks on the bottom menubar.
+It is as simple as adding the social media icon as a png and putting it in the logos directory.
+The php script will find every logo, add them as entries in the database and then use the
+entries as reference when you as a user get asked to insert your link into an html form.
+I am very happy with the end result of this. I even made a python script that "prepares"
+the icons if they are large or colored. I want them to be shown in greyscale to fit the
+dark layout of the site.
+
+
+12.05.2021
+PROJECT IS NOW ON GITHUB!!
+I made my decision to put it online. It was always gonna happen eventually, but I feel like
+the groundwork has been completed and now it`s time for git to track changes and let people
+see all that goodies that this includes.
+This also means I have to start writing a documentation from now on.
+
+Disclaimer (as always):
+There are uncommented code her eand there and there are scripts I will remove.
+This will all be visible through git commits from now on and I will be tidying things up
+Anyways, congrats to me!
