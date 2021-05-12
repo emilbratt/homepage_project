@@ -1,5 +1,3 @@
-# homepage_project
-
 <h3>My Own Website</h3>
 <p>I am finally putting my project up for everyone to see/use</p>
 
