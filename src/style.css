@@ -33,7 +33,7 @@ body {
     /* -webkit-text-size-adjust: none; */
     min-height: 100%;
     margin: 0;
-    max-width: 2200px;
+    max-width: 2000px;
     margin-left: auto;
     margin-right: auto;
     /* background-color: #1f1e1d; */
@@ -99,13 +99,14 @@ body {
 }
 
 .greybox {
-    text-align: center;
+    /* text-align: center; */
     position: relative;
     /* color: #CFC69E; */
     color: #9195B1;
     /* min-height: 200px; */
 
 }
+
 
 .greybox_left,
 .greybox_right {
@@ -123,6 +124,14 @@ body {
     text-align: right;
     margin-right: 10px;
 } */
+.profile_pic {
+    max-height: 400px;
+    width: auto;
+    /* max-width: 94%; */
+    /* height: auto; */
+    margin-left: 3%;
+    margin-right: 3%;
+}
 
 .greybox_title_center {
         text-align: center;
@@ -141,7 +150,8 @@ figcaption,
 .greyboxbody {
     /*more fint */
     /* color: #9195B1; */
-
+    overflow-wrap: anywhere;
+    word-break: break-word;
     /*more opaque*/
     color: #A1B8C6;
 
@@ -283,6 +293,24 @@ a:hover[href^="mailto:"] {
         /* position:static; */
 
     }
+
+
+    .greybox_inline_block {
+        display: inline-block;
+        vertical-align: text-top;
+        width: 46%;
+        margin-left: 2%;
+    }
+
+     #left_side {
+         margin-left: 8%;
+    }
+
+    #right_side {
+        text-align: right;
+    }
+
+
 }
 
 /* LARGE SCREEN */
@@ -306,6 +334,7 @@ a:hover[href^="mailto:"] {
         margin-left: auto;
         margin-right: auto;
         overflow: hidden;
+        /* width: 1500px; */
         width: 70%;
     }
 
@@ -339,6 +368,7 @@ a:hover[href^="mailto:"] {
         margin-left: auto;
         margin-right: auto;
         /* min-height: 200px; */
+        /* width: 1500px; */
         width: 70%;
         /* padding-bottom: 10px; */
 
@@ -346,8 +376,9 @@ a:hover[href^="mailto:"] {
 
     .greybox_left,
     .greybox_right {
-            display: inline-block;
+        display: inline-block;
         width: 34%;
+        /* width: 750; */
         position: relative;
     }
 
@@ -359,8 +390,16 @@ a:hover[href^="mailto:"] {
     .greybox_right {
         margin-left: 1.8%;
 
+    }
+
+    .greybox_left_body {
 
     }
+
+    .greybox_right_body {
+
+    }
+
 
     .greybox_title_center,
     .greybox_title_left,
@@ -430,6 +469,7 @@ a:hover[href^="mailto:"] {
 
 
     .blog_post_box {
+        /* width: 1500px; */
         width: 70%;
         margin-left: auto;
         margin-right: auto;
@@ -532,6 +572,7 @@ a:hover[href^="mailto:"] {
         /* margin-left: 3%; */
         /* margin-right: 3%; */
     }
+
 
 
     .greybox_title_center,
@@ -669,6 +710,15 @@ a:hover[href^="mailto:"] {
     }
 
 
+    .profile_pic {
+        max-height: 400px;
+        width: auto;
+        /* max-width: 94%; */
+        /* height: auto; */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .greybox, {
         /* margin-left: auto;
         margin-right: auto; */
@@ -677,6 +727,8 @@ a:hover[href^="mailto:"] {
         overflow: hidden;
 
     }
+
+
 
     .greybox_title_center,
     .greybox_title_left {

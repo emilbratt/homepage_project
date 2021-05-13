@@ -7,26 +7,35 @@ Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 
 <div class="greybox">
+
     <div class="greyboxbody">
     <h3 style="text-align: center;">John Travolta</h3>
-
-    <h3>Undergrad student</h3>
-    <p>I have a special love for computers</p>
     </div>
-<!-- </div>
 
 
-<div class="greybox"> -->
-    <div class="greyboxbody">
-    <h3>Programming</h3>
-    <p>Check out my projects on this site or on github</p>
+
+    <div class="greybox_inline_block" >
+        <div class="greyboxbody" id="left_side">
+        <h3>Programming</h3>
+        <p>Check out my projects on this site or on github</p>
+        </div>
+    <!-- </div>
+
+    <div class="greybox"> -->
+        <div class="greyboxbody" id="left_side">
+        <h3>Photographing</h3>
+        <p>Nature, Weddings, People and more</p>
+        </div>
+        <div class="greyboxbody" id="left_side">
+        <h3>Undergrad student</h3>
+        <p>I have a special love for computers</p>
+        </div>
     </div>
-<!-- </div>
 
-<div class="greybox"> -->
-    <div class="greyboxbody">
-    <h3>Photographing</h3>
-    <p>Nature, Weddings, People and more</p>
+    <div class="greybox_inline_block" >
+        <div class="greyboxbody" id="right_side" >
+        <img src="/extra/profile_pic.png" alt="" class="profile_pic" style="">
+        </div>
     </div>
 </div>
 

@@ -59,6 +59,8 @@ if(isset($_POST['content']) and isset($_POST['content_id'])) {
 
     function insert_blog_content_image($field) {
         $root_path = $_SERVER["DOCUMENT_ROOT"];
+
+        // AVOID URL CONFLICTS BY REPLACING WHITESPACE WITH UNDERSCORE IN FILENAME
         $file = str_replace(' ', '_', $_FILES["content_file"]["name"]);
 
         $caption = null;

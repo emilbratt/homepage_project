@@ -8,33 +8,37 @@ require_once "../admin/config.inc.php";
 
 
 <div class="greybox">
-    <h1>Database Setup</h1>
-    <form action="setup.php" method="post"id="in_line_position_greyboxbody">
-        <input type="hidden" name="setup" value="db_prepare">
-        <h3>Prepares the database</h3>
-        <input type="submit" style="width: 270px;" value="Create">
-    </form>
+    <div class="greyboxbody">
+        <h1>Database Setup</h1>
+        <form action="setup.php" method="post" id="in_line_position_greyboxbody">
+            <input type="hidden" name="setup" value="db_prepare">
+            <h3>Prepares the database</h3>
+            <input type="submit" style="width: 270px;" value="Create">
+        </form>
 
-    <form action="setup.php" method="post" id="in_line_position_greyboxbody">
-        <input type="hidden" name="setup" value="db_erase">
-        <h3>Deletes the database</h3>
-        <input type="submit" style="width: 270px; margin-top: 0px;" value="Delete">
-    </form>
+        <form action="setup.php" method="post" id="in_line_position_greyboxbody">
+            <input type="hidden" name="setup" value="db_erase">
+            <h3>Deletes the database</h3>
+            <input type="submit" style="width: 270px; margin-top: 0px;" value="Delete">
+        </form>
+    </div>
 </div>
 
 <div class="greybox">
-    <h1>Image Setup</h1>
-    <form action="setup.php" method="post" id="in_line_position_greyboxbody">
-        <input type="hidden" name="setup" value="image_resize">
-        <h3>Batch resize all images</h3>
-        <input type="submit" style="width: 270px; " value="Resize All Images">
-    </form>
+    <div class="greyboxbody">
+        <h1>Image Setup</h1>
+        <form action="setup.php" method="post" id="in_line_position_greyboxbody">
+            <input type="hidden" name="setup" value="image_resize">
+            <h3>Batch resize all images</h3>
+            <input type="submit" style="width: 270px; " value="Resize All Images">
+        </form>
 
-    <form action="setup.php" method="post" id="in_line_position_greyboxbody">
-        <input type="hidden" name="setup" value="image_delete_all_files">
-        <h3>Delete all image files</h3>
-        <input type="submit" style="width: 270px; margin-top: 0px;" value="Delete Images">
-    </form>
+        <form action="setup.php" method="post" id="in_line_position_greyboxbody">
+            <input type="hidden" name="setup" value="image_delete_all_files">
+            <h3>Delete all image files</h3>
+            <input type="submit" style="width: 270px; margin-top: 0px;" value="Delete Images">
+        </form>
+    </div>
 </div>
 
 <?php
@@ -43,13 +47,12 @@ if(isset($_POST['setup'])) {
     switch($_POST['setup']) {
         // PREPARE DATABASE
         case 'db_prepare';
-            echo '<div class="greybox">';
+            echo '    <div class="greyboxbody">';
 
             // SKIP IF DATABASE EXISTS
             if(file_exists('../admin/database.sqlite')) {
                 echo '<h2 style="text-align: center;">DATABASE EXISTS</h2>';
                 echo '</div>';
-                echo "<H1>OK</H1>";
                 break;
             }
             // CREATE DATABASE
@@ -68,14 +71,14 @@ if(isset($_POST['setup'])) {
             echo '</div>';
             break;
         case 'db_erase';
-            echo '<div class="greybox">';
+            echo '    <div class="greyboxbody">';
             unlink('../admin/database.sqlite');
             echo '<h2 style="text-align: center;">DATABASE DELETED</h2>';
             echo '</div>';
             break;
         case 'image_resize';
             echo <<<EOT
-            <div class="greybox">
+                <div class="greyboxbody">
             <h1>This might take a some time</h1>
 
             EOT;
@@ -89,7 +92,7 @@ if(isset($_POST['setup'])) {
             echo '</div>';
             break;
         case 'image_delete_all_files';
-            echo '<div class="greybox">';
+            echo '    <div class="greyboxbody">';
             foreach(Config::IMAGE_PATHS as $dir) {
                 if($dir == Config::IMAGE_PATHS['converted']) {
                     // ITERATING THROUGH RESOLUTION FOLDERS
@@ -142,7 +145,7 @@ if(isset($_POST['setup'])) {
 }
 else {
     echo <<<EOT
-    <div class="greybox">
+    <div class="greyboxbody">
         <h1>Output Messages</h1>
         <p>This block will output info when you press one of the buttons..</p>
     </div>

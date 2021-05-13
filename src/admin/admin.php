@@ -2,7 +2,7 @@
 require_once "../layout.inc.php";
 require_once "queries.inc.php";
 require_once "database.inc.php";
-Starthtml::show('Admin');
+Starthtml::show('Adminpage');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 

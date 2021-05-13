@@ -55,7 +55,7 @@ $icons = scandir($icons_dir);
 
 
     <div class="greybox">
-    <h1>Set Profile Info</h1>
+    <h1>Bullet Points Left side</h1>
     <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
     method="post" id="in_line_position_greyboxbody">
     <input type="hidden" name="links" value="true">
@@ -97,12 +97,12 @@ $icons = scandir($icons_dir);
         }
 
         foreach($icons as $icon) {
-            if($icon != '.' and $icon != '..') { // AVOIDS . AND .. IN UNIX DIRECTORY
+            if($icon != '.' and $icon != '..') { // AVOID GLOBAL . AND .. IN UNIX DIRECTORY
 
                 // CHECK IF png EXTENTION
                 $path = Config::IMAGE_PATHS['logos'].$icon;
-                $ext = pathinfo($path, PATHINFO_EXTENSION);
-                if(strtolower($ext) == 'png') {
+                $file_ext_check = strtolower(pathinfo($path,PATHINFO_EXTENSION));
+                if(in_array($file_ext_check, Config::FILE_EXT_ALLOWED['image'])) {
                     $icon = explode('.', $icon)[0];
 
                     if(!(in_array($icon, $name_exists))) {
