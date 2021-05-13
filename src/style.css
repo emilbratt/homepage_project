@@ -130,7 +130,9 @@ body {
 }
 
 figcaption,
-.greyboxbody {
+.greyboxbody,
+.greybox_left_body,
+.greybox_right_body {
     /*more fint */
     /* color: #9195B1; */
     overflow-wrap: anywhere;
@@ -140,13 +142,17 @@ figcaption,
 
 }
 
-.greyboxbody {
+.greyboxbody,
+.greybox_left_body,
+.greybox_right_body {
     text-align: left;
     width: 94%;
     margin-left: 3%;
     margin-right: 3%;
 
 }
+
+
 
 .greybox_menu {
     width: 50%;
@@ -157,8 +163,6 @@ figcaption,
     color: #B9C2CF;
 
 }
-
-
 
 
 .greybox_img {
@@ -301,10 +305,11 @@ a:hover[href^="mailto:"] {
     }
 
      #left_side {
-         /* margin-left: 8%; */
+         margin-left: 6%;
     }
 
     #right_side {
+        margin-right: 3%;
         /* text-align: right; */
     }
 
@@ -390,14 +395,14 @@ a:hover[href^="mailto:"] {
 
     }
 
-    .greybox_left_body {
-
-    }
-
+    .greybox_left_body,
     .greybox_right_body {
+        text-align: left;
+        width: 88%;
+        margin-left: 6%;
+        margin-right: 6%;
 
     }
-
 
     .greybox_title_center,
     .greybox_title_left,

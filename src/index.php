@@ -3,72 +3,65 @@ require_once "layout.inc.php";
 // require_once "logs/logging.inc.php";
 Starthtml::show('My homepage');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+?>
+
+<?php
+
+$cnxn = db_connect();
+$stmt = $cnxn->prepare("
+    SELECT body_title, body_text FROM front_page
+    ORDER BY id_content ASC
+");
+$stmt->execute();
+$front_page_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $cnxn->prepare("
+    SELECT * FROM user_data
+");
+$stmt->execute();
+$user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+if($front_page_data == null) {
+    echo '<p>No frontpage data</p>';
+}
+$cnxn = null;
 
 ?>
 
 <div class="greybox">
 
     <div class="greybox_title_center">
-    <h3 style="text-align: center;">John Travolta</h3>
+    <h3 style="text-align: center;"><?php echo $user_data['full_name'] ?></h3>
     </div>
 
-
-
     <div class="greybox_inline_block">
-
-        <div class="greyboxbody" id="left_side_">
-            <h3>Programming</h3>
-            <p>
-                Check out my projects on this site or on github
-                Check out my projects on this site or on github
-                Check out my projects on this site or on github
-                Check out my projects on this site or on github
-            </p>
+        <div class="greyboxbody" id="left_side">
+        <?php
+        foreach($front_page_data as $k => $v) {
+            echo '<h3>'.$v['body_title'].'</h3>';
+            echo '<p>'.$v['body_text'].'</p><br>';
+        }
+        ?>
         </div>
-        <br>
-
-        <div class="greyboxbody" id="left_side_">
-        <h3>Photographing</h3>
-            <p>
-                Nature, Weddings, People and more
-                Nature, Weddings, People and more
-                Nature, Weddings, People and more
-                Nature, Weddings, People and more
-            </p>
-        </div>
-        <br>
-
-        <div class="greyboxbody" id="left_side_">
-            <h3>Undergrad student</h3>
-            <p>I have a special love for computers</p>
-        </div>
-        <br>
     </div>
+
     <div class="greybox_inline_block">
-        <div class="greyboxbody" id="right_side_" style="text-align: right;">
-        <img src="/extra/profile_pic.png" alt="" class="profile_pic" style="">
-        <!-- <figcaption style="text-align: left; margin-left: 3%; margin-right: 3%;">
-            Image Caption textImage Caption textImage Caption textImage Caption text
-        </figcaption> -->
+        <div class="greyboxbody"  style="text-align: right;">
+
+            <img
+            src="<?php echo $user_data['profile_pic'] ?>"
+              id="right_side" alt="" class="profile_pic" style="">
+            <!-- <figcaption style="text-align: left; margin-left: 3%; margin-right: 3%;">
+                Image Caption textImage Caption textImage Caption textImage Caption text
+            </figcaption> -->
         </div>
     </div>
 </div>
+
+
+
 
 <div class="greybox_left">
-    <div class="greyboxbody" id="left_side_">
-        <!-- <div class="greyboxbody"> -->
-        <h3>Contact</h3>
-        <div class="standalone_link">
-            <p><a href="mailto:johnson@gmail.com">E-mail</a></p>
-        </div>
-        <!-- </div> -->
-    </div>
-</div>
-
-
-<div class="greybox_right">
     <!-- <div class="greyboxbody"> -->
-        <div class="greyboxbody" id="right_side_">
+        <div class="greybox_right_body" id="right_side_">
         <h3>Latest blogpost</h3>
         <?php
         $cnxn = db_connect();
@@ -99,7 +92,21 @@ Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
         </div>
     <!-- </div> -->
 </div>
+<div class="greybox_right">
+    <div class="greybox_left_body" id="left_side_">
+        <!-- <div class="greyboxbody"> -->
+        <h3>Contact</h3>
+        <div class="standalone_link">
+            <p><a href="mailto:<?php echo $user_data['full_name'] ?>">E-mail</a></p>
+        </div>
+        <!-- </div> -->
+    </div>
+</div>
 
+<?php
+$user_data = null;
+$front_page_data = null;
+?>
 
 <?php
 Footer::show(basename($_SERVER['PHP_SELF']));

@@ -154,8 +154,8 @@ else {
 ?>
 
 <div class="greybox">
+    <div class="greyboxbody">
     <h1>Server Setup</h1>
-<div class="greyboxbody">
 <pre>
 
 ----------------FOR DEBIAN BUSTER----------------

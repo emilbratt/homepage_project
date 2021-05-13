@@ -177,18 +177,11 @@
         }
     }
 
-    // class Logpost {
-    //     public static function start() {
-    //         echo '<div class="greybox">';
-    //     }
-    //
-    //     public static function end() {
-    //         echo '</div>';
-    //     }
-    //
-    // }
 
     class Display {
+        protected static $media_query_medium = 'min-width:800px';
+        protected static $media_query_large = 'min-width:1200px';
+
         public static function start() {
             echo '<div class="greybox">';
         }
@@ -204,13 +197,6 @@
     }
 
     class Blogpost extends Display {
-
-        private static $media_query_medium = 'min-width:800px';
-        private static $media_query_large = 'min-width:1200px';
-
-        // public static function start() {
-        //     echo '<div class="greybox">';
-        // }
 
         public static function main_title($title, $alignment = 'center') {
             echo '<div class="greybox_title_'.$alignment.'">';
@@ -243,11 +229,11 @@
                 }
             }
             if($align == 'center' and isset($cap)) {
-                echo '<source media="('.Blogpost::$media_query_large.')" '.
+                echo '<source media="('.Display::$media_query_large.')" '.
                 'loading="lazy" srcset="'.$targets[1].
                 '">';
 
-                echo '<source media="('.Blogpost::$media_query_medium.')" '.
+                echo '<source media="('.Display::$media_query_medium.')" '.
                 'loading="lazy" srcset="'.$targets[2].
                 '">';
 
@@ -262,11 +248,11 @@
                 }
 
             else {
-                echo '<source media="('.Blogpost::$media_query_large.')" '.
+                echo '<source media="('.Display::$media_query_large.')" '.
                 'loading="lazy" srcset="'.$targets[1].
                 '">';
 
-                echo '<source media="('.Blogpost::$media_query_medium.')" '.
+                echo '<source media="('.Display::$media_query_medium.')" '.
                 'loading="lazy" srcset="'.$targets[2].
                 '">';
 
