@@ -55,6 +55,7 @@ $icons = scandir($icons_dir);
 
 
     <div class="greybox">
+    <div class="greyboxbody">
     <h1>Bullet Points Left side</h1>
     <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
     method="post" id="in_line_position_greyboxbody">
@@ -75,9 +76,13 @@ $icons = scandir($icons_dir);
     <input type="submit" style="width: 270px;" value="Insert">
     </form>
     </div>
+    </div>
 
 
     <div class="greybox">
+
+    <div class="greyboxbody">
+
     <h1>Links for Social Networks</h1>
     <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
     method="post" id="in_line_position_greyboxbodsy">
@@ -145,11 +150,12 @@ $icons = scandir($icons_dir);
     <br>
     <input type="submit" style="width: 270px;"
     name="links" value="Update">
-    <br><br>
-    <input type="submit" style="width: 270px;"
+
+    <input id="small_screen_button" type="submit" style="width: 270px;"
     name="links" value="Reset All">
     </form>
 
+    </div>
     </div>
 
 <?php

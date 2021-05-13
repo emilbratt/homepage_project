@@ -83,7 +83,6 @@ body {
 }
 
 
-
 .greybox_left,
 .greybox_right,
 .greybox {
@@ -143,9 +142,9 @@ figcaption,
 
 .greyboxbody {
     text-align: left;
-    width: 92%;
-    margin-left: 4%;
-    margin-right: 4%;
+    width: 94%;
+    margin-left: 3%;
+    margin-right: 3%;
 
 }
 
@@ -241,10 +240,10 @@ textarea {
 a[href^="mailto:"] {
     text-decoration: none;
     color: #9195B1;
-    padding-top: 10px;
+    /* padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
-    padding-left: 10px;
+    padding-left: 10px; */
 
 }
 a:hover[href^="mailto:"] {
@@ -253,10 +252,10 @@ a:hover[href^="mailto:"] {
 }
 
 .standalone_link a {
-    padding-top: 10px;
+    /* padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
-    padding-left: 10px;
+    padding-left: 10px; */
     text-decoration: none;
     color: #9195B1;
 
@@ -289,24 +288,24 @@ a:hover[href^="mailto:"] {
         max-width: 100%;
         /* max-width: 94%; */
         /* height: auto; */
-        margin-left: 3%;
-        margin-right: 3%;
+        /* margin-left: 3%; */
+        /* margin-right: 3%; */
         margin-top: 30px;
     }
 
     .greybox_inline_block {
         display: inline-block;
 
-        width: 46%;
-        margin-left: 2%;
+        width: 49.7%;
+        /* margin-left: 2%; */
     }
 
      #left_side {
-         margin-left: 8%;
+         /* margin-left: 8%; */
     }
 
     #right_side {
-        text-align: right;
+        /* text-align: right; */
     }
 
 
@@ -412,7 +411,7 @@ a:hover[href^="mailto:"] {
 
     .greybox_title_left {
         text-align: left;
-        width: 43%;
+        width: 47%;
         margin-left: 3%;
         display: inline-block;
 
@@ -420,7 +419,7 @@ a:hover[href^="mailto:"] {
 
     .greybox_title_right {
         text-align: right;
-        width: 43%;
+        width: 47%;
         margin-right: 3%;
         display: inline-block;
 
@@ -784,5 +783,12 @@ a:hover[href^="mailto:"] {
         font-size: 28px;
         height: 50px;
     }
+    input {
+        display: block;
+        /* margin-top: 30px; */
+    }
 
+    #small_screen_button {
+         margin-top: 20px;
+    }
 }
