@@ -115,23 +115,7 @@ body {
 
 }
 
-/* .text_10px_from_left {
-    text-align: left;
-    margin-left: 10px;
-}
 
-.text_10px_from_right {
-    text-align: right;
-    margin-right: 10px;
-} */
-.profile_pic {
-    max-height: 400px;
-    width: auto;
-    /* max-width: 94%; */
-    /* height: auto; */
-    margin-left: 3%;
-    margin-right: 3%;
-}
 
 .greybox_title_center {
         text-align: center;
@@ -282,6 +266,11 @@ a:hover[href^="mailto:"] {
     color: #9195B1;
 }
 
+.greybox_inline_block {
+            vertical-align: text-top;
+}
+
+
 /* GREATER THAN OR EQUAL TO MEDIUM SCREEN */
 @media all and (min-width: 1000px) {
     #in_line_position_greyboxbody {
@@ -294,10 +283,20 @@ a:hover[href^="mailto:"] {
 
     }
 
+    .profile_pic {
+        max-height: 400px;
+        width: auto;
+        max-width: 100%;
+        /* max-width: 94%; */
+        /* height: auto; */
+        margin-left: 3%;
+        margin-right: 3%;
+        margin-top: 30px;
+    }
 
     .greybox_inline_block {
         display: inline-block;
-        vertical-align: text-top;
+
         width: 46%;
         margin-left: 2%;
     }
@@ -709,17 +708,21 @@ a:hover[href^="mailto:"] {
         width: auto;
     }
 
-
-    .profile_pic {
-        max-height: 400px;
-        width: auto;
-        /* max-width: 94%; */
-        /* height: auto; */
-        margin-left: auto;
-        margin-right: auto;
+    .greybox_inline_block {
+        display: block;
+        /* vertical-align: text-top; */
+        width: 100%;
+        /* margin-left: 2%; */
     }
 
-    .greybox, {
+
+    .profile_pic {
+        width: 100%;
+        height: auto;
+
+    }
+
+    .greybox {
         /* margin-left: auto;
         margin-right: auto; */
         /* min-height: 200px; */
