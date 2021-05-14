@@ -1,9 +1,9 @@
 <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . "/admin/database.inc.php";
-    require_once "admin/queries.inc.php";
-    require_once "admin/config.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/database.inc.php';
+    require_once 'admin/queries.inc.php';
+    require_once 'admin/config.inc.php';
     // require_once "admin/file_upload.inc.php";
-    require_once "admin/logging.inc.php";
+    require_once 'admin/logging.inc.php';
 ?>
 
 <?php
@@ -198,6 +198,7 @@
 
 
     class Frontpage_content extends Display {
+
         public static function text_field_left() {
             $cnxn = db_connect($pragma = false);
             $stmt = $cnxn->prepare("
@@ -207,8 +208,9 @@
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $cnxn = null;
+            Frontpage_content::start();
             ?>
-            <div class="greybox">
+
             <div class="greyboxbody">
                 <h1>Textfield left-hand side</h1>
                 <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
@@ -225,7 +227,7 @@
                     <br><br>
                     <input type="submit" style="width: 270px;" value="Add">
                 </form>
-                
+
                 <br>
 
                 <form id="in_line_position_greyboxbody"
@@ -283,22 +285,22 @@
 
 
             </div>
-            </div>
             <?php
+            Frontpage_content::end();
         }
+
 
         public static function social_network() {
             $icons_dir = $_SERVER["DOCUMENT_ROOT"].Config::IMAGE_PATHS['logos'];
             $icon_images = glob($icons_dir."*");
             $icons = scandir($icons_dir);
+            Frontpage_content::start();
             ?>
-            <div class="greybox">
             <div class="greyboxbody">
-
 
             <?php
                 // THE SECTION UNDER LOADS THE PNG IMAGES FOUND HERE /logos/..
-                //
+
                 // INPUT FIELDS ARE BASED ON EACH IMAGE AND ITS NAME.
                 // IF A LOGO HAS THE NAME github.png, IT IS IMPLIED THAT
                 // THIS LOGO IS FOR GITHUB AND YOU SHOULD PUT IN YOUR github
@@ -382,8 +384,26 @@
             </form>
 
             </div>
+            <?php
+            Frontpage_content::end();
+        }
+
+
+        public static function profile_pic() {
+            Frontpage_content::start();
+            ?>
+            <div class="greyboxbody">
+            <h1>Upload Profile Picture</h1>
+                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+                method="post" id="in_line_position_greyboxbodsy"
+                enctype="multipart/form-data">
+                <input type="hidden" name="profile_pic" value="true">
+                <input type="file" name="file" >
+                <input type="submit" value="Upload">
+                </form>
             </div>
             <?php
+            Frontpage_content::end();
         }
     }
 
@@ -479,7 +499,7 @@
 
 
 
-    class Blogcontent {
+    class Blog_content {
 
         public static function create($id_type) {
             $script = htmlentities($_SERVER['PHP_SELF']);

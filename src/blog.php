@@ -65,7 +65,7 @@ if(isset($_GET['id_blog'])) {
     $current_id = $stmt->fetchColumn(0);
 
     $cnxn = null;
-    Blogcontent::show($current_id);
+    Blog_content::show($current_id);
     blogpost_menubar($previous_id,$next_id);
 }
 
@@ -85,10 +85,10 @@ if(!(isset($_GET['id_blog']))) {
 
     switch(count($result)) {
         case 1; // IF ONLY 1 POST EXISTS, DON`T SHOW MENU BAR UNDER POST
-            Blogcontent::show($result[0]['id_blog']);
+            Blog_content::show($result[0]['id_blog']);
             break;
         case 2; // IF 2 EXISTS, SHOW MENUBAR UNDER POST
-            Blogcontent::show($result[0]['id_blog']);
+            Blog_content::show($result[0]['id_blog']);
             blogpost_menubar($result[1]['id_blog']);
             break;
         default;

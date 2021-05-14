@@ -44,7 +44,7 @@ if(
 }
 
 if(isset($_SESSION['id_blog'])) {
-    Blogcontent::show($_SESSION['id_blog']);
+    Blog_content::show($_SESSION['id_blog']);
 }
 else {
     $cnxn = db_connect(); //  will only load remaining page if successfully connected

@@ -2,6 +2,7 @@
 session_start();
 require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/upload.inc.php";
 Starthtml::show('Frontpage Settings');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
@@ -80,7 +81,7 @@ if(isset($_POST['textfield'])) {
 }
 
 if(isset($_POST['profile_pic'])) {
-
+    Upload::image('profile', 'file');
 }
 
 
@@ -89,6 +90,7 @@ if(isset($_POST['profile_pic'])) {
 <?php
 // DISPLAY FORMS FOR CONTENT
 Frontpage_content::text_field_left();
+Frontpage_content::profile_pic();
 Frontpage_content::social_network();
 ?>
 

@@ -87,7 +87,7 @@ if(isset($_POST['content']) and isset($_POST['content_id'])) {
         Log::debug(
         '$target: '.$target. "<br>" .
         '$file: '.$file . "<br>" .
-        'basename($_FILES["content_file"]["name"]) '. basename($_FILES["content_file"]["name"]) . "<br>"
+        basename($_FILES["content_file"]["name"]) .' '. basename($_FILES["content_file"]["name"]) . "<br>"
         );
 
 
@@ -572,13 +572,12 @@ $cnxn = null;
 <?php
 // ADD/CHANGE/REMOVE CONTENT FROM DATABASE
 if(isset($_POST['blog_content_type_create'])) {
-    Blogcontent::create($_POST['blog_content_type_create']);
+    Blog_content::create($_POST['blog_content_type_create']);
 }
 
 ?>
 
 <?php
-// Blogcontent::show($_SESSION['id_blog']);
 Footer::show(basename($_SERVER['PHP_SELF']));
 Endhtml::show();
 ?>
