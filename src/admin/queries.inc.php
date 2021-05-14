@@ -10,6 +10,55 @@ class FrontpageSQL {
         return $result;
     }
 
+    public static function get_next_content_number($cnxn) {
+        $stmt = $cnxn->prepare("
+            SELECT CASE
+                WHEN MAX(content_number) IS NULL THEN '1'
+                ELSE MAX(content_number) + 1
+            END AS next_content_number
+            FROM front_page
+        ");
+        $stmt->execute();
+        return $stmt->fetchColumn(0);
+    }
+
+    public static function delete_text($cnxn, $content_number) {
+        $stmt = $cnxn->prepare("
+            DELETE FROM front_page
+            WHERE content_number = :n
+        ");
+        $stmt->bindParam(':n', $content_number);
+        $stmt->execute();
+    }
+
+    public static function swap_text($cnxn, $c_n_a, $c_n_b) {
+        $stmt = $cnxn->prepare("
+            UPDATE front_page
+            SET content_number = '0'
+            WHERE content_number = :a
+
+        ");
+        $stmt->bindParam(':a', $c_n_a);
+        $stmt->execute();
+        $stmt = $cnxn->prepare("
+            UPDATE front_page
+            SET content_number = :a
+            WHERE content_number = :b
+
+        ");
+        $stmt->bindParam(':a', $c_n_a);
+        $stmt->bindParam(':b', $c_n_b);
+        $stmt->execute();
+
+        $stmt = $cnxn->prepare("
+            UPDATE front_page
+            SET content_number = :b
+            WHERE content_number = '0'
+        ");
+        $stmt->bindParam(':b', $c_n_b);
+        $stmt->execute();
+    }
+
 }
 
 class BlogSQL {

@@ -415,3 +415,16 @@ Disclaimer (as always):
 There are uncommented code her eand there and there are scripts I will remove.
 This will all be visible through git commits from now on and I will be tidying things up
 Anyways, congrats to me!
+
+
+14.05.2021
+Implementing a way to dynamically add, change and delete frontpage content.
+I scratched my head around how I wanted to go about storing it. The content on the frontpage
+will most likely remain static, or see very few changes. I don`t see any reason for keeping
+the old front_page data that te user has swapped out. I literally considered using json objects
+to store the paragraphs and profile picture path and some minor user information, but after a
+while of thinking; I decided it was probably best to keep everything inside the database.
+Even though creating dedicated tables only for a few kB of stored data feels unnatural.
+At least it will be less of a hasle to migrate the webserver to another platform since less
+data get fragmented when most of the stuff is stored in the database.
+Images will have to be manually transfered, but thats about it.

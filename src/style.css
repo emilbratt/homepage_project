@@ -486,6 +486,7 @@ a:hover[href^="mailto:"] {
     }
 
     textarea {
+        width: 60%;
         font-size: 22px;
         height: 600px;
         /* overflow: auto; */

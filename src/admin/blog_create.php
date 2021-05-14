@@ -437,7 +437,7 @@ $cnxn = null;
     <br>
 
     <div class="greyboxbody">
-        <form id=in_line_position_greyboxbody
+        <form
         action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
         method="post">
             <input class="increae_input_width" type="hidden" name="content_id" value="2">
@@ -502,7 +502,7 @@ $cnxn = null;
                 if($row['content_number'] > 2) {
                     $desc = $row['desc_type'];
                     $alias = ( //CONCATENATE WHATEVER HAS VALUE IN IT
-                        strval($num).': '. ' '.$row['alias'].' '.$row['body_title'].substr($row['body_text'],0,50).
+                        strval($num).'. '. ' '.$row['alias'].' '.$row['body_title'].substr($row['body_text'],0,50).
                         $row['img_name'].$row['img_caption'].$row['body_title']
                     );
                     $content_number = $row['content_number'];
@@ -531,7 +531,7 @@ $cnxn = null;
                 if($row['content_number'] > 2) {
                     $desc = $row['desc_type'];
                     $alias = ( //CONCATENATE WHATEVER HAS VALUE IN IT
-                        strval($num).': '. ' '.$row['alias'].' '.$row['body_title'].substr($row['body_text'],0,50).
+                        strval($num).'. '. ' '.$row['alias'].' '.$row['body_title'].substr($row['body_text'],0,50).
                         $row['img_name'].$row['img_caption'].$row['body_title']
                     );
                     $content_number = $row['content_number'];
@@ -548,13 +548,11 @@ $cnxn = null;
                 if($row['content_number'] > 2) {
                     $desc = $row['desc_type'];
                     $alias = ( //CONCATENATE WHATEVER HAS VALUE IN IT
-                        strval($num).': '. ' '.$row['alias'].' '.$row['body_title'].substr($row['body_text'],0,50).
+                        strval($num).'. '. ' '.$row['alias'].' '.$row['body_title'].substr($row['body_text'],0,50).
                         $row['img_name'].$row['img_caption'].$row['body_title']
                     );
-                    $id = $row['content_number'];
-                        echo <<<EOT
-                        <option value=$id> $alias </option>
-                        EOT;
+                    $content_number = $row['content_number'];
+                        echo "<option value=$content_number> $alias </option>";
                     $num++;
                 }
             }

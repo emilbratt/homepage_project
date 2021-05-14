@@ -10,7 +10,7 @@ Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 $cnxn = db_connect();
 $stmt = $cnxn->prepare("
     SELECT body_title, body_text FROM front_page
-    ORDER BY id_content ASC
+    ORDER BY content_number ASC
 ");
 $stmt->execute();
 $front_page_data = $stmt->fetchAll(PDO::FETCH_ASSOC);

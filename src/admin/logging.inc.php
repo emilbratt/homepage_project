@@ -28,27 +28,32 @@ class Log {
         $cnxn = null;
     }
 
-    public static function debug($msg, $level = 2 /*2 = debug*/) {
+    public static function debug($msg, $level = 2) {
         $subject = 'Debugging';
         Log::insert_log($msg,$level,$subject);
     }
 
-    public static function upload($msg, $level = 2 /*2 = debug*/) {
+    public static function upload($msg, $level = 2) {
         $subject = 'File Upload';
         Log::insert_log($msg,$level,$subject);
     }
 
-public static function user_settings($msg, $level = 1 /*1 = info*/) {
+    public static function front_page($msg, $level = 1 /*1 = info*/) {
+        $subject = 'Front-Page';
+        Log::insert_log($msg,$level,$subject);
+    }
+
+    public static function user_settings($msg, $level = 1 /*1 = info*/) {
         $subject = 'User Settings';
         Log::insert_log($msg,$level,$subject);
     }
 
-    public static function image_resize($msg, $level = 2 /*2 = debug*/) {
+    public static function image_resize($msg, $level = 2) {
         $subject = 'Image Resizing';
         Log::insert_log($msg,$level,$subject);
     }
 
-    public static function blog_content_display($msg, $level = 2 /*2 = debug*/) {
+    public static function blog_content_display($msg, $level = 2) {
         $subject = 'Blog content display';
         Log::insert_log($msg,$level,$subject);
     }

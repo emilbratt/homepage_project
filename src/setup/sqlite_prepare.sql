@@ -94,11 +94,11 @@ CREATE TABLE blog_content
 
 CREATE TABLE IF NOT EXISTS front_page  -- short description about the page or about you
 (
-    id_content      TINYINT UNSIGNED    NOT NULL,  -- should really not exceed a 1 digit amount of rows, therefor tiny integer
+    content_number  TINYINT UNSIGNED    NOT NULL,  -- should really not exceed a 1 digit amount of rows, therefor tiny integer
     body_title      VARCHAR(64)         NOT NULL,  -- body-title on left side of front page
     body_text       VARCHAR(256)        NOT NULL,  -- body-text on left side of front page
 
-    PRIMARY KEY (id_content, body_title)
+    PRIMARY KEY (content_number, body_title)
 );
 
 CREATE TABLE user_data -- for several fields on front page as well as other things
@@ -239,7 +239,7 @@ WHERE id_blog < '3';
 
 
 INSERT INTO front_page
-    (id_content, body_title, body_text)
+    (content_number, body_title, body_text)
 VALUES
     ('1','Title. About me',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit,

@@ -4,7 +4,7 @@ $_SESSION['begin'] = 'OK';
 require_once "../layout.inc.php";
 require_once "queries.inc.php";
 require_once "database.inc.php";
-Starthtml::show('Blog Admin');
+Starthtml::show('Blog Panel');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 

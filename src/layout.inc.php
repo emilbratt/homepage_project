@@ -183,17 +183,208 @@
         protected static $media_query_large = 'min-width:1200px';
 
         public static function start() {
-            echo '<div class="greybox">';
+            ?><div class="greybox"><?php
         }
 
         public static function end() {
-            echo '</div>';
+            ?></div><?php
         }
 
         public static function table() {
 
         }
 
+    }
+
+
+    class Frontpage_content extends Display {
+        public static function text_field_left() {
+            $cnxn = db_connect($pragma = false);
+            $stmt = $cnxn->prepare("
+                SELECT content_number, body_title
+                FROM front_page
+            ");
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $cnxn = null;
+            ?>
+            <div class="greybox">
+            <div class="greyboxbody">
+                <h1>Textfield left-hand side</h1>
+                <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                method="post" >
+                    <input type="hidden" name="textfield" value="add">
+                    <h3>Title</h3>
+                    <input type="text" onfocus="this.select()"
+                    autofocus="autofocus"
+                    name="title" placeholder=""
+                    class="increae_input_width">
+                    <h3>Paragraph</h3>
+                    <textarea name="paragraph"
+                    style="height: 270px;" required></textarea>
+                    <br><br>
+                    <input type="submit" style="width: 270px;" value="Add">
+                </form>
+                
+                <br>
+
+                <form id="in_line_position_greyboxbody"
+                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                method="post">
+                    <input type="hidden" name="textfield" value="delete">
+                    <label for="delete"><h3>Delete Text</h3></label>
+                    <select name="content_number" style="width: 400px;" >
+                    <?php
+                    $num = 1;
+                    foreach($result as $row) {
+                            $content_number = $row['content_number'];
+                            $alias = $row['body_title'];
+                                    echo "<option value=$content_number>$num. $alias </option>";
+                            $num++;
+                    }
+                    ?>
+                    </select><br><br>
+                    <input type="submit"   value="Delete Content"/>
+                </form>
+
+
+
+                <form id="in_line_position_greyboxbody"
+                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                method="post">
+                    <input type="hidden" name="textfield" value="swap">
+                    <label for="swap_1"><h3>Swap Position</h3></label>
+                    <select name="swap_1" style="width: 200px;" >
+                    <?php
+                    $num = 1;
+                    foreach($result as $row) {
+                            $alias = $row['body_title'];
+                            $content_number = $row['content_number'];
+                                echo "<option value=$content_number>$num. $alias </option>";
+                            $num++;
+
+                    }
+                    ?>
+                    </select>
+                    <select name="swap_2" style="width: 200px;" >
+                    <?php
+                    $num = 1;
+                    foreach($result as $row) {
+                            $alias = $row['body_title'];
+                            $content_number = $row['content_number'];
+                                    echo "<option value=$content_number>$num. $alias </option>";
+                            $num++;
+                        }
+
+                    ?>
+                    </select><br><br>
+                    <input type="submit"   value="Swap Content"/>
+                </form>
+
+
+            </div>
+            </div>
+            <?php
+        }
+
+        public static function social_network() {
+            $icons_dir = $_SERVER["DOCUMENT_ROOT"].Config::IMAGE_PATHS['logos'];
+            $icon_images = glob($icons_dir."*");
+            $icons = scandir($icons_dir);
+            ?>
+            <div class="greybox">
+            <div class="greyboxbody">
+
+
+            <?php
+                // THE SECTION UNDER LOADS THE PNG IMAGES FOUND HERE /logos/..
+                //
+                // INPUT FIELDS ARE BASED ON EACH IMAGE AND ITS NAME.
+                // IF A LOGO HAS THE NAME github.png, IT IS IMPLIED THAT
+                // THIS LOGO IS FOR GITHUB AND YOU SHOULD PUT IN YOUR github
+                // LINK INTO THIS TEXT FIELD. ADDING MORE LOGOS IN THIS FOLDER
+                // WILL THUS ADD CORRESPONDING OPTION INTO THIS SCRIPT
+            ?>
+            <h1>Links for Social Networks</h1>
+            <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+            method="post" id="in_line_position_greyboxbodsy">
+            <input type="hidden" name="links" value="true">
+            <?php
+                $cnxn = db_connect();
+                $stmt = $cnxn->prepare("
+                SELECT * FROM social_networks
+                -- WHERE name = :v
+                ");
+                $stmt->execute();
+                $name_exists = array(); // STORES NAMES ONLY
+                $networks = array();    // STORES NAMES AND URL
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $networks[$row['name']] = $row['url'];
+                    array_push($name_exists, $row['name']);
+                }
+
+                foreach($icons as $icon) {
+                    if($icon != '.' and $icon != '..') { // AVOID GLOBAL . AND .. IN UNIX DIRECTORY
+
+                        // CHECK IF png EXTENTION
+                        $path = Config::IMAGE_PATHS['logos'].$icon;
+                        $file_ext_check = strtolower(pathinfo($path,PATHINFO_EXTENSION));
+                        if(in_array($file_ext_check, Config::FILE_EXT_ALLOWED['image'])) {
+                            $icon = explode('.', $icon)[0];
+
+                            if(!(in_array($icon, $name_exists))) {
+                                // INSERT SOCIAL NETWORK NAME INTO DATABASE
+                                    // IF NAME DOESN`T EXIST
+                                Log::user_settings(
+                                    $icon . ': Was inserted into database', 1
+                                );
+                                $stmt = $cnxn->prepare("
+                                INSERT INTO social_networks (name)
+                                VALUES (:v)
+                                ");
+                                $stmt->bindParam(':v', $icon);
+                                $stmt->execute();
+                            }
+
+                            // GET PLACEHOLDER FOR INSERT FIELD
+                            $placeholder = null;
+                            if(isset($networks[$icon])) {
+                                $placeholder = $networks[$icon];
+                            }
+                            if($placeholder == null) {
+                                $placeholder = "https://$icon";
+                            }
+
+                            // RENDER INPUT FIELD
+                            ?>
+                            <div id="in_line_position_greyboxbody">
+                            <h3><?php echo $icon; ?></h3>
+
+                            <input type="text"
+                            name="<?php echo $icon; ?>"
+                            placeholder="<?php echo $placeholder; ?>"
+                            style="width: 80%;">
+                            <br><br>
+                            </div>
+                            <?php
+                        }
+
+                    }
+                }
+                $cnxn = null;
+            ?>
+            <br>
+            <input type="submit" style="width: 270px;"
+            name="links" value="Update">
+
+            <input id="small_screen_button" type="submit" style="width: 270px;"
+            name="links" value="Reset All">
+            </form>
+
+            </div>
+            </div>
+            <?php
+        }
     }
 
     class Blogpost extends Display {
