@@ -1,3 +1,5 @@
 /src/admin/database.sqlite
 /src/logs/image_resize.log
 /src/untracked
+/src/images/original
+/src/images/converted

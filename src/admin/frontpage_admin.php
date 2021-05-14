@@ -43,6 +43,13 @@ if(isset($_POST['links'])) {
 
 }
 
+if(isset($_POST['paragraphs'])) {
+
+}
+
+if(isset($_POST['profile_pic'])) {
+
+}
 
 
 ?>
@@ -56,7 +63,7 @@ $icons = scandir($icons_dir);
 
     <div class="greybox">
     <div class="greyboxbody">
-    <h1>Bullet Points Left side</h1>
+    <h1>Add paragraphs on homepage</h1>
     <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
     method="post" id="in_line_position_greyboxbody">
     <input type="hidden" name="links" value="true">
@@ -80,7 +87,6 @@ $icons = scandir($icons_dir);
 
 
     <div class="greybox">
-
     <div class="greyboxbody">
 
     <h1>Links for Social Networks</h1>

@@ -22,6 +22,9 @@ $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
 if($front_page_data == null) {
     echo '<p>No frontpage data</p>';
 }
+if($user_data == null) {
+    echo '<p>No user_data data</p>';
+}
 $cnxn = null;
 
 ?>
@@ -29,7 +32,7 @@ $cnxn = null;
 <div class="greybox">
 
     <div class="greybox_title_center">
-    <h3 style="text-align: center;"><?php echo $user_data['full_name'] ?></h3>
+        <h3 style="text-align: center;"><?php echo $user_data['full_name'] ?></h3>
     </div>
 
     <div class="greybox_inline_block">
@@ -45,13 +48,8 @@ $cnxn = null;
 
     <div class="greybox_inline_block">
         <div class="greyboxbody"  style="text-align: right;">
-
-            <img
-            src="<?php echo $user_data['profile_pic'] ?>"
-              id="right_side" alt="" class="profile_pic" style="">
-            <!-- <figcaption style="text-align: left; margin-left: 3%; margin-right: 3%;">
-                Image Caption textImage Caption textImage Caption textImage Caption text
-            </figcaption> -->
+            <img src="<?php echo $user_data['profile_pic'] ?>"
+            id="right_side" alt="" class="profile_pic">
         </div>
     </div>
 </div>
@@ -61,7 +59,7 @@ $cnxn = null;
 
 <div class="greybox_left">
     <!-- <div class="greyboxbody"> -->
-        <div class="greybox_right_body" id="right_side_">
+    <div class="greybox_right_body" id="right_side_">
         <h3>Latest blogpost</h3>
         <?php
         $cnxn = db_connect();
@@ -87,19 +85,16 @@ $cnxn = null;
                 $result['main_title'].'</a></p>
             </div>
             ';
-
         ?>
-        </div>
+    </div>
     <!-- </div> -->
 </div>
 <div class="greybox_right">
     <div class="greybox_left_body" id="left_side_">
-        <!-- <div class="greyboxbody"> -->
         <h3>Contact</h3>
         <div class="standalone_link">
-            <p><a href="mailto:<?php echo $user_data['full_name'] ?>">E-mail</a></p>
+        <p><a href="mailto:<?php echo $user_data['full_name'] ?>">E-mail</a></p>
         </div>
-        <!-- </div> -->
     </div>
 </div>
 

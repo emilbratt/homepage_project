@@ -55,8 +55,8 @@ VALUES
     ('main_title_center','Centered Title'),                       -- -> text
     ('main_title_left','Left Title'),                             -- -> text
     ('main_title_right','Right Title'),                           -- -> text
-    ('body_title','Sub Header'),                                  -- -> text
-    ('body_text','Textfield'),                                    -- -> text
+    ('body_title','Paragraph Header'),                                  -- -> text
+    ('body_text','Paragraph'),                                    -- -> text
     ('body_image_center','Centered Image'),                       -- -> img_name + img_caption
     ('body_image_left','Left Image'),                             -- -> img_name + img_caption
     ('body_image_right','Right Image'),                           -- -> img_name + img_caption
