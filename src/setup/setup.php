@@ -145,9 +145,11 @@ if(isset($_POST['setup'])) {
 }
 else {
     echo <<<EOT
+    <div class="greybox">
     <div class="greyboxbody">
         <h1>Output Messages</h1>
         <p>This block will output info when you press one of the buttons..</p>
+    </div>
     </div>
     EOT;
 }
