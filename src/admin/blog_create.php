@@ -1,10 +1,12 @@
 <?php
 session_start();
-require_once "../layout.inc.php";
-require_once "queries.inc.php";
-require_once "database.inc.php";
-require_once "../admin/logging.inc.php";
-require_once "config.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/upload.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/logging.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/config.inc.php";
+
 Starthtml::show('Blog Edit');
 echo <<< EOT
 <header>
@@ -57,187 +59,13 @@ if(isset($_POST['content']) and isset($_POST['content_id'])) {
         $cnxn = null;
     }
 
-    function insert_blog_content_image($field) {
-        $root_path = $_SERVER["DOCUMENT_ROOT"];
+    function insert_blog_content_image() {
+        $image_name = Upload::image('blog');
 
-        // AVOID URL CONFLICTS BY REPLACING WHITESPACE WITH UNDERSCORE IN FILENAME
-        $file = str_replace(' ', '_', $_FILES["content_file"]["name"]);
-
+        $category = 'blog';
         $caption = null;
         if(isset($_POST['caption'])) {
             $caption = $_POST['caption'];
-        }
-
-        if(!(is_dir($root_path.Config::IMAGE_PATHS['upload']))) {
-            mkdir($root_path.Config::IMAGE_PATHS['upload'], 0775);
-        }
-
-        $upload_path = $root_path.Config::IMAGE_PATHS['upload'].'/blog/';
-        $upload_path = str_replace(' ', '_', $upload_path);
-
-        if(!(is_dir($upload_path))) {mkdir($upload_path, 0775);}
-
-        // $target =  $upload_path . basename($_FILES["content_file"]["name"]);
-        $target =  $upload_path . $file;
-
-
-        // $file = basename($target);
-
-
-        Log::debug(
-        '$target: '.$target. "<br>" .
-        '$file: '.$file . "<br>" .
-        basename($_FILES["content_file"]["name"]) .' '. basename($_FILES["content_file"]["name"]) . "<br>"
-        );
-
-
-        $abort = false; // UPLOAD WILL ABORT IF SET TO TRUE
-        $ret_msgs = array(); // RETURN MESSAGES IF UPLOAD FAILS
-
-        Log::upload('Starting upload of file '.$target.
-        ' for blog id '.$_SESSION['id_blog'].
-        ' and content number '.$_POST['content_id'],1
-        );
-
-        // GO THORUGH STEPS TO VALIDATE NEW IMAGE
-
-        // FILE SIZE
-        if($_FILES["content_file"]["error"] == 2) {
-            $max_file_size = Config::IMAGE_MAX_FILESIZE['upload'];
-            Log::upload(
-                $file . ': File exceeds '.$max_file_size.
-                ' byte size limit!',
-                4
-            );
-            array_push(
-                $ret_msgs,
-                $file . ': File exceeds '.
-                $max_file_size.' byte size limit!'
-            );
-            $abort = true;
-        }
-
-        // FILE EXTENTION
-        $file_ext_check = strtolower(pathinfo($target,PATHINFO_EXTENSION));
-        if(!(in_array($file_ext_check, Config::FILE_EXT_ALLOWED['image']))) {
-            Log::upload($file . ': File extention is not valid', 4);
-            array_push(
-                $ret_msgs, $file .
-                ': File extention is not valid'
-            );
-            $abort = true;
-        }
-
-        // IS IMAGE FILE BASED ON METADATA
-        $file_check = getimagesize($_FILES["content_file"]["tmp_name"]);
-        if($file_check == false) {
-            Log::upload($file . ': File upload is not an image!', 4);
-            array_push($ret_msgs, $file . ': File upload is not an image!');
-            $abort = true;
-        }
-
-        // CHECK FOR NAME COLLISION OF EXISTING IMAGE REGARDLESS OF FILE EXTENTION
-        $file_split = explode(".", $file);
-        $image_name = $file_split[0];
-        foreach(Config::FILE_EXT_ALLOWED['image'] as $extention) {
-            if(file_exists($upload_path.$image_name.'.'.$extention)) {
-                echo <<<EOT
-                <div class="greybox"><div class="greyboxbody">
-                <h2 style="text-align: center;">
-                    Image already exists<br>Using existing image
-                </h2>
-                <p style="text-align: center;">
-                    If image is incorrect<br>upload same image<br>with different filename
-                </p>
-                </div></div>
-                EOT;
-                Log::upload(
-                    $target.' already exists with extention '.
-                    $extention,
-                    1
-                );
-                array_push(
-                    $ret_msgs, $target.' already exists with extention '.
-                    $extention
-                );
-                $abort = true;
-            }
-        }
-
-        if(!(is_uploaded_file($_FILES["content_file"]["tmp_name"]))) {
-            $abort = true;
-            Log::upload($file . ': Upload aborted due to avoiding a file upload exploit', 2);
-        }
-
-
-        if($abort == false) {
-            echo '<div class="greybox">';
-            echo '<div class="greyboxbody">';
-            if (move_uploaded_file(
-                $_FILES["content_file"]["tmp_name"], $target)
-            ) {
-                chmod($target,0770);
-                echo <<<EOT
-                <h3>$file uploaded successfully</h3><br>
-                EOT;
-                Log::upload(
-                    htmlspecialchars($file) . ': Was uploaded to '.$upload_path,
-                    1
-                );
-            } else {
-                foreach($ret_msgs as $msg) {
-                    echo <<<EOT
-                    <h3>$msg</h3><br>
-                    EOT;
-                }
-                Log::upload(
-                    'Could not upload ' .htmlspecialchars($file).
-                    'to '.$upload_path,
-                    1
-                );
-            }
-            echo '</div>';
-            echo '</div>';
-        }
-
-
-        if($abort == false) {
-            // DO EXTRA CHECK TO ENSURE FILE IS UPLOADED
-            // TO AVVOID A FILE UPLOAD ATTACK BEFORE SCRIPT RUNS
-
-            // $script = $root_path.Config::IMAGE_SCRIPTS['resize_uploaded_image'];
-            $script = $root_path.Config::IMAGE_SCRIPTS['resize_image'];
-            if(!(is_file($script))) {
-                Log::upload('Could not resize '.$file.' the script '.$script.' does not exist', '4');
-            }
-
-            $output_value = null; // FOR DEBUGGING
-            $return_value = null; // FOR DEBUGGING
-
-            exec("python3 $script '$image_name' '$target' blog jpg", $output_value, $return_value);
-
-            foreach($output_value as $v) {
-                echo <<<EOT
-
-                <div class="greybox"><div class="greyboxbody">
-                <h2 style="text-align: center;">$v</h2>
-                </div></div>
-                EOT;
-            }
-
-            if($return_value != 0) {
-                Log::image_resize(
-                    'Could not resize ' .htmlspecialchars($file).
-                    'to '.$upload_path,
-                    5
-                );
-                die('<h2 style="text-align: center;">Could not resize image, check log</h2>');
-            }
-
-            Log::image_resize(
-                'successfully resized ' .htmlspecialchars($file),
-                1
-            );
         }
 
         $cnxn = db_connect();
@@ -252,7 +80,7 @@ if(isset($_POST['content']) and isset($_POST['content_id'])) {
         $stmt->bindParam(':b', $_POST['content_id']);
         $stmt->bindParam(':c', $content_id);
         $stmt->bindParam(':d', $image_name);
-        $stmt->bindParam(':e', $field);
+        $stmt->bindParam(':e', $category);
         $stmt->bindParam(':f', $caption);
         $stmt->execute();
         $cnxn = null;
@@ -270,11 +98,11 @@ if(isset($_POST['content']) and isset($_POST['content_id'])) {
     }
     else if((int)$_POST['content_id'] >= 6 and
         (int)$_POST['content_id'] <= 8) {
-        insert_blog_content_image('blog');
+        insert_blog_content_image();
     }
     else if((int)$_POST['content_id'] >= 9 and
         (int)$_POST['content_id'] <= 11) {
-        insert_blog_content_image('blog');
+        insert_blog_content_image();
     }
 
 }
@@ -479,13 +307,13 @@ $cnxn = null;
                     // $desc = $row['desc_type'];
                     $alias = $row['alias'];
                     $id = $row['id_type'];
-                        echo <<<EOT
-                        <option value=$id>
-                        $alias
-                        </option>
-                        EOT;
-                    }
+                    echo <<<EOT
+                    <option value=$id>
+                    $alias
+                    </option>
+                    EOT;
                 }
+            }
             ?>
             </select><br><br>
             <input type="submit"   value="Add Content"/>

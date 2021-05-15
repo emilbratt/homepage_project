@@ -428,3 +428,13 @@ Even though creating dedicated tables only for a few kB of stored data feels unn
 At least it will be less of a hasle to migrate the webserver to another platform since less
 data get fragmented when most of the stuff is stored in the database.
 Images will have to be manually transfered, but thats about it.
+
+
+15.05.2021
+Progress is being made on the front-page part. I can now upload a "profile pic" and add
+an about me paragraph effortlessly. I`ve also done som refactoring in index.php and layout.inc.php.
+Things are shaping up and the only major thing left before I can put it into production which
+means hosting it for my own purpose is adding a way to put the scripts in ./admin behind a
+login wall so that only the owner (me or whoever) can add/change the content of the site.
+I will also start working on a script that solely handles file uploads and I might refactor
+existing code into that script.

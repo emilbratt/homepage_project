@@ -215,6 +215,12 @@ def insert_org(file_name,original_image_path):
         (?,?,?,?,?,?);
         ''', (file_name, category, aspect, width, height, original_image_path)
     )
+
+    if category == 'profile':
+        cur.execute('SELECT MAX(id_image) FROM image_org;')
+        last_id = cur.fetchone()[0]
+        cur.execute('UPDATE user_data SET profile_pic = ?;', str(last_id))
+
     cnxn.commit()
     cnxn.close()
 

@@ -4,6 +4,8 @@
 
         public const INSTALL = true; // IS TRUE IF NOT INSTALLED, CHANGES TO FALSE AFTER
 
+        public const DATABASE_PATH = "/admin/database.sqlite";
+
         // public const ENCODING = [
         //     // 'ISO-8859-1' = mb_convert_encoding($main['Kategori'], "UTF-8", "ISO-8859-1")
         //     'UTF-8' => false,

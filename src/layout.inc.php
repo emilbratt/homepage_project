@@ -18,6 +18,7 @@
 
         public static $admin_pagess = array(
             'Admin' => 'admin.php',
+            'Upload' => 'upload_admin.php',
             'Frontpage' => 'frontpage_admin.php',
             'Blog' => 'blog_admin.php',
             'Create' => 'blog_create.php',
@@ -125,11 +126,12 @@
                 <div class="bottombar">
                     <div class="navbar_logo">
                 EOT;
+                $logo_path = Config::IMAGE_PATHS['logos'];
                 foreach($results as $row) {
                     if(!(empty($row['url']))) {
                         echo '
                             <a href="'.$row['url'].'">
-                                <img src="logos/' . $row['name'] . '.png" alt="no image"
+                                <img src="'.$logo_path.$row['name'] . '.png" alt="no image"
                                 class="logo_link">
                             </a>';
                     }
@@ -182,12 +184,35 @@
         protected static $media_query_medium = 'min-width:800px';
         protected static $media_query_large = 'min-width:1200px';
 
-        public static function start() {
-            ?><div class="greybox"><?php
+        public static function start($align = null) {
+            if($align) {
+                echo '<div class="greybox_'.$align.'">';
+                return null;
+            }
+            echo '<div class="greybox">';
+        }
+
+
+        public static function main_title($title, $alignment = 'center') {
+            echo '<div class="greybox_title_'.$alignment.'">';
+            echo '<h3>'.$title.'</h3>';
+            echo '</div>';
+        }
+
+        public static function body_title($title) {
+            echo '<div class="greyboxbody">';
+            echo '<h3>'.$title.'</h3>';
+            echo '</div>';
+        }
+
+        public static function body_text($message) {
+            echo '<div class="greyboxbody">';
+            echo '<p>'.$message.'</p>';
+            echo '</div>';
         }
 
         public static function end() {
-            ?></div><?php
+            echo '</div>';
         }
 
         public static function table() {
@@ -196,10 +221,81 @@
 
     }
 
+    class Frontpage extends Display {
+
+        public static function text_field($front_page_data) {
+            echo '
+            <div class="greybox_inline_block">
+            <div class="greyboxbody" id="left_side">
+            ';
+            foreach($front_page_data as $k => $v) {
+                echo '<h3>'.$v['body_title'].'</h3>';
+                echo '<p>'.$v['body_text'].'</p><br>';
+            }
+            echo '
+            </div>
+            </div>
+            ';
+        }
+
+        public static function profile_pic($profile_pic_name = null) {
+            if($profile_pic_name != null) {
+                $profile_pic_name = $profile_pic_name.'.jpg';
+                $resize_path = Config::IMAGE_PATHS['converted'];
+                echo '
+                <div class="greybox_inline_block">
+                <div class="greyboxbody"  style="text-align: right;">
+                    <picture>
+                        <source media="('.Display::$media_query_large.')" '.
+                        'loading="lazy"
+                        srcset="'.$resize_path.'1600/profile/'.$profile_pic_name.'">
+
+                        <source media="('.Display::$media_query_medium.')" '.
+                        'loading="lazy"
+                        srcset="'.$resize_path.'1200/profile/'.$profile_pic_name.'">
+
+                        <img src="'.$resize_path.'800/profile/'.$profile_pic_name.'"
+                        id="right_side" alt="" class="profile_pic"
+                        loading="lazy">
+                    </picture>
+                </div>
+                </div>
+                ';
+            }
+        }
+
+        public static function latest_blogpost($id_blog = null, $main_title = null) {
+            if($id_blog == null or $main_title == null) {
+                $main_title = 'No blogposts';
+            }
+            echo '
+            <div class="greybox_right_body" id="right_side_">
+                <h3>Latest blogpost</h3>
+                <div class="standalone_link">
+                    <p><a  href="/blog.php?id_blog='.$id_blog.'">'.
+                    $main_title.'</a></p>
+                </div>
+            </div>
+                ';
+        }
+
+        public static function contact_field($email = null) {
+            echo '
+            <div class="greybox_left_body" id="left_side_">
+                <h3>Contact</h3>
+                <div class="standalone_link">
+                <p><a href="mailto:'.$email.'">E-mail</a></p>
+                </div>
+            </div>
+            ';
+        }
+    }
+
 
     class Frontpage_content extends Display {
 
-        public static function text_field_left() {
+        public static function text_field_left_form() {
+
             $cnxn = db_connect($pragma = false);
             $stmt = $cnxn->prepare("
                 SELECT content_number, body_title
@@ -212,7 +308,7 @@
             ?>
 
             <div class="greyboxbody">
-                <h1>Textfield left-hand side</h1>
+                <h1>Textfield</h1>
                 <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
                 method="post" >
                     <input type="hidden" name="textfield" value="add">
@@ -290,7 +386,58 @@
         }
 
 
-        public static function social_network() {
+
+        public static function profile_pic_form() {
+
+            Frontpage_content::start();
+            $cnxn = db_connect($pragma = false);
+            $stmt = $cnxn->prepare("
+                SELECT id_image, file_name
+                FROM image_org
+                WHERE category = 'profile';
+            ");
+            $stmt->execute();
+
+            ?>
+            <div class="greyboxbody">
+            <h1>Frontpage image</h1>
+                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+                method="post" id="in_line_position_greyboxbody"
+                enctype="multipart/form-data">
+                <label for="file"><h3>Upload</h3></label>
+                <input type="hidden" name="profile_pic" value="upload">
+                <input type="file" name="file" >
+                <br><br>
+                <input type="submit" value="Upload">
+                </form>
+
+
+                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+                method="post" id="in_line_position_greyboxbody">
+                <input type="hidden" name="profile_pic" value="choice">
+                <label for="file"><h3>Chose Existing</h3></label>
+                <select name="id_image" style="width: 400px;" >
+                <?php
+                $num = 1;
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $alias = $row['file_name'];
+                    $id_image = $row['id_image'];
+                        echo "<option value=$id_image>$num. $alias </option>";
+                    $num++;
+                }
+                ?>
+                </select><br><br>
+                <input type="submit" value="Select">
+                </form>
+            </div>
+            <?php
+
+            Frontpage_content::end();
+        }
+
+
+        public static function social_network_form() {
+
             $icons_dir = $_SERVER["DOCUMENT_ROOT"].Config::IMAGE_PATHS['logos'];
             $icon_images = glob($icons_dir."*");
             $icons = scandir($icons_dir);
@@ -309,10 +456,10 @@
             ?>
             <h1>Links for Social Networks</h1>
             <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
-            method="post" id="in_line_position_greyboxbodsy">
+            method="post">
             <input type="hidden" name="links" value="true">
             <?php
-                $cnxn = db_connect();
+                $cnxn = db_connect($pragma = false);
                 $stmt = $cnxn->prepare("
                 SELECT * FROM social_networks
                 -- WHERE name = :v
@@ -360,8 +507,10 @@
                             // RENDER INPUT FIELD
                             ?>
                             <div id="in_line_position_greyboxbody">
-                            <h3><?php echo $icon; ?></h3>
 
+                            <label for="<?php echo $icon; ?>">
+                                <h3><?php echo $icon; ?></h3>
+                            </label>
                             <input type="text"
                             name="<?php echo $icon; ?>"
                             placeholder="<?php echo $placeholder; ?>"
@@ -388,44 +537,11 @@
             Frontpage_content::end();
         }
 
-
-        public static function profile_pic() {
-            Frontpage_content::start();
-            ?>
-            <div class="greyboxbody">
-            <h1>Upload Profile Picture</h1>
-                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
-                method="post" id="in_line_position_greyboxbodsy"
-                enctype="multipart/form-data">
-                <input type="hidden" name="profile_pic" value="true">
-                <input type="file" name="file" >
-                <input type="submit" value="Upload">
-                </form>
-            </div>
-            <?php
-            Frontpage_content::end();
-        }
     }
 
     class Blogpost extends Display {
 
-        public static function main_title($title, $alignment = 'center') {
-            echo '<div class="greybox_title_'.$alignment.'">';
-            echo '<h3>'.$title.'</h3>';
-            echo '</div>';
-        }
 
-        public static function body_title($title) {
-            echo '<div class="greyboxbody">';
-            echo '<h3>'.$title.'</h3>';
-            echo '</div>';
-        }
-
-        public static function body_text($message) {
-            echo '<div class="greyboxbody">';
-            echo '<p>'.$message.'</p>';
-            echo '</div>';
-        }
 
 
         public static function body_image($img, $cat, $align, $cap = null) {
@@ -491,10 +607,6 @@
             echo '</picture>';
         }
 
-        // public static function end() {
-        //     echo '</div>';
-        // }
-
     }
 
 
@@ -556,7 +668,7 @@
                 echo <<<EOT
                 <input type="hidden" name="content" value="$path">
                 <input type="hidden" name="MAX_FILE_SIZE" value="$max_image_size">
-                <input type="file" name="content_file" >
+                <input type="file" name="file" >
                 <input type="hidden" name="upload_path" value="$path">
                 EOT;
             }
@@ -567,7 +679,7 @@
                 echo <<<EOT
                 <input type="hidden" name="content" value="$path">
                 <input type="hidden" name="MAX_FILE_SIZE" value="$max_image_size">
-                <input type="file" name="content_file" >
+                <input type="file" name="file" >
                 <input type="hidden" name="upload_path" value="$path">
                 <textarea name="caption" style="margin-top: 10px;"
                 onfocus="this.select()" autofocus="autofocus" required>
@@ -642,41 +754,43 @@
                         case '5';
                             Blogpost::body_text($row['body_text']);
                             break;
-                        case '6'; //          break; // REMOVE break WHEN IMAGE UPLOAD DONE
+                        case '6';
                             Blogpost::body_image(
                                 $row['img_name'], $row['img_folder'], 'center'
                             );
                             break;
-                        case '7'; //          break; // REMOVE break WHEN IMAGE UPLOAD DONE
+                        case '7';
                             Blogpost::body_image(
                                 $row['img_name'], $row['img_folder'], 'left'
                             );
                             break;
-                        case '8'; //          break; // REMOVE break WHEN IMAGE UPLOAD DONE
+                        case '8'; //
                             Blogpost::body_image(
                                 $row['img_name'], $row['img_folder'], 'right'
                             );
                             break;
                         case '9';
                             Blogpost::body_image(
-                                $row['img_name'], $row['img_folder'],
-                                'center', $row['img_caption']
+                                $row['img_name'], $row['img_folder'], 'center',
+                                $row['img_caption']
                             );
                             break;
                         case '10';
                             Blogpost::body_image(
-                                $row['img_name'], $row['img_folder'],
-                                'left', $row['img_caption']
+                                $row['img_name'], $row['img_folder'], 'left',
+                                $row['img_caption']
                             );
                             break;
                         case '11';
                             Blogpost::body_image(
-                                $row['img_name'], $row['img_folder'],
-                                'right', $row['img_caption']
+                                $row['img_name'], $row['img_folder'], 'right',
+                                $row['img_caption']
                             );
                             break;
                         default;
-                            Log::blog_content_display($row['img_name'].' could not be displayed', 4);
+                            Log::blog_content_display('Blog content with blog id: ' .
+                            $id_blog. ' and content number: ' .$row['id_type'] .
+                            ' could not be displayed', 4);
 
                     }
                 }

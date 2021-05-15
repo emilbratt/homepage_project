@@ -1,9 +1,11 @@
 <?php
 session_start();
 $_SESSION['begin'] = 'OK';
-require_once "../layout.inc.php";
-require_once "queries.inc.php";
-require_once "database.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+
+// require_once "database.inc.php";
 Starthtml::show('Blog Panel');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>

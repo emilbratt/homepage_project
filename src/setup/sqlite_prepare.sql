@@ -55,14 +55,14 @@ VALUES
     ('main_title_center','Centered Title'),                       -- -> text
     ('main_title_left','Left Title'),                             -- -> text
     ('main_title_right','Right Title'),                           -- -> text
-    ('body_title','Paragraph Header'),                                  -- -> text
+    ('body_title','Paragraph Header'),                            -- -> text
     ('body_text','Paragraph'),                                    -- -> text
-    ('body_image_center','Centered Image'),                       -- -> img_name + img_caption
-    ('body_image_left','Left Image'),                             -- -> img_name + img_caption
-    ('body_image_right','Right Image'),                           -- -> img_name + img_caption
-    ('body_image_center_caption','Centered Image with Caption'),  -- -> img_name + img_caption + img_caption
-    ('body_image_left_caption','Left Image with Caption'),        -- -> img_name + img_caption + img_caption
-    ('body_image_right_caption','Right Image with Caption')       -- -> img_name + img_caption + img_caption
+    ('body_image_center','Centered Image'),                       -- -> img_name + img_position
+    ('body_image_left','Left Image'),                             -- -> img_name + img_position
+    ('body_image_right','Right Image'),                           -- -> img_name + img_position
+    ('body_image_center_caption','Centered Image with Caption'),  -- -> img_name + img_position + img_caption
+    ('body_image_left_caption','Left Image with Caption'),        -- -> img_name + img_position + img_caption
+    ('body_image_right_caption','Right Image with Caption')       -- -> img_name + img_position + img_caption
 ;
 
 CREATE TABLE blog_content
@@ -92,21 +92,7 @@ CREATE TABLE blog_content
 );
 
 
-CREATE TABLE IF NOT EXISTS front_page  -- short description about the page or about you
-(
-    content_number  TINYINT UNSIGNED    NOT NULL,  -- should really not exceed a 1 digit amount of rows, therefor tiny integer
-    body_title      VARCHAR(64)         NOT NULL,  -- body-title on left side of front page
-    body_text       VARCHAR(256)        NOT NULL,  -- body-text on left side of front page
 
-    PRIMARY KEY (content_number, body_title)
-);
-
-CREATE TABLE user_data -- for several fields on front page as well as other things
-(
-    full_name       VARCHAR(64)     NOT NULL,   -- shows on top of front page
-    profile_pic     VARCHAR(128)    NOT NULL,   -- path to uploaded image
-    email           VARCHAR(64)     NOT NULL    -- email in Contact field
-);
 
 
 
@@ -134,7 +120,7 @@ CREATE TABLE IF NOT EXISTS image_resize
 (
     id_image        INTEGER NOT NULL,
     file_name       VARCHAR(256)        NOT NULL, -- example: my_photo.png
-    format          CHAR(5)             NOT NULL, -- example: png
+    format          CHAR(5)             NOT NULL, -- example: jpg
     resize_target   VARCHAR(512)        NOT NULL, -- example: ./resized/path/photo.png
     long_edge       SMALLINT UNSIGNED   NOT NULL, -- example: 1600 (longest side in pixels)
     date_insert     DATE DEFAULT CURRENT_DATE,
@@ -143,6 +129,33 @@ CREATE TABLE IF NOT EXISTS image_resize
     FOREIGN KEY (id_image)
         REFERENCES image_org (id_image)
             ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE user_data -- basic user data, image pointer for profile pic etc.
+(
+    full_name       VARCHAR(64),    -- shows on top of front page
+    profile_pic     INTEGER,        -- id_image
+    email           VARCHAR(64),     -- email (visible in Contact field)
+
+    FOREIGN KEY (profile_pic)
+        REFERENCES image_org (id_image)
+);
+
+INSERT INTO user_data
+    (full_name, profile_pic, email)
+VALUES
+    ('Your name',NULL,'hi@gmail.com')
+;
+
+CREATE TABLE IF NOT EXISTS front_page  -- short description about the page or about you
+(
+    content_number  TINYINT UNSIGNED    NOT NULL,  -- should really not exceed a 1 digit amount of rows, therefor tiny integer
+    body_title      VARCHAR(64)         NOT NULL,  -- body-title on left side of front page
+    body_text       VARCHAR(256)        NOT NULL,  -- body-text on left side of front page
+
+    PRIMARY KEY (content_number, body_title)
 );
 
 CREATE TABLE IF NOT EXISTS log_level
@@ -253,11 +266,4 @@ VALUES
         Excepteur sint occaecat cupidatat non proident, sunt in culpa
         qui officia deserunt mollit anim id est laborum.'
     )
-;
-
-
-INSERT INTO user_data
-    (full_name, profile_pic, email)
-VALUES
-    ('John Travolta','/tools/profile_pic.png','travlota@gmail.com')
 ;

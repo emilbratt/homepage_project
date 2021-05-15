@@ -8,15 +8,17 @@ class Upload {
     public static function image($category, $ref_key = 'file') {
         $root_path = $_SERVER["DOCUMENT_ROOT"];
 
-
         // AVOID URL CONFLICTS BY REPLACING WHITESPACE WITH UNDERSCORE IN FILENAME
         $file = str_replace(' ', '_', $_FILES[$ref_key]["name"]);
 
+        if(!(is_dir($root_path.Config::IMAGE_PATHS['upload']))) {
+            mkdir($root_path.Config::IMAGE_PATHS['upload'], 0770);
+        }
 
-        $upload_path = $root_path.Config::IMAGE_PATHS['upload'].'/'.$category.'/';
+        $upload_path = $root_path.Config::IMAGE_PATHS['upload'].$category.'/';
         $upload_path = str_replace(' ', '_', $upload_path);
 
-        if(!(is_dir($upload_path))) {mkdir($upload_path, 0775);}
+        if(!(is_dir($upload_path))) {mkdir($upload_path, 0770);}
 
         $target =  $upload_path . $file;
 
@@ -146,7 +148,7 @@ class Upload {
 
             $output_value = null; // FOR DEBUGGING
             $return_value = null; // FOR DEBUGGING
-
+            Log::debug("command: python3 $script '$image_name' '$target' '$category' jpg");
             exec("python3 $script '$image_name' '$target' '$category' jpg", $output_value, $return_value);
 
             foreach($output_value as $v) {
@@ -174,7 +176,11 @@ class Upload {
         }
 
 
+        return $image_name;
     }
+
+
+
 }
 
 ?>

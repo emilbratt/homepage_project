@@ -1,109 +1,89 @@
 <?php
-require_once "layout.inc.php";
-// require_once "logs/logging.inc.php";
-Starthtml::show('My homepage');
-Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+    require_once "layout.inc.php";
+    // require_once "logs/logging.inc.php";
+    Starthtml::show('My homepage');
+    Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 
 <?php
+    $cnxn = db_connect();
+    $stmt = $cnxn->prepare("
+        SELECT body_title, body_text FROM front_page
+        ORDER BY content_number ASC
+    ");
+    $stmt->execute();
+    $front_page_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $cnxn->prepare("
+        SELECT * FROM user_data
+    ");
+    $stmt->execute();
+    $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($front_page_data == null) {
+        echo '<p>No frontpage data</p>';
+    }
+    if($user_data == null) {
+        echo '<p>No user_data data</p>';
+    }
 
-$cnxn = db_connect();
-$stmt = $cnxn->prepare("
-    SELECT body_title, body_text FROM front_page
-    ORDER BY content_number ASC
-");
-$stmt->execute();
-$front_page_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$stmt = $cnxn->prepare("
-    SELECT * FROM user_data
-");
-$stmt->execute();
-$user_data = $stmt->fetch(PDO::FETCH_ASSOC);
-if($front_page_data == null) {
-    echo '<p>No frontpage data</p>';
-}
-if($user_data == null) {
-    echo '<p>No user_data data</p>';
-}
-$cnxn = null;
-
-?>
-
-<div class="greybox">
-
-    <div class="greybox_title_center">
-        <h3 style="text-align: center;"><?php echo $user_data['full_name'] ?></h3>
-    </div>
-
-    <div class="greybox_inline_block">
-        <div class="greyboxbody" id="left_side">
-        <?php
-        foreach($front_page_data as $k => $v) {
-            echo '<h3>'.$v['body_title'].'</h3>';
-            echo '<p>'.$v['body_text'].'</p><br>';
-        }
-        ?>
-        </div>
-    </div>
-
-    <div class="greybox_inline_block">
-        <div class="greyboxbody"  style="text-align: right;">
-            <img src="<?php echo $user_data['profile_pic'] ?>"
-            id="right_side" alt="" class="profile_pic">
-        </div>
-    </div>
-</div>
-
-
-
-
-<div class="greybox_left">
-    <!-- <div class="greyboxbody"> -->
-    <div class="greybox_right_body" id="right_side_">
-        <h3>Latest blogpost</h3>
-        <?php
-        $cnxn = db_connect();
+    $profile_pic_name = null;
+    if($user_data['profile_pic'] != null) {
+        $n = $user_data['profile_pic'];
         $stmt = $cnxn->prepare("
-            SELECT blog_content.id_blog, blog_content.main_title
-            FROM blog_content
-            INNER JOIN blog
-            ON blog_content.id_blog = blog.id_blog
-            WHERE blog.id_status = '2'
-            AND  blog_content.content_number = '1'
-            ORDER BY blog.id_blog DESC
-            LIMIT 1
-            ;
+            SELECT image_org.file_name
+            FROM image_org
+            WHERE id_image =:n
         ");
+        $stmt->bindParam(':n', $n);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($result == null) {
-            echo '<p>No blogposts</p>';
-        }
-        echo '
-            <div class="standalone_link">
-                <p><a  href="/blog.php?id_blog='.$result['id_blog'].'">'.
-                $result['main_title'].'</a></p>
-            </div>
-            ';
-        ?>
-    </div>
-    <!-- </div> -->
-</div>
-<div class="greybox_right">
-    <div class="greybox_left_body" id="left_side_">
-        <h3>Contact</h3>
-        <div class="standalone_link">
-        <p><a href="mailto:<?php echo $user_data['full_name'] ?>">E-mail</a></p>
-        </div>
-    </div>
-</div>
+        $profile_pic_name = $stmt->fetchColumn(0);
 
-<?php
-$user_data = null;
-$front_page_data = null;
+    }
+
+    $stmt = $cnxn->prepare("
+        SELECT blog_content.id_blog, blog_content.main_title
+        FROM blog_content
+        INNER JOIN blog
+        ON blog_content.id_blog = blog.id_blog
+        WHERE blog.id_status = '2'
+        AND  blog_content.content_number = '1'
+        ORDER BY blog.id_blog DESC
+        LIMIT 1
+        ;
+    ");
+    $stmt->execute();
+    $latest_blogpost = $stmt->fetch(PDO::FETCH_ASSOC);
+    $id_blog = null;
+    $main_title = null;
+    if($latest_blogpost != null) {
+        $id_blog = $latest_blogpost['id_blog'];
+        $main_title = $latest_blogpost['main_title'];
+    }
 ?>
 
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
-Endhtml::show();
+    Frontpage::start();
+    Frontpage::main_title($user_data['full_name'], 'center');
+    Frontpage::text_field($front_page_data);
+    Frontpage::profile_pic($profile_pic_name);
+    Frontpage::end();
+
+    Frontpage::start('left');
+    Frontpage::latest_blogpost($id_blog, $main_title);
+    Frontpage::end();
+
+    Frontpage::start('right');
+    Frontpage::contact_field($user_data['email']);
+    Frontpage::end();
+?>
+
+<?php
+    $cnxn = null;
+    $user_data = null;
+    $front_page_data = null;
+    $latest_blogpost = null;
+?>
+
+<?php
+    Footer::show(basename($_SERVER['PHP_SELF']));
+    Endhtml::show();
 ?>

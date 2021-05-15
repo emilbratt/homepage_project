@@ -3,12 +3,18 @@ session_start();
 require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/admin/upload.inc.php";
+?>
+
+ <?php
 Starthtml::show('Frontpage Settings');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 
 
 <?php
+// NOTE: remember to fix max count for row INSERT limit for front_page table
+// based on: content_number TINYINT
+
 // POST REQUEST INSERTS FOR SOCIAL NETWORK LINKS
 if(isset($_POST['links'])) {
     $cnxn = db_connect($pragma = false);
@@ -81,7 +87,20 @@ if(isset($_POST['textfield'])) {
 }
 
 if(isset($_POST['profile_pic'])) {
-    Upload::image('profile', 'file');
+    if($_POST['profile_pic'] == 'upload') {
+        Upload::image('profile', 'file');
+    }
+    if($_POST['profile_pic'] == 'choice') {
+        $id_image = $_POST['id_image'];
+        $cnxn = db_connect($pragma = false);
+        $stmt = $cnxn->prepare("
+        UPDATE user_data
+        SET profile_pic = :n
+        ");
+        $stmt->bindParam(':n', $id_image);
+        $stmt->execute();
+        $cnxn = null;
+    }
 }
 
 
@@ -89,12 +108,10 @@ if(isset($_POST['profile_pic'])) {
 
 <?php
 // DISPLAY FORMS FOR CONTENT
-Frontpage_content::text_field_left();
-Frontpage_content::profile_pic();
-Frontpage_content::social_network();
+Frontpage_content::text_field_left_form();
+Frontpage_content::profile_pic_form();
+Frontpage_content::social_network_form();
 ?>
-
-
 
 <?php
 Footer::show(basename($_SERVER['PHP_SELF']));

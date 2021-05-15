@@ -42,15 +42,21 @@ require_once "../admin/config.inc.php";
 </div>
 
 <?php
+$db_path = Config::DATABASE_PATH;
+if(!(file_exists($db_path))) {
+    $db_path = $_SERVER["DOCUMENT_ROOT"].Config::DATABASE_PATH;
+}
+
 if(isset($_POST['setup'])) {
     echo '<div class="greybox">';
     switch($_POST['setup']) {
         // PREPARE DATABASE
         case 'db_prepare';
+
             echo '    <div class="greyboxbody">';
 
             // SKIP IF DATABASE EXISTS
-            if(file_exists('../admin/database.sqlite')) {
+            if(file_exists($db_path)) {
                 echo '<h2 style="text-align: center;">DATABASE EXISTS</h2>';
                 echo '</div>';
                 break;
@@ -58,11 +64,11 @@ if(isset($_POST['setup'])) {
             // CREATE DATABASE
             $output_value = null; // FOR DEBUGGING
             $return_value = null; // FOR DEBUGGING
-            exec('touch ../admin/database.sqlite', $output_value, $return_value);
+            exec('touch '.$db_path, $output_value, $return_value);
             if($return_value != 0) {
                 die('could not create sqlite database file (maybe permission issues)');
             }
-            exec('sqlite3 ../admin/database.sqlite ".read sqlite_prepare.sql" ', $output_value, $return_value);
+            exec('sqlite3 '.$db_path.' ".read sqlite_prepare.sql" ', $output_value, $return_value);
             if($return_value != 0) {
                 die('Check script for errors');
             }
@@ -72,7 +78,7 @@ if(isset($_POST['setup'])) {
             break;
         case 'db_erase';
             echo '    <div class="greyboxbody">';
-            unlink('../admin/database.sqlite');
+            unlink($db_path);
             echo '<h2 style="text-align: center;">DATABASE DELETED</h2>';
             echo '</div>';
             break;
@@ -95,7 +101,6 @@ if(isset($_POST['setup'])) {
             echo '    <div class="greyboxbody">';
             foreach(Config::IMAGE_PATHS as $dir) {
                 if($dir == Config::IMAGE_PATHS['converted']) {
-                    // ITERATING THROUGH RESOLUTION FOLDERS
                     $root_dir = $_SERVER["DOCUMENT_ROOT"].$dir;
                     if(is_dir($root_dir)) {
                         $res_folders = glob($root_dir."*/");
