@@ -1,18 +1,28 @@
 <?php
 session_start();
-$_SESSION['begin'] = 'OK';
-require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/credential.inc.php";
+if(Credential::verify_session()) {
+    require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+}
+if(Credential::verify_session() == false) {
+    unset($_SESSION['verified_login']);
+    header("Location: login.php");
+    exit();
+}
+?>
 
-// require_once "database.inc.php";
+
+<?php
 Starthtml::show('Blog Panel');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 
 <?php
 $cnxn = db_connect(); //  will only load remaining page if successfully connected
-// GET ONLY DESCRIPTION WITH STATUS 1 == NOT POSTED
+
+// GET ONLY DESCRIPTION FROM POSTS WITH STATUS 1 -> NOT ACTIVE
 $results = BlogSQL::get_descriptions($cnxn, '1');
 $cnxn = null;
 ?>

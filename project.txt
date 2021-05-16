@@ -438,3 +438,23 @@ means hosting it for my own purpose is adding a way to put the scripts in ./admi
 login wall so that only the owner (me or whoever) can add/change the content of the site.
 I will also start working on a script that solely handles file uploads and I might refactor
 existing code into that script.
+
+
+16.05.2021
+Ok so this is a big one. Cleaning up code, implementing logging to the database in the image resize
+script and last but not least, log in wall for the website.
+The login wall is as good as finnished and I haven`t encountered any roadblocks to the developement
+as of yet. It works as expected and I can`t see any issues with it so far. I added two scripts:
+login.php and logout.php that logs you in and out respectively. I also added a script credential.inc.php
+that provides methods for verifying passwords and storing new passwords.
+I am no expert at this so we are diving into the rabit-hole of security. It seems like a massive
+topic with so many branches that make up all the under-lying topics. There are just so many ways
+a hacker can target a host making it unfeasable for a guy like me to understand everything.
+The basics of running a production server which includes disabling error reporting, running
+the application with the lowest privileges as possible, storing sensitive data outside of webroot,
+and forcing https on every request is apparantly not close to even being the iceberg of the matter.
+Thankfully there are well implemented solutions in PHP for handeling the cryptographic side of
+things when it comes to storing passwords -> password_hash() and password_verify().
+I also added several lines to the setup.php so that a random seed (or almost random) for password
+generating when the database is created. I opted for the good old md5 function since it is fast and
+the password is only suppose to be a one-time-use only and should be changed by first login.

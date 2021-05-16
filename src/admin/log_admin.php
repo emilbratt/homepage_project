@@ -1,7 +1,19 @@
 <?php
-require_once "../layout.inc.php";
-require_once "queries.inc.php";
-require_once "database.inc.php";
+session_start();
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/credential.inc.php";
+if(Credential::verify_session()) {
+    require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+}
+if(Credential::verify_session() == false) {
+    unset($_SESSION['verified_login']);
+    header("Location: login.php");
+    exit();
+}
+?>
+
+<?php
 Starthtml::show('Display Logs');
 Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>

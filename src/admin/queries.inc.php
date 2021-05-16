@@ -234,9 +234,7 @@ class BlogSQL {
         $stmt->bindParam(':v', $id_blog);
         $stmt->execute();
         $result = $stmt->fetchColumn(0);
-        // $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
-        // return $result['next_content_number'];
     }
 
     public static function get_blog_post_dates($cnxn, $id_blog) {
@@ -310,9 +308,6 @@ class BlogSQL {
         $stmt->bindParam(':b', $c_n_b);
         $stmt->execute();
 
-
-
-
     }
 
 }
@@ -327,10 +322,9 @@ class ImageSQL {
     }
 
     public static function get_image_resize_target($cnxn, $img_name, $category) {
+
         // PDO WILL NOT ALLOW % PLACEHOLDERS INSIDE prepare STATEMENTS
-        // SHOULD BE OK SINCE THIS IS ONLY CALLED BY USER WITH ADMIN PRIVILEGES
-
-
+        // SHOULD BE OK SINCE THIS IS ONLY CALLED FROM THE ADMIN PAGES
         $stmt = $cnxn->prepare("
         SELECT
             image_resize.resize_target,

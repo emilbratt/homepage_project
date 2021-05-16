@@ -2,15 +2,18 @@
 
     class Config {
 
-        public const INSTALL = true; // IS TRUE IF NOT INSTALLED, CHANGES TO FALSE AFTER
+        // IS TRUE IF INSTALLED, CHANGES TO FALSE IN PRODUCTION
+        public const INSTALL = false;
 
+        // setup.php WILL ONLY LOAD IF TRUE, SET TO false IF IN PRODUCTION
+        public const SETUP_ENABLE = true;
+
+        // REFERENCS PATH/FILE FOR DATABASE CONNECTION
         public const DATABASE_PATH = "/admin/database.sqlite";
 
-        // public const ENCODING = [
-        //     // 'ISO-8859-1' = mb_convert_encoding($main['Kategori'], "UTF-8", "ISO-8859-1")
-        //     'UTF-8' => false,
-        //     'ISO-8859-1' => true
-        // ];
+        // CHOSE AN ALGORITHM FOR STORING PASSWORD
+        public const PWD_HASH_METHOD = PASSWORD_ARGON2ID;
+            // MORE OPTIONS: https://www.php.net/manual/en/function.password-hash.php
 
         // ALLOW HOST CONNETIONS TO FETCH CONFIG VALUES
         public const CONFIG_FETCH_ALLOWED_HOSTS = [
@@ -32,11 +35,12 @@
             'base' => '800',
                 // ..phones and other small handhield devices
 
+            'min-width:800px' => '1200',
+                // ..netbooks and other medium sized mobile devices
+
             'min-width:1200px' => '1600',
                 // ..desktops, laptops etc
 
-            'min-width:800px' => '1200',
-                // ..netbooks and other medium sized mobile devices
         ];
 
         // ALLOWED FILETYPES FOR FILE UPLOAD

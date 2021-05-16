@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
+
 __author__ = 'Emil Bratt Boersting'
+
 import os, sys, shutil, sqlite3, requests, json, subprocess
 from datetime import datetime
-from time import sleep
-try: # CHECK IF PILLOW IS INSTALLED
+try: # CHECKS IF THE PILLOW MODULE IS INSTALLED AND IMPORTS IT
     from PIL import Image
 except ModuleNotFoundError:
-    with open('../logs/image_resize.log', 'a') as log:
-        log.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") +' no module found for Pillow\n')
+    print('No module found for Pillow')
     exit()
 
 
 ############## SETTINGS #######################################################
-global max_limit, category, target_path, format, config_URL
+global max_limit, category, target_path, format, config_URL, log_insert_query
 max_limit = 500000000 # ADJUST IF YOU GET DECOMPRESSION BOMB WARNING
-# host = 'localhost'
-# port = '81'
 db_name = 'database.sqlite' # SET DATABASE NAME AND DIRECTORY
 target_path = '../images/converted' # SET OUTPUT DIRECTORY
 category = 'blog' # THIS SCRIPT IS FOR BLOG IMAGES
@@ -25,6 +23,13 @@ format = "png" # SET OUTPUT FORMAT
 if(len(sys.argv) >= 5): # OPTIONALLY PASS FORMAT TYPE AS 4TH ARGUMENT
     format = sys.argv[4]
 config_URL = 'http://localhost:81/admin/config.inc.php?config=IMAGE_RES'
+log_insert_query = '''
+    INSERT INTO logging
+        (message, id_log_level, subject)
+    VALUES
+    	(?,?,'Resize Script')
+    ;
+'''
 ###############################################################################
 
 
@@ -50,8 +55,6 @@ def fetch_website_res():
     return resolutions
 
 
-
-
 def get_aspect(width, height):
     resolution = width * height
     if width > (height*1.8):
@@ -67,8 +70,9 @@ def get_aspect(width, height):
     return aspect
 
 
-
 def process(process_list):
+    cnxn = sqlite3.connect(db_name)
+    cur = cnxn.cursor()
 
     image_data = []
     for list in process_list:
@@ -133,11 +137,12 @@ def process(process_list):
         image_data_row.append(new_res)
         image_data.append(image_data_row)
 
-        with open('../logs/image_resize.log', 'a') as log:
-            log.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + output_image_path + '\n')
+        # INSERT LOG
+        cur.execute(log_insert_query, ['Resized: ' + output_image_path, '1'])
 
-    cnxn = sqlite3.connect(db_name)
-    cur = cnxn.cursor()
+    # COMMIT INSERTS WHEN FOR LOOP IS DONE
+    cnxn.commit()
+
 
     # SET COMMIT TO FALSE SO THAT IF NO NEW IMAGES, NO COMMITS WILL BE MADE
     commit = False
@@ -185,8 +190,10 @@ def process(process_list):
             ;
 
             """,[id,row[2],row[3],row[1],row[4]])
-            with open('../logs/image_resize.log', 'a') as log:
-                log.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' Database insert ' + row[1] + '\n')
+
+            # INSERT LOG
+            cur.execute(log_insert_query, ['Database insert: ' + row[1], '1'])
+
 
     if commit == True:
         cnxn.commit()
@@ -226,12 +233,17 @@ def insert_org(file_name,original_image_path):
 
 # THIS FUNCTION RUNS AT THE START OF THE SCRIPT
 def script_execute():
+
+
     Image.MAX_IMAGE_PIXELS = max_limit
     resolutions = fetch_website_res()
 
     if len(sys.argv) < 3:
-        with open('../logs/image_resize.log', 'a') as log:
-            log.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' source path or/and target path argument was not passed\n')
+        cnxn = sqlite3.connect(db_name)
+        cur = cnxn.cursor()
+        cur.execute(log_insert_query, ['source path or/and target path argument was not passed', '4'])
+        cnxn.commit()
+        cnxn.close()
         sys.exit(100)
         exit()
 
@@ -260,8 +272,11 @@ def script_execute():
 
     process(process_list)
 
-    with open('../logs/image_resize.log', 'a') as log:
-        log.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' Script ended succesfully\n')
+    cnxn = sqlite3.connect(db_name)
+    cur = cnxn.cursor()
+    cur.execute(log_insert_query, ['Script ended succesfully', '1'])
+    cnxn.commit()
+    cnxn.close()
 
 
 # END menu()

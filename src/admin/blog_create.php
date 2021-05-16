@@ -1,12 +1,23 @@
 <?php
 session_start();
-require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/upload.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/logging.inc.php";
-require_once $_SERVER["DOCUMENT_ROOT"]."/admin/config.inc.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/admin/credential.inc.php";
+if(Credential::verify_session()) {
+    require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/queries.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/upload.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/logging.inc.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/admin/config.inc.php";
+}
+if(Credential::verify_session() == false) {
+    unset($_SESSION['verified_login']);
+    header("Location: login.php");
+    exit();
+}
+?>
 
+
+<?php
 Starthtml::show('Blog Edit');
 echo <<< EOT
 <header>
@@ -60,9 +71,11 @@ if(isset($_POST['content']) and isset($_POST['content_id'])) {
     }
 
     function insert_blog_content_image() {
+
         $image_name = Upload::image('blog');
 
         $category = 'blog';
+
         $caption = null;
         if(isset($_POST['caption'])) {
             $caption = $_POST['caption'];

@@ -1,4 +1,5 @@
 <?php
+die;
 require_once "queries.inc.php";
 require_once "database.inc.php";
 

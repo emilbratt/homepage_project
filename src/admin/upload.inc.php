@@ -28,12 +28,10 @@ class Upload {
         basename($_FILES[$ref_key]["name"]) . ' ' . basename($_FILES[$ref_key]["name"]) . "<br>"
         );
 
-
         $abort = false; // UPLOAD WILL ABORT IF SET TO TRUE
         $ret_msgs = array(); // RETURN MESSAGES IF UPLOAD FAILS
 
         Log::upload('Starting upload of image file '.$target);
-
 
         // GO THORUGH STEPS TO VALIDATE NEW IMAGE
 
@@ -105,7 +103,6 @@ class Upload {
             Log::upload($file . ': Upload aborted due to avoiding a file upload exploit', 2);
         }
 
-
         if($abort == false) {
             echo '<div class="greybox">';
             echo '<div class="greyboxbody">';
@@ -148,7 +145,7 @@ class Upload {
 
             $output_value = null; // FOR DEBUGGING
             $return_value = null; // FOR DEBUGGING
-            Log::debug("command: python3 $script '$image_name' '$target' '$category' jpg");
+            Log::debug("command: python3 $script '$image_name' '$target' '$category' jpg", '1');
             exec("python3 $script '$image_name' '$target' '$category' jpg", $output_value, $return_value);
 
             foreach($output_value as $v) {
@@ -162,9 +159,8 @@ class Upload {
 
             if($return_value != 0) {
                 Log::image_resize(
-                    'Could not resize ' .htmlspecialchars($file).
-                    'to '.$upload_path,
-                    5
+                    'Resize script error. Could not resize ' . htmlspecialchars($file) .
+                    'to ' . $upload_path, 5
                 );
                 die('<h2 style="text-align: center;">Could not resize image, check log</h2>');
             }
@@ -174,7 +170,6 @@ class Upload {
                 1
             );
         }
-
 
         return $image_name;
     }

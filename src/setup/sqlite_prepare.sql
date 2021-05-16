@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS front_page  -- short description about the page or about you
+(
+    content_number  TINYINT UNSIGNED    NOT NULL,  -- should really not exceed a 1 digit amount of rows, therefor tiny integer
+    body_title      VARCHAR(64)         NOT NULL,  -- body-title on left side of front page
+    body_text       VARCHAR(256)        NOT NULL,  -- body-text on left side of front page
+
+    PRIMARY KEY (content_number, body_title)
+);
+
 CREATE TABLE blog_status
 (
     id_status       INTEGER PRIMARY KEY AUTOINCREMENT , -- the blog id contains one greybox == one post on website
@@ -92,10 +101,6 @@ CREATE TABLE blog_content
 );
 
 
-
-
-
-
 CREATE TABLE IF NOT EXISTS social_networks -- for menu icons on the bottom navigation bar
 (
     name    VARCHAR(40) PRIMARY KEY NOT NULL,   -- example github
@@ -116,6 +121,7 @@ CREATE TABLE IF NOT EXISTS image_org
     time_insert     TIME DEFAULT CURRENT_TIME
 );
 
+
 CREATE TABLE IF NOT EXISTS image_resize
 (
     id_image        INTEGER NOT NULL,
@@ -132,31 +138,26 @@ CREATE TABLE IF NOT EXISTS image_resize
 );
 
 
-
 CREATE TABLE user_data -- basic user data, image pointer for profile pic etc.
 (
     full_name       VARCHAR(64),    -- shows on top of front page
     profile_pic     INTEGER,        -- id_image
-    email           VARCHAR(64),     -- email (visible in Contact field)
+    email           VARCHAR(64),    -- email (visible in Contact field)
+    user_name       VARCHAR(32),    -- username
+    password        VARCHAR(255),   -- stores the hashed password
 
     FOREIGN KEY (profile_pic)
         REFERENCES image_org (id_image)
 );
 
+-- for now we only use 1 row (might support multiple users in future)
+-- every value that is added/changed will remain inside this one row
 INSERT INTO user_data
-    (full_name, profile_pic, email)
+    (full_name, profile_pic, email, user_name, password)
 VALUES
-    ('Your name',NULL,'hi@gmail.com')
+    (NULL, NULL, NULL, NULL, NULL)
 ;
 
-CREATE TABLE IF NOT EXISTS front_page  -- short description about the page or about you
-(
-    content_number  TINYINT UNSIGNED    NOT NULL,  -- should really not exceed a 1 digit amount of rows, therefor tiny integer
-    body_title      VARCHAR(64)         NOT NULL,  -- body-title on left side of front page
-    body_text       VARCHAR(256)        NOT NULL,  -- body-text on left side of front page
-
-    PRIMARY KEY (content_number, body_title)
-);
 
 CREATE TABLE IF NOT EXISTS log_level
 (
@@ -174,6 +175,7 @@ VALUES
     ('Error'),
     ('Fatal')
 ;
+
 
 CREATE TABLE IF NOT EXISTS logging
 (
@@ -198,72 +200,69 @@ CREATE TABLE IF NOT EXISTS logging
 
 );
 
-
-
-
--- INSERT DUMMY DATA (REMOVE WHEN PRODUCTION READY)
-INSERT INTO blog
-    (description, tags)
-VALUES
-(
-    'Blogpost 1',
-    'programming,web developement, computers, python'
-),
-(
-    'Blogpost 2',
-    'programming,web developement, computers, php'
-),
-(
-    'Blogpost 3',
-    'programming,web developement, computers, php'
-);
-
--- INSERT DUMMY DATA (REMOVE WHEN PRODUCTION READY)
-INSERT INTO blog_content
-    (id_blog,id_type, content_number, main_title)
-VALUES
-    ('1','2','1','Python Stuff'),
-    ('1','3','2','__date__'),
-    ('2','2','1','Programmin Stuf'),
-    ('2','3','2','__date__'),
-    ('3','2','1','Learning PHP'),
-    ('3','3','2','__date__')
-
-;
-
--- INSERT DUMMY DATA (REMOVE WHEN PRODUCTION READY)
-INSERT INTO blog_content
-    (id_blog,id_type, content_number, body_title)
-VALUES
-    ('1','4','3','Some random body title, jihaa'),
-    ('2','4','3','Some random body title, jihaa')
-;
-INSERT INTO blog_content
-    (id_blog,id_type, content_number, body_text)
-VALUES
-    ('1','5','4','Some random body text 1'),
-    ('1','5','5','Some random body text 2')
-;
-
-UPDATE blog
-SET id_status = '2'
-WHERE id_blog < '3';
-
-
-
-INSERT INTO front_page
-    (content_number, body_title, body_text)
-VALUES
-    ('1','Title. About me',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    ),
-    ('2','Title. About this site',
-        'Duis aute irure dolor in reprehenderit in voluptate velit
-        esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum.'
-    )
-;
+-- -- INSERT DUMMY DATA (REMOVE WHEN PRODUCTION READY)
+-- INSERT INTO blog
+--     (description, tags)
+-- VALUES
+-- (
+--     'Blogpost 1',
+--     'programming,web developement, computers, python'
+-- ),
+-- (
+--     'Blogpost 2',
+--     'programming,web developement, computers, php'
+-- ),
+-- (
+--     'Blogpost 3',
+--     'programming,web developement, computers, php'
+-- );
+--
+-- -- INSERT DUMMY DATA (REMOVE WHEN PRODUCTION READY)
+-- INSERT INTO blog_content
+--     (id_blog,id_type, content_number, main_title)
+-- VALUES
+--     ('1','2','1','Python Stuff'),
+--     ('1','3','2','__date__'),
+--     ('2','2','1','Programmin Stuf'),
+--     ('2','3','2','__date__'),
+--     ('3','2','1','Learning PHP'),
+--     ('3','3','2','__date__')
+--
+-- ;
+--
+-- -- INSERT DUMMY DATA (REMOVE WHEN PRODUCTION READY)
+-- INSERT INTO blog_content
+--     (id_blog,id_type, content_number, body_title)
+-- VALUES
+--     ('1','4','3','Some random body title, jihaa'),
+--     ('2','4','3','Some random body title, jihaa')
+-- ;
+-- INSERT INTO blog_content
+--     (id_blog,id_type, content_number, body_text)
+-- VALUES
+--     ('1','5','4','Some random body text 1'),
+--     ('1','5','5','Some random body text 2')
+-- ;
+--
+-- UPDATE blog
+-- SET id_status = '2'
+-- WHERE id_blog < '3';
+--
+--
+--
+-- INSERT INTO front_page
+--     (content_number, body_title, body_text)
+-- VALUES
+--     ('1','Title. About me',
+--         'Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+--         sed do eiusmod tempor incididunt ut labore et
+--         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+--         exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+--     ),
+--     ('2','Title. About this site',
+--         'Duis aute irure dolor in reprehenderit in voluptate velit
+--         esse cillum dolore eu fugiat nulla pariatur.
+--         Excepteur sint occaecat cupidatat non proident, sunt in culpa
+--         qui officia deserunt mollit anim id est laborum.'
+--     )
+-- ;

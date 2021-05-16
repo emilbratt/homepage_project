@@ -18,18 +18,19 @@
 
         public static $admin_pagess = array(
             'Admin' => 'admin.php',
-            'Upload' => 'upload_admin.php',
+            // 'Upload' => 'upload_admin.php',
             'Frontpage' => 'frontpage_admin.php',
             'Blog' => 'blog_admin.php',
             'Create' => 'blog_create.php',
             // 'Preview' => 'blog_preview.php',
             // 'Scan Photos' => 'image_scan.php',
-            'Logs' => 'log_admin.php',
+            'Activity' => 'log_admin.php',
             'Preview' => 'blog_preview.php',
+            'Log in' => 'login.php',
         );
 
         public static $excluded_menu_admin_pagess = array(
-            'Create', 'Preview'
+            'Create', 'Preview', 'Log in'
         );
     }
 
@@ -186,9 +187,11 @@
 
         public static function start($align = null) {
             if($align) {
+                // LEFT OR RIGHT GREYBOX
                 echo '<div class="greybox_'.$align.'">';
                 return null;
             }
+            // STANDARD GERYBOX
             echo '<div class="greybox">';
         }
 
@@ -221,6 +224,109 @@
 
     }
 
+
+    class Account extends Display {
+
+
+        public static function login_form() {
+            ?>
+            <div class="greyboxbody">
+                <h3>Log in</h3>
+                <form id="in_line_position_greyboxbody"
+                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                method="post" >
+                    <input type="hidden" name="login" value="true">
+                    <input type="text" onfocus="this.select()"
+                    autofocus="autofocus"
+                    name="usr" placeholder="Username" class="input_theme_1"
+                    class="increae_input_width" required>
+                    <br><br>
+                    <input type="password"
+                    name="pwd" placeholder="Password" class="input_theme_1"
+                    class="increae_input_width" required>
+                    <br><br>
+                    <input type="submit" class="submit_theme_1" value="Log in">
+                </form>
+            </div>
+            <?php
+        }
+
+        public static function change_usr_form() {
+            ?>
+            <div class="greyboxbody">
+                <h3 style="margin-bottom: 30px;">Change User</h3>
+                <form id="in_line_position_greyboxbody"
+                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                method="post" >
+                    <input type="hidden" name="change_usr" value="true">
+                    <input type="text"  style="margin-bottom: 20px;"
+                    name="usr_change" placeholder="New Username" class="input_theme_1"
+                    class="increae_input_width" required>
+
+                    <input type="password"
+                    name="pwd" placeholder="Current Password" class="input_theme_1"
+                    class="increae_input_width" required>
+                    <br><br>
+                    <input type="submit" class="submit_theme_1" value="Change">
+                </form>
+
+            </div>
+            <?php
+        }
+
+        public static function change_pwd_form($message = false) {
+
+            // CHECK LOG TO SEE IF NEW PASSWORD HAS BEEN SET AT LEAST ONC SINCE SETUP
+            $cnxn = db_connect($pragma = false);
+            $stmt = $cnxn->prepare("
+            SELECT id_log FROM logging
+            WHERE id_log_level = '1' AND message = 'Password was changed'
+            LIMIT 1
+            ");
+            $stmt->execute();
+            $val = $stmt->fetchColumn(0);
+
+            // SET WARNING MESSAGE IF PASSWORD NEVER WAS CHANGED (IF NO OTHER MESSAGE WAS PASSED)
+            if(!($message)) {
+                if(!($val)) {
+                    $message = '<strong>IMPORTANT:</strong><br>Please change your password<br>' .
+                    'as soon as possible';
+                }
+            }
+            ?>
+
+            <div class="greyboxbody">
+                <h3 style="margin-bottom: 30px;">Change Password</h3>
+                <form id="in_line_position_greyboxbody"
+                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                method="post" >
+                
+                <?php if($message != false) {
+                    echo '<label for="change_pwd"><p>'.$message.'</p></label>';
+                }?>
+                    <input type="hidden" name="change_pwd" value="true">
+
+                    <input type="password" style="margin-bottom: 20px;"
+                    name="pwd_old" placeholder="Current Password" class="input_theme_1"
+                    class="increae_input_width" required>
+
+                    <input type="password" style="margin-bottom: 20px;"
+                    name="pwd_change_1" placeholder="New Password" class="input_theme_1"
+                    class="increae_input_width" required>
+
+                    <input type="password"
+                    name="pwd_change_2" placeholder="Verify Password" class="input_theme_1"
+                    class="increae_input_width" required>
+                    <br><br>
+                    <input type="submit" class="submit_theme_1" value="Change">
+                </form>
+
+            </div>
+            <?php
+        }
+
+    }
+
     class Frontpage extends Display {
 
         public static function text_field($front_page_data) {
@@ -239,6 +345,17 @@
         }
 
         public static function profile_pic($profile_pic_name = null) {
+            if($profile_pic_name == null) {
+                echo '
+                <div class="greybox_inline_block">
+                <div class="greyboxbody"  style="text-align: right;">
+                    <h3 style="text-align: left;">No profile picture</h3>
+                    <p style="text-align: left;">Go to admin panel and add a profile picture</p>
+                </div>
+                </div>
+                ';
+                return null;
+            }
             if($profile_pic_name != null) {
                 $profile_pic_name = $profile_pic_name.'.jpg';
                 $resize_path = Config::IMAGE_PATHS['converted'];
@@ -246,10 +363,6 @@
                 <div class="greybox_inline_block">
                 <div class="greyboxbody"  style="text-align: right;">
                     <picture>
-                        <source media="('.Display::$media_query_large.')" '.
-                        'loading="lazy"
-                        srcset="'.$resize_path.'1600/profile/'.$profile_pic_name.'">
-
                         <source media="('.Display::$media_query_medium.')" '.
                         'loading="lazy"
                         srcset="'.$resize_path.'1200/profile/'.$profile_pic_name.'">
@@ -304,7 +417,7 @@
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $cnxn = null;
-            Frontpage_content::start();
+
             ?>
 
             <div class="greyboxbody">
@@ -382,14 +495,13 @@
 
             </div>
             <?php
-            Frontpage_content::end();
+
         }
 
 
 
         public static function profile_pic_form() {
 
-            Frontpage_content::start();
             $cnxn = db_connect($pragma = false);
             $stmt = $cnxn->prepare("
                 SELECT id_image, file_name
@@ -432,7 +544,6 @@
             </div>
             <?php
 
-            Frontpage_content::end();
         }
 
 
@@ -441,7 +552,7 @@
             $icons_dir = $_SERVER["DOCUMENT_ROOT"].Config::IMAGE_PATHS['logos'];
             $icon_images = glob($icons_dir."*");
             $icons = scandir($icons_dir);
-            Frontpage_content::start();
+
             ?>
             <div class="greyboxbody">
 
@@ -485,7 +596,7 @@
                                 // INSERT SOCIAL NETWORK NAME INTO DATABASE
                                     // IF NAME DOESN`T EXIST
                                 Log::user_settings(
-                                    $icon . ': Was inserted into database', 1
+                                    'New icon "' . $icon . '" found in /logos/', 1
                                 );
                                 $stmt = $cnxn->prepare("
                                 INSERT INTO social_networks (name)
@@ -534,7 +645,7 @@
 
             </div>
             <?php
-            Frontpage_content::end();
+
         }
 
     }

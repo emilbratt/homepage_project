@@ -32,9 +32,9 @@ if(
 ) {
     // VALIDATE IF VALUES ARE PASSED FROM blog_admin.php
     $cnxn = db_connect();
-    $stmt = $cnxn->prepare(
-        "SELECT description, tags FROM blog WHERE id_blog = :v"
-    );
+    $stmt = $cnxn->prepare("
+        SELECT description, tags FROM blog WHERE id_blog = :v
+    ");
     $stmt->bindParam(':v', $_POST['id_blog']);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);

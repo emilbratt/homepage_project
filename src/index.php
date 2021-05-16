@@ -1,6 +1,8 @@
 <?php
     require_once "layout.inc.php";
-    // require_once "logs/logging.inc.php";
+?>
+
+<?php
     Starthtml::show('My homepage');
     Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
@@ -13,14 +15,20 @@
     ");
     $stmt->execute();
     $front_page_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if($front_page_data == null) {
+        $front_page_data = array(
+            [
+            'body_title' => 'No frontpage text',
+            'body_text' => 'Go to admin panel and add text'
+            ],
+        );
+    }
+
     $stmt = $cnxn->prepare("
         SELECT * FROM user_data
     ");
     $stmt->execute();
     $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($front_page_data == null) {
-        echo '<p>No frontpage data</p>';
-    }
     if($user_data == null) {
         echo '<p>No user_data data</p>';
     }
