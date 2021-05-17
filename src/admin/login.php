@@ -26,9 +26,6 @@ isset($_POST['pwd'])) {
 require_once $_SERVER["DOCUMENT_ROOT"]."/layout.inc.php";
 Starthtml::show('Adminpage');
 ?>
-<?php
-echo PHP_VERSION;
-?>
 
 <?php
 Display::start();
