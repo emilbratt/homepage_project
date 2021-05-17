@@ -239,7 +239,7 @@
                     <input type="text" onfocus="this.select()"
                     autofocus="autofocus"
                     name="usr" placeholder="Username" class="input_theme_1"
-                    class="increae_input_width" required>
+                    class="increae_input_width" autocomplete="off" required>
                     <br><br>
                     <input type="password"
                     name="pwd" placeholder="Password" class="input_theme_1"
@@ -261,7 +261,7 @@
                     <input type="hidden" name="change_usr" value="true">
                     <input type="text"  style="margin-bottom: 20px;"
                     name="usr_change" placeholder="New Username" class="input_theme_1"
-                    class="increae_input_width" required>
+                    class="increae_input_width" autocomplete="off" required>
 
                     <input type="password"
                     name="pwd" placeholder="Current Password" class="input_theme_1"
@@ -315,7 +315,7 @@
                     class="increae_input_width" required>
 
                     <input type="password"
-                    name="pwd_change_2" placeholder="Verify Password" class="input_theme_1"
+                    name="pwd_change_2" placeholder="Repeat Password" class="input_theme_1"
                     class="increae_input_width" required>
                     <br>
                     <input type="submit" class="submit_theme_1" value="Change">
@@ -429,12 +429,13 @@
                     <input type="text" onfocus="this.select()"
                     autofocus="autofocus"
                     name="title" placeholder=""
-                    class="increae_input_width">
+                    class="input_theme_1">
                     <h3>Paragraph</h3>
-                    <textarea name="paragraph"
+                    <textarea class="input_theme_1" name="paragraph"
                     style="height: 270px;" required></textarea>
                     <br><br>
-                    <input type="submit" style="width: 270px;" value="Add">
+                    <input class="standalone_button_1"
+                    type="submit"  value="Add">
                 </form>
 
                 <br>
@@ -444,7 +445,8 @@
                 method="post">
                     <input type="hidden" name="textfield" value="delete">
                     <label for="delete"><h3>Delete Text</h3></label>
-                    <select name="content_number" style="width: 400px;" >
+                    <select class="input_theme_1" name="content_number"
+                    style="display: inline-block; width: 400px;" >
                     <?php
                     $num = 1;
                     foreach($result as $row) {
@@ -455,7 +457,7 @@
                     }
                     ?>
                     </select><br><br>
-                    <input type="submit"   value="Delete Content"/>
+                    <input class="standalone_button_1" type="submit" value="Delete Content"/>
                 </form>
 
 
@@ -465,7 +467,7 @@
                 method="post">
                     <input type="hidden" name="textfield" value="swap">
                     <label for="swap_1"><h3>Swap Position</h3></label>
-                    <select name="swap_1" style="width: 200px;" >
+                    <select class="input_theme_1" name="swap_1" style="display: inline-block; width: 200px;" >
                     <?php
                     $num = 1;
                     foreach($result as $row) {
@@ -477,7 +479,7 @@
                     }
                     ?>
                     </select>
-                    <select name="swap_2" style="width: 200px;" >
+                    <select class="input_theme_1" name="swap_2" style="display: inline-block; width: 200px;" >
                     <?php
                     $num = 1;
                     foreach($result as $row) {
@@ -489,7 +491,7 @@
 
                     ?>
                     </select><br><br>
-                    <input type="submit"   value="Swap Content"/>
+                    <input class="standalone_button_1" type="submit"   value="Swap Content"/>
                 </form>
 
 
@@ -516,11 +518,18 @@
                 <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
                 method="post" id="in_line_position_greyboxbody"
                 enctype="multipart/form-data">
-                <label for="file"><h3>Upload</h3></label>
+                <label><h3>Upload</h3></label>
                 <input type="hidden" name="profile_pic" value="upload">
-                <input type="file" name="file" >
+
+                <input class="" type="file" name="file" >
+
+                <!-- <div class="stack">
+                    <label id="stack_top" class="standalone_button_1" for="file">Chose File</label>
+                    <input class="input_theme_1" id="stack_bottom" type="file" name="file" >
+                </div> -->
+
                 <br><br>
-                <input type="submit" value="Upload">
+                <input class="standalone_button_1" type="submit" value="Upload">
                 </form>
 
 
@@ -528,7 +537,7 @@
                 method="post" id="in_line_position_greyboxbody">
                 <input type="hidden" name="profile_pic" value="choice">
                 <label for="file"><h3>Chose Existing</h3></label>
-                <select name="id_image" style="width: 400px;" >
+                <select class="input_theme_1" name="id_image" style="width: 400px;" >
                 <?php
                 $num = 1;
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -539,7 +548,7 @@
                 }
                 ?>
                 </select><br><br>
-                <input type="submit" value="Select">
+                <input class="standalone_button_1"type="submit" value="Select">
                 </form>
             </div>
             <?php
@@ -622,7 +631,7 @@
                             <label for="<?php echo $icon; ?>">
                                 <h3><?php echo $icon; ?></h3>
                             </label>
-                            <input type="text"
+                            <input type="text" class="input_theme_1"
                             name="<?php echo $icon; ?>"
                             placeholder="<?php echo $placeholder; ?>"
                             style="width: 80%;">
@@ -637,10 +646,10 @@
             ?>
             <br>
             <input type="submit" style="width: 270px;"
-            name="links" value="Update">
+            class="standalone_button_1" name="links" value="Update">
 
             <input id="small_screen_button" type="submit" style="width: 270px;"
-            name="links" value="Reset All">
+            class="standalone_button_1" name="links" value="Reset All">
             </form>
 
             </div>
@@ -759,7 +768,7 @@
             if((int)$id_type < 5) {
                 // FOR TITLE
                 echo <<<EOT
-                <input type="text" placeholder="$alias"
+                <input type="text" placeholder="$alias" class="input_theme_1
                 style="width: 400px;" name="content"
                 onfocus="this.select()" autofocus="autofocus" required>
                 EOT;
@@ -767,13 +776,13 @@
             else if((int)$id_type == 5) {
                 // FOR ARTICLE
                 echo <<<EOT
-                <textarea name="content"
+                <textarea name="content" class="input_theme_1
                 onfocus="this.select()" autofocus="autofocus" required>
                 </textarea>
                 EOT;
             }
             else if((int)$id_type >= 6 and (int)$id_type <= 8) {
-                // FOR IMAGE (max 50MB -> 52428800 Bytes)
+                // FOR IMAGE
                 $path = '../images/original/blog/';
                 $max_image_size = Config::IMAGE_MAX_FILESIZE['upload'];
                 echo <<<EOT
@@ -792,7 +801,7 @@
                 <input type="hidden" name="MAX_FILE_SIZE" value="$max_image_size">
                 <input type="file" name="file" >
                 <input type="hidden" name="upload_path" value="$path">
-                <textarea name="caption" style="margin-top: 10px;"
+                <textarea name="caption" style="margin-top: 10px;" class="input_theme_1
                 onfocus="this.select()" autofocus="autofocus" required>
                 </textarea>
                 EOT;
@@ -831,12 +840,12 @@
                                 // CHECK IF DEFAULT VALUE
                                     // ..TO TRIGGER DATE POSTED IN RIGHT TITLE
                                     // ..IN BLOG POST
-                                $date_res = BlogSQL::get_blog_post_dates(
+                                $blog_date = BlogSQL::get_blog_post_dates(
                                     $cnxn, $id_blog
                                 );
                                 $date = null;
                                 $str = null;
-                                foreach($date_res as $k => $v) {
+                                foreach($blog_date as $k => $v) {
                                     if($v != null) {
                                         $date = $v;
                                         $str = $k;

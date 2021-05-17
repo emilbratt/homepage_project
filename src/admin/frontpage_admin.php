@@ -78,19 +78,24 @@ if(isset($_POST['textfield'])) {
         Log::front_page('Added text field with content number: ' . $n);
     }
     if($_POST['textfield'] == 'swap') {
+        if(isset($_POST['swap_1']) and isset($_POST['swap_2'])) {
+            $cnxn = db_connect($pragma = false);
+            FrontpageSQL::swap_text($cnxn, $_POST['swap_1'], $_POST['swap_2']);
+            $cnxn = null;
+            Log::front_page('Swapped text field content number: ' .
+            $_POST['swap_1'].' with ' .$_POST['swap_1']);    
+        }
 
-        $cnxn = db_connect($pragma = false);
-        FrontpageSQL::swap_text($cnxn, $_POST['swap_1'], $_POST['swap_2']);
-        $cnxn = null;
-        Log::front_page('Swapped text field content number: ' .
-        $_POST['swap_1'].' with ' .$_POST['swap_1']);
     }
     if($_POST['textfield'] == 'delete') {
-        $cnxn = db_connect($pragma = false);
-        FrontpageSQL::delete_text($cnxn, $_POST['content_number']);
-        $cnxn = null;
-        Log::front_page('Deleted text field with content number: ' .
-        $_POST['content_number'].' ');
+        if(isset($_POST['content_number'])) {
+            $cnxn = db_connect($pragma = false);
+            FrontpageSQL::delete_text($cnxn, $_POST['content_number']);
+            $cnxn = null;
+            Log::front_page('Deleted text field with content number: ' .
+            $_POST['content_number'].' ');
+        }
+
     }
 }
 

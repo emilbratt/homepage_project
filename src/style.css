@@ -34,8 +34,15 @@ COLOR PALETTE:
     Layer 4:    #383838
     Text:       #B9C2CF
     Hover:      #3F4258
+    Focus:      #3A4768
 
 */
+
+
+
+
+
+
 
 html {
     /* min-height: 100%; */
@@ -79,11 +86,18 @@ body {
     text-decoration: none;
 
 }
+
 .navbar a:hover,
 .navbar_logo a:hover {
     background-color: #3F4258;
-    color: #9195B1;
 }
+
+.navbar a:focus,
+.navbar_logo a:focus {
+    background-color: #3A4768;
+
+}
+
 #pageselector {
     text-decoration: underline;
     color: #B9C2CF;
@@ -257,9 +271,14 @@ a[href^="mailto:"] {
     padding-left: 10px; */
 
 }
+
 a:hover[href^="mailto:"] {
     background-color: #3F4258;
-    color: #9195B1;
+
+}
+
+a:focus[href^="mailto:"] {
+    background-color: #3A4768;
 }
 
 .standalone_link a {
@@ -271,9 +290,15 @@ a:hover[href^="mailto:"] {
     color: #9195B1;
 
 }
+
 .standalone_link a:hover {
     background-color: #3F4258;
-    color: #9195B1;
+
+}
+
+.standalone_link a:focus {
+    background-color: #3A4768;
+
 }
 
 .greybox_inline_block {
@@ -302,8 +327,13 @@ a:hover[href^="mailto:"] {
   cursor: pointer;
 }
 
+.standalone_button_1:focus {
+  background-color: #3A4768;
+}
+
 .input_theme_1,
-.input_theme_2 {
+.input_theme_2,
+.select_1 {
     background-color: #383838;
     color: #B9C2CF;
     border: 1px solid #8C8C8C;
@@ -312,13 +342,16 @@ a:hover[href^="mailto:"] {
 }
 
 
-
-
-.input_theme_1:hover ,
+.input_theme_1:hover,
 .input_theme_2:hover {
     background-color: #3F4258;
-
 }
+
+.input_theme_1:focus,
+.input_theme_2:focus {
+    background-color: #3A4768;
+}
+
 .submit_theme_1 {
     background-color: #383838;
     border: none;
@@ -334,6 +367,22 @@ a:hover[href^="mailto:"] {
     background-color: #3F4258;
     cursor: pointer;
 
+}
+
+
+.stack {
+    position: relative;
+}
+
+
+#stack_top {
+    position: absolute;
+
+}
+
+#stack_bottom {
+    opacity: 0;
+     cursor: pointer;
 }
 
 
@@ -570,7 +619,8 @@ a:hover[href^="mailto:"] {
     }
 
     .input_theme_1,
-    .input_theme_2 {
+    .input_theme_2,
+    .select_1 {
         font-size: 20px;
         width: 40%;
     }
@@ -734,10 +784,14 @@ a:hover[href^="mailto:"] {
         height: 50px;
         font-size: 28px;
     }
-    select, button {
+    button {
         width: 50%;
         text-align: center;
 
+    }
+
+    select {
+        width: 70%;
     }
 
     .input_theme_1,

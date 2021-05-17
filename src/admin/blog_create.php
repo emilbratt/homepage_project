@@ -283,17 +283,16 @@ $cnxn = null;
         method="post">
             <input class="increae_input_width" type="hidden" name="content_id" value="2">
             <label for="content"><h3>Change Blogpost Title</h3></label>
-            <input type="text" placeholder="Current Title: <?php echo $title_placeholder; ?>"
-            style="width: 400px;" name="content">
-            <br><br>
-            <input type="submit"  value="Change Title">
+            <input class="input_theme_1" type="text" placeholder="<?php echo $title_placeholder; ?>"
+            style="width: 400px;" autocomplete="off" name="content">
+            <input class="submit_theme_1" type="submit"  value="Change Title">
         </form>
-
+        <br>
         <form id="in_line_position_greyboxbody"
         action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
         method="post">
             <label for="blog_content_status_change"><h3>Change Blogpost Status</h3></label>
-            <select name="blog_content_status_change" style="width: 400px;" >
+            <select class="input_theme_1" name="blog_content_status_change" style="width: 400px;" >
             <?php
             foreach($results_blog_status as $row) {
                 $alias = $row['alias'];
@@ -305,15 +304,15 @@ $cnxn = null;
                     EOT;
                 }
             ?>
-            </select><br><br>
-            <input type="submit"   value="Change Status"/>
+            </select>
+            <input class="submit_theme_1" type="submit"   value="Change Status"/>
         </form>
 
         <form id="in_line_position_greyboxbody"
         action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
         method="post">
             <label for="blog_content_type_create"><h3>Insert Blog Content</h3></label>
-            <select name="blog_content_type_create" style="width: 400px;" >
+            <select class="input_theme_1" name="blog_content_type_create" style="width: 400px;" >
             <?php
             foreach($results_content_types as $row) {
                 if($row['id_type'] > 3) { // DO NOT SHOW TITLE OPTION
@@ -328,15 +327,15 @@ $cnxn = null;
                 }
             }
             ?>
-            </select><br><br>
-            <input type="submit"   value="Add Content"/>
+            </select>
+            <input class="submit_theme_1" type="submit" value="Add Content"/>
         </form>
-
+        <br><br>
         <form id="in_line_position_greyboxbody"
         action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
         method="post">
             <label for="blog_content_delete"><h3>Delete Blog Content</h3></label>
-            <select name="blog_content_delete" style="width: 400px;" >
+            <select class="input_theme_1" name="blog_content_delete"  style="width: 400px;" >
             <?php
             $num = 1;
             foreach($results_content as $row) {
@@ -356,8 +355,8 @@ $cnxn = null;
                 }
             }
             ?>
-            </select><br><br>
-            <input type="submit"   value="Delete Content"/>
+            </select>
+            <input class="submit_theme_1" type="submit" value="Delete Content"/>
         </form>
 
         <form id="in_line_position_greyboxbody"
@@ -365,7 +364,7 @@ $cnxn = null;
         method="post">
             <input type="hidden" name="content" value="true">
             <label for="content_swap_1"><h3>Swap Content Position</h3></label>
-            <select  name="content_swap_1" style="width: 200px;" >
+            <select class="input_theme_1" name="content_swap_1" style="display: inline-block; width: 200px;">
             <?php
             $num = 1;
             foreach($results_content as $row) {
@@ -382,7 +381,7 @@ $cnxn = null;
             }
             ?>
             </select>
-            <select name="content_swap_2" style="width: 200px;" >
+            <select class="input_theme_1" name="content_swap_2" style="display: inline-block; width: 200px;">
             <?php
             $num = 1;
             foreach($results_content as $row) {
@@ -398,8 +397,8 @@ $cnxn = null;
                 }
             }
             ?>
-            </select><br><br>
-            <input type="submit"   value="Swap Content"/>
+        </select><br>
+            <input class="submit_theme_1" type="submit" value="Swap Content"/>
         </form>
 
 
