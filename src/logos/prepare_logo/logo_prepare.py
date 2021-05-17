@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
 __author__ = 'Emil Bratt Boersting'
 import os
-# import sys
 from datetime import datetime
 from time import sleep
 try: # CHECK IF PILLOW IS INSTALLED
     from PIL import Image
 except ModuleNotFoundError:
-    print('PILLOW module not found')
+    print('No module found for Pillow')
     exit()
 import PIL.ImageOps
 
 
-
-def start():
+def prepare_icon():
     format = "png"
     target_folder = 'prepared'
     relative_root_dir = os.getcwd()
@@ -37,4 +35,4 @@ def start():
         resized_image.close()
 
 if __name__ == '__main__':
-    start()
+    prepare_icon()

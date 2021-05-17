@@ -20,7 +20,7 @@ Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
 ?>
 
 <?php
-$cnxn = db_connect(); //  will only load remaining page if successfully connected
+$cnxn = db_connect();
 
 // GET ONLY DESCRIPTION FROM POSTS WITH STATUS 1 -> NOT ACTIVE
 $results = BlogSQL::get_descriptions($cnxn, '1');
@@ -42,15 +42,15 @@ $cnxn = null;
             name="title" required onfocus="this.select()" autofocus="autofocus">
             <br>
             <label for="description"><p>Description</p></label>
-            <input class="increae_input_width" type="text" placeholder="Description should be unique for each post"
+            <input class="input_theme_2" type="text" placeholder="Description should be unique for each post"
             name="description" required>
             <br>
             <label for="tags"><p>Tags</p></label>
-            <input class="increae_input_width" type="text" placeholder="Separate with comma tag1, tag2 etc."
+            <input class="input_theme_1" type="text" placeholder="Separate with comma tag1, tag2 etc."
             name="tags" required >
             <br>
             <br>
-            <input type="submit"  value="Create">
+            <input class="standalone_button_1" type="submit"  value="Create">
         </form>
     </div>
 </div>
@@ -77,7 +77,30 @@ $cnxn = null;
                 </select>
                 <br>
                 <br>
-            <input type="submit"   value="Modify"/>
+            <input class="standalone_button_1" type="submit"   value="Modify"/>
+        </form>
+    </div>
+</div>
+
+<div class="greybox">
+    <div class="greyboxbody">
+        <h3>Continue On Post</h3>
+
+        <form action="blog_modify.php" method="post">
+            <label for="title"><p>Blog Title</p></label>
+            <input class="increae_input_width" type="text" placeholder="The title will show on top of your post"
+            name="title" required onfocus="this.select()" autofocus="autofocus">
+            <br>
+            <label for="description"><p>Description</p></label>
+            <input class="input_theme_2" type="text" placeholder="Description should be unique for each post"
+            name="description" required>
+            <br>
+            <label for="tags"><p>Tags</p></label>
+            <input class="input_theme_1" type="text" placeholder="Separate with comma tag1, tag2 etc."
+            name="tags" required >
+            <br>
+            <br>
+            <input class="standalone_button_1" type="submit"  value="Create">
         </form>
     </div>
 </div>

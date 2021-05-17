@@ -254,7 +254,7 @@
         public static function change_usr_form() {
             ?>
             <div class="greyboxbody">
-                <h3 style="margin-bottom: 30px;">Change User</h3>
+                <h3 style="margin-bottom: 20px;">Change User</h3>
                 <form id="in_line_position_greyboxbody"
                 action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
                 method="post" >
@@ -266,7 +266,7 @@
                     <input type="password"
                     name="pwd" placeholder="Current Password" class="input_theme_1"
                     class="increae_input_width" required>
-                    <br><br>
+                    <br>
                     <input type="submit" class="submit_theme_1" value="Change">
                 </form>
 
@@ -296,13 +296,13 @@
             ?>
 
             <div class="greyboxbody">
-                <h3 style="margin-bottom: 30px;">Change Password</h3>
+                <h3 style="margin-bottom: 20px;">Change Password</h3>
                 <form id="in_line_position_greyboxbody"
                 action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
                 method="post" >
-                
+
                 <?php if($message != false) {
-                    echo '<label for="change_pwd"><p>'.$message.'</p></label>';
+                    echo '<label for="change_pwd">'.$message.'</label>';
                 }?>
                     <input type="hidden" name="change_pwd" value="true">
 
@@ -317,7 +317,7 @@
                     <input type="password"
                     name="pwd_change_2" placeholder="Verify Password" class="input_theme_1"
                     class="increae_input_width" required>
-                    <br><br>
+                    <br>
                     <input type="submit" class="submit_theme_1" value="Change">
                 </form>
 
