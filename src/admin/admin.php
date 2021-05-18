@@ -45,7 +45,7 @@ if(isset($_POST['change_pwd'])) {
 
 <?php
 Starthtml::show('Adminpage');
-Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 ?>
 
 <div style="text-align: center;" class="greybox">
@@ -76,6 +76,6 @@ if(Config::INSTALL) {
 ?>
 
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
+Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>

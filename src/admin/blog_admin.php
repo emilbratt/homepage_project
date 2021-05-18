@@ -16,7 +16,7 @@ if(Credential::verify_session() == false) {
 
 <?php
 Starthtml::show('Blog Panel');
-Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 ?>
 
 <?php
@@ -36,12 +36,14 @@ $cnxn = null;
         <h3>Create New Post</h3>
         <form action="blog_create.php" method="post">
             <label for="title"><p>Blog Title</p></label>
-            <input class="input_theme_1" type="text" placeholder="The title will show on top of your post"
+            <input class="input_theme_1" type="text"
+            placeholder="The title will show on top of your post"
             name="title" required onfocus="this.select()"
             autocomplete="off" autofocus="autofocus">
             <br>
             <label for="description"><p>Description</p></label>
-            <input class="input_theme_1" type="text" placeholder="Description should be unique for each post"
+            <input class="input_theme_1" type="text"
+            placeholder="Description should be unique for each post"
             name="description" autocomplete="off" required>
             <br>
             <label for="tags"><p>Tags</p></label>
@@ -49,7 +51,8 @@ $cnxn = null;
             placeholder="Separate with comma tag1, tag2 etc."
             name="tags" autocomplete="off" required >
             <br><br>
-            <input class="standalone_button_1" type="submit"  value="Create">
+            <input class="standalone_button_1" type="submit"
+            value="Create">
         </form>
     </div>
 </div>
@@ -74,7 +77,8 @@ $cnxn = null;
             ?>
             </select>
             <br><br>
-        <input class="standalone_button_1" type="submit"   value="Modify"/>
+        <input class="standalone_button_1" type="submit"
+        value="Modify"/>
     </form>
     </div>
 </div>
@@ -85,7 +89,8 @@ $cnxn = null;
         <form action="blog_modify.php" method="post">
             <input type="hidden" name ="edit" value="true">
             <br>
-            <input class="standalone_button_1" type="submit"  value="Proceed">
+            <input class="standalone_button_1" type="submit"
+            value="Proceed">
         </form>
     </div>
 </div>
@@ -93,6 +98,6 @@ $cnxn = null;
 
 
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
+Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>

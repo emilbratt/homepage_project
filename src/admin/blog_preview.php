@@ -101,6 +101,6 @@ else {
 ?>
 
 <?php
-Footer::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+Footer::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 Endhtml::show();
 ?>

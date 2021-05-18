@@ -2,7 +2,7 @@
 require_once "layout.inc.php";
 require_once "admin/database.inc.php";
 Starthtml::show('Emils Blog');
-Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 ?>
 
 
@@ -120,6 +120,6 @@ if(!(isset($_GET['id_blog']))) {
 
 
 <?php
-// Footer::show(basename($_SERVER['PHP_SELF']));
+// Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>

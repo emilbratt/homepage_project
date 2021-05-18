@@ -233,7 +233,7 @@
             <div class="greyboxbody">
                 <h3>Log in</h3>
                 <form id="in_line_position_greyboxbody"
-                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
                 method="post" >
                     <input type="hidden" name="login" value="true">
                     <input type="text" onfocus="this.select()"
@@ -256,7 +256,7 @@
             <div class="greyboxbody">
                 <h3 style="margin-bottom: 20px;">Change User</h3>
                 <form id="in_line_position_greyboxbody"
-                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
                 method="post" >
                     <input type="hidden" name="change_usr" value="true">
                     <input type="text"  style="margin-bottom: 20px;"
@@ -298,7 +298,7 @@
             <div class="greyboxbody">
                 <h3 style="margin-bottom: 20px;">Change Password</h3>
                 <form id="in_line_position_greyboxbody"
-                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
                 method="post" >
 
                 <?php if($message != false) {
@@ -422,7 +422,7 @@
 
             <div class="greyboxbody">
                 <h1>Textfield</h1>
-                <form action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                <form action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
                 method="post" >
                     <input type="hidden" name="textfield" value="add">
                     <h3>Title</h3>
@@ -441,7 +441,7 @@
                 <br>
 
                 <form id="in_line_position_greyboxbody"
-                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
                 method="post">
                     <input type="hidden" name="textfield" value="delete">
                     <label for="delete"><h3>Delete Text</h3></label>
@@ -463,7 +463,7 @@
 
 
                 <form id="in_line_position_greyboxbody"
-                action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+                action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
                 method="post">
                     <input type="hidden" name="textfield" value="swap">
                     <label for="swap_1"><h3>Swap Position</h3></label>
@@ -515,7 +515,7 @@
             ?>
             <div class="greyboxbody">
             <h1>Frontpage image</h1>
-                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+                <form action="<?php echo htmlentities($_SERVER['SCRIPT_NAME']) ;?>"
                 method="post" id="in_line_position_greyboxbody"
                 enctype="multipart/form-data">
                 <label><h3>Upload</h3></label>
@@ -533,7 +533,7 @@
                 </form>
 
 
-                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+                <form action="<?php echo htmlentities($_SERVER['SCRIPT_NAME']) ;?>"
                 method="post" id="in_line_position_greyboxbody">
                 <input type="hidden" name="profile_pic" value="choice">
                 <label for="file"><h3>Chose Existing</h3></label>
@@ -575,7 +575,7 @@
                 // WILL THUS ADD CORRESPONDING OPTION INTO THIS SCRIPT
             ?>
             <h1>Links for Social Networks</h1>
-            <form action="<?php echo htmlentities($_SERVER['PHP_SELF']) ;?>"
+            <form action="<?php echo htmlentities($_SERVER['SCRIPT_NAME']) ;?>"
             method="post">
             <input type="hidden" name="links" value="true">
             <?php
@@ -734,7 +734,7 @@
     class Blog_content {
 
         public static function create($id_type) {
-            $script = htmlentities($_SERVER['PHP_SELF']);
+            $script = htmlentities($_SERVER['SCRIPT_NAME']);
             $cnxn = db_connect();
             $stmt = $cnxn->prepare("
                 SELECT alias FROM blog_content_type

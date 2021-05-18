@@ -1,7 +1,7 @@
 <?php
 require_once "layout.inc.php";
 Starthtml::show('Emil Bratt Børsting');
-Header::show(basename($_SERVER['PHP_SELF']));
+Header::show(basename($_SERVER['SCRIPT_NAME']));
 ?>
 <?php
 

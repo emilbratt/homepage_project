@@ -35,6 +35,6 @@ Display::end();
 
 
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
+Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>

@@ -8,19 +8,18 @@
         // setup.php WILL ONLY LOAD IF TRUE, SET TO false IF IN PRODUCTION
         public const SETUP_ENABLE = true;
 
-        // REFERENCS PATH/FILE FOR DATABASE CONNECTION
+        // REFERENCES PATH/FILE FOR DATABASE CONNECTION
         public const DATABASE_PATH = "/admin/database.sqlite";
 
-        // CHOSE AN ALGORITHM FOR STORING PASSWORD
+        // SET ALGORITHM FOR PASSWORD-HASHING
         public const PWD_HASH_METHOD = PASSWORD_ARGON2ID;
             // MORE OPTIONS: https://www.php.net/manual/en/function.password-hash.php
 
-        // ALLOW HOST CONNETIONS TO FETCH CONFIG VALUES
+        // ALLOWED HOST CONNETIONS TO FETCH CONFIG VALUES
         public const CONFIG_FETCH_ALLOWED_HOSTS = [
             '127.0.0.1',    // IPv4 loopback
             '::1'           // IPv6 loopback
         ];
-
 
         // IMAGE DEFAULT PATHS
         public const IMAGE_PATHS = [
@@ -40,7 +39,6 @@
 
             'min-width:1200px' => '1600',
                 // ..desktops, laptops etc
-
         ];
 
         // ALLOWED FILETYPES FOR FILE UPLOAD
@@ -73,7 +71,6 @@
     if(isset($_GET['config']) and
     in_array($_SERVER['REMOTE_ADDR'] , Config::CONFIG_FETCH_ALLOWED_HOSTS)
     ) {
-    // NOTE: '::1' MEANS THAT REQUEST MUST COME FROM LOCAL HOST
 
         // URL ./admin/config.inc.php?config=IMAGE_MAX_FILESIZE
         if($_GET['config'] == 'IMAGE_MAX_FILESIZE') {

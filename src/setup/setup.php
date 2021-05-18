@@ -273,8 +273,8 @@ Display::start();
 echo '<div class="greyboxbody">';
 echo '<h1>$_SERVER dump</h1>';
 foreach($_SERVER as $k => $v) {
-    echo '<h3>'.$k.'</h3>';
-    echo '<p>'.$v.'</p>';
+    echo '<p><strong>'.$k.'</strong><br>';
+    echo ''.$v.'</p>';
 }
 
 echo '</div>';

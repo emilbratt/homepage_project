@@ -15,7 +15,7 @@ if(Credential::verify_session() == false) {
 
  <?php
 Starthtml::show('Frontpage Settings');
-Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 ?>
 
 
@@ -83,7 +83,7 @@ if(isset($_POST['textfield'])) {
             FrontpageSQL::swap_text($cnxn, $_POST['swap_1'], $_POST['swap_2']);
             $cnxn = null;
             Log::front_page('Swapped text field content number: ' .
-            $_POST['swap_1'].' with ' .$_POST['swap_1']);    
+            $_POST['swap_1'].' with ' .$_POST['swap_1']);
         }
 
     }
@@ -136,6 +136,6 @@ Frontpage_content::end();
 ?>
 
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
+Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>

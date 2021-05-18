@@ -15,7 +15,7 @@ if(Credential::verify_session() == false) {
 
 <?php
 Starthtml::show('Display Logs');
-Header::show(basename(htmlentities($_SERVER['PHP_SELF'])));
+Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 ?>
 
 <?php
@@ -79,6 +79,6 @@ $cnxn = null;
 
 </div>
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
+Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>

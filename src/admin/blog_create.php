@@ -213,7 +213,7 @@ else if(isset($_POST['description']) and
         Blogpost::body_text($form);
 
         Blogpost::end();
-        Footer::show(basename($_SERVER['PHP_SELF']));
+        Footer::show(basename($_SERVER['SCRIPT_NAME']));
         Endhtml::show();
         $cnxn = null;
         exit;
@@ -256,7 +256,7 @@ $results_content = BlogSQL::get_blog_content_and_type($cnxn, $_SESSION['id_blog'
 
 if(!(isset($_SESSION['description'])) or !(isset($_SESSION['tags']))) {
     $host  = $_SERVER['HTTP_HOST'];
-    $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+    $uri   = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
     $extra = 'blog_admin.php';
     header("Location: http://$host$uri/$extra");
     exit;
@@ -279,7 +279,7 @@ $cnxn = null;
 
     <div class="greyboxbody">
         <form
-        action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+        action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
         method="post">
             <input class="increae_input_width" type="hidden" name="content_id" value="2">
             <label for="content"><h3>Change Blogpost Title</h3></label>
@@ -289,7 +289,7 @@ $cnxn = null;
         </form>
         <br>
         <form id="in_line_position_greyboxbody"
-        action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+        action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
         method="post">
             <label for="blog_content_status_change"><h3>Change Blogpost Status</h3></label>
             <select class="input_theme_1" name="blog_content_status_change" style="width: 400px;" >
@@ -309,7 +309,7 @@ $cnxn = null;
         </form>
 
         <form id="in_line_position_greyboxbody"
-        action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+        action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
         method="post">
             <label for="blog_content_type_create"><h3>Insert Blog Content</h3></label>
             <select class="input_theme_1" name="blog_content_type_create" style="width: 400px;" >
@@ -332,7 +332,7 @@ $cnxn = null;
         </form>
         <br><br>
         <form id="in_line_position_greyboxbody"
-        action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+        action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
         method="post">
             <label for="blog_content_delete"><h3>Delete Blog Content</h3></label>
             <select class="input_theme_1" name="blog_content_delete"  style="width: 400px;" >
@@ -360,7 +360,7 @@ $cnxn = null;
         </form>
 
         <form id="in_line_position_greyboxbody"
-        action=<?php echo htmlentities($_SERVER['PHP_SELF']);?>
+        action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
         method="post">
             <input type="hidden" name="content" value="true">
             <label for="content_swap_1"><h3>Swap Content Position</h3></label>
@@ -418,6 +418,6 @@ if(isset($_POST['blog_content_type_create'])) {
 ?>
 
 <?php
-Footer::show(basename($_SERVER['PHP_SELF']));
+Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>
