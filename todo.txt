@@ -1,3 +1,5 @@
 -Implement a gallery page for photos
 -Implement a way to modify any script (can only modify posts that have not been activated at this point)
 -Fix undefined value when loading blogpost photo that was uploaded but canceled because it already existed
+-Remove bottom closing tag for php for each php-file as adviced
+-Refactor code (especially functions that mix HTML and PHP) 
