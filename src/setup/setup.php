@@ -237,6 +237,7 @@ WEB SERVER
 
 IMAGE SCRIPT DEPENDENCIES
     $ sudo apt update
+    $ sudo apt install php-sqlite3 -y
     $ sudo apt install python3-pip -y
     $ sudo python3 -m pip install --upgrade pip
     $ sudo python3 -m pip install --upgrade Pillow
