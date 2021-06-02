@@ -29,7 +29,7 @@ Things that I intend to work on and implement is written down in
 the "todo.txt" file.
 </pre>
 
-<h3>Install for Debia Buster Stable<h3>
+<h3>Install for Debia Buster Stable</h3>
 <pre>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
