@@ -8,7 +8,7 @@ class Upload {
     public static function image($category, $ref_key = 'file') {
         $root_path = $_SERVER["DOCUMENT_ROOT"];
 
-        // AVOID URL CONFLICTS BY REPLACING WHITESPACE WITH UNDERSCORE IN FILENAME
+        // AVOID URI ISSUES BY REPLACING WHITESPACE WITH UNDERSCORE IN FILENAME
         $file = str_replace(' ', '_', $_FILES[$ref_key]["name"]);
 
         if(!(is_dir($root_path.Config::IMAGE_PATHS['upload']))) {
