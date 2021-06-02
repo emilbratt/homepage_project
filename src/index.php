@@ -13,7 +13,7 @@
     } catch (Exception $e) {
         echo Display::start();
         Display::body_title('No content found, is your database installed?');
-        Display::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE DATABASE"');
+        Display::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE" under Database Setup');
         Display::end();
         echo Endhtml::show();
         exit;
