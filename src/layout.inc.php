@@ -2,11 +2,8 @@
     require_once $_SERVER["DOCUMENT_ROOT"] . '/admin/database.inc.php';
     require_once 'admin/queries.inc.php';
     require_once 'admin/config.inc.php';
-    // require_once "admin/file_upload.inc.php";
     require_once 'admin/logging.inc.php';
-?>
 
-<?php
     class Pages {
         public static $main_pagess = array(
             'Home' => 'index.php',
@@ -164,6 +161,7 @@
             }
         }
     }
+
 
     class Endhtml {
         static public function show() {
@@ -724,7 +722,6 @@
     }
 
 
-
     class Blog_content {
 
         public static function create($id_type) {
@@ -810,7 +807,6 @@
             Blogpost::end();
 
         }
-
 
         public static function show($id_blog) {
 
@@ -913,5 +909,3 @@
             $cnxn = null;
         }
     }
-
-?>
