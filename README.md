@@ -29,7 +29,7 @@ Things that I intend to work on and implement is written down in
 the "todo.txt" file.
 
 
-<h3>----------------FOR DEBIAN BUSTER STABLE----------------</h3>
+<h3>----------------INSTALL FOR DEBIAN BUSTER STABLE----------------</h3>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
     $ sudo apt install apache2 -y
@@ -63,7 +63,7 @@ ADD WRITE PERMISSIONS FOR WEBSERVER
     $ sudo chown www-data /images
 
 
-<h3>----------------FOR RASPBERRY PI OS LITE----------------</h3>
+<h3>----------------INSTALL FOR RASPBERRY PI OS LITE----------------</h3>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
     $ sudo apt-get install apache2 -y
