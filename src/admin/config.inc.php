@@ -3,7 +3,7 @@
     class Config {
 
         // setup.php WILL ONLY LOAD IF false, SET TO true IF IN PRODUCTION
-        public const SETUP_DISABLE = true;
+        public const SETUP_DISABLE = false;
 
         // REFERENCES PATH/FILE FOR DATABASE CONNECTION
         public const DATABASE_PATH = "/admin/database.sqlite";
