@@ -1,13 +1,9 @@
 <?php
     require_once "layout.inc.php";
-?>
 
-<?php
     Starthtml::show('My homepage');
     Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
-?>
 
-<?php
     $cnxn = db_connect();
     try {
         $stmt = $cnxn->prepare("
@@ -41,7 +37,6 @@
     if($user_data == null) {
         echo '<p>No user_data data</p>';
     }
-
     $profile_pic_name = null;
     if($user_data['profile_pic'] != null) {
         $n = $user_data['profile_pic'];
@@ -75,9 +70,7 @@
         $id_blog = $latest_blogpost['id_blog'];
         $main_title = $latest_blogpost['main_title'];
     }
-?>
 
-<?php
     Frontpage::start();
     Frontpage::main_title($user_data['full_name'], 'center');
     Frontpage::text_field($front_page_data);
@@ -91,16 +84,11 @@
     Frontpage::start('right');
     Frontpage::contact_field($user_data['email']);
     Frontpage::end();
-?>
 
-<?php
     $cnxn = null;
     $user_data = null;
     $front_page_data = null;
     $latest_blogpost = null;
-?>
 
-<?php
     Footer::show(basename($_SERVER['SCRIPT_NAME']));
     Endhtml::show();
-?>
