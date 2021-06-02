@@ -190,49 +190,49 @@ else {
     <h1>Server Setup</h1>
 <pre>
 
-----------------FOR DEBIAN BUSTER----------------
+----------------FOR DEBIAN BUSTER STABLE----------------
 
-LINES IN PHP CONFIG -> php.ini
-    extension=pdo_odbc
-    extension=pdo_pgsql
+WEB SERVER DEPENDENCIES
+    $ sudo apt update
+    $ sudo apt install apache2 -y
+    $ sudo apt-get install php -y
+    $ sudo apt install libapache2-mod-php -y
+    $ sudo apt install sqlite3 -y
+    $ sudo apt install php7.3-sqlite3 -y
+        note:
+            at this time in writing, php7.3-sqlite3 is the current php sqlite3 module
+            provided in the repository for debian stable..
+            ..changes in debian stable repos might occur
+            ..try another version number if package is not found
+            .. you can search the repository with the command provided command
+                $ apt-cache search sqlite3 | grep php
+
+IMAGE RESIZE SCRIPT DEPENDENCIES
+    $ sudo apt update && sudo apt install python3-pip -y
+    $ sudo python3 -m pip install --upgrade pip
+    $ sudo python3 -m pip install --upgrade Pillow
+
+ADD/CHANGE LINES IN PHP CONFIG -> php.ini
     extension=pdo_sqlite
-    extension=pgsql
     file_uploads = On ;enable file upload
     upload_max_filesize = 50M ;max allowed file size for uploading files
     post_max_size = 50M ;mainly used for uploading images
     max_input_time = 60 ;seconds a script is allow to run parsing upload data (files)
     memory_limit = 256M ;max amount of memory a single php script can consume
 
-FOR SQLITE
-install packages (change to correct php-version)
-    sqlite3
-    php7.3-sqlite3
-
-
-ADD WRITE PERMISSIONS
-    /admin
-    /logs
-    /images
-
-
-IMAGE RESIZE SCRIPT DEPENDENCIES
-    $ sudo apt update && sudo apt install python3-pip -y
-    $ sudo python3 -m pip install --upgrade pip
-    $ sudo python3 -m pip install --upgrade Pillow
-        # might not need.. -> $ sudo apt install php7.3-cli -y # change version number if needed
-
+ADD WRITE PERMISSIONS FOR WEBSERVER
+    $ sudo chown www-data /admin
+    $ sudo chown www-data /images
 
 
 ----------------FOR RASPBERRY PI OS LITE----------------
 
-WEB SERVER
-    Install a functoning LAMP server (with apache or nginx)
-    NOTE: you do not need the database as this webserver runs sqlite as backend
+WEB SERVER DEPENDENCIES
     $ sudo apt update
     $ sudo apt-get install apache2 -y
     $ sudo apt-get install php -y
-    $ sudo apt install libapache2-mod-php
-    $ sudo apt install sqlite3
+    $ sudo apt install libapache2-mod-php -y
+    $ sudo apt install sqlite3 -y
     $ sudo apt install php-sqlite3 -y
     $ sudo systemctl restart apache2
     $ a2enmod php
@@ -244,9 +244,8 @@ IMAGE SCRIPT DEPENDENCIES
     $ sudo python3 -m pip install --upgrade Pillow
     $ sudo apt install libopenjp2-7
     $ sudo apt install libtiff5
-        # might not need.. -> $ sudo apt install php7.3-cli -y # change version number if needed
 
-LINES IN PHP CONFIG -> php.ini
+ADD/CHANGE LINES IN PHP CONFIG -> php.ini
     extension=pdo_sqlite
     file_uploads = On ;enable file upload
     upload_max_filesize = 50M ;max allowed file size for uploading files
@@ -254,16 +253,9 @@ LINES IN PHP CONFIG -> php.ini
     max_input_time = 60 ;seconds a script is allow to run parsing upload data (files)
     memory_limit = 256M ;max amount of memory a single php script can consume
 
-FOR SQLITE
-install packages (change to correct php-version)
-    #sqlite3
-    #php7.3-sqlite3
-
-
-ADD WRITE PERMISSIONS
-    /admin
-    /logs
-    /images
+ADD WRITE PERMISSIONS FOR WEBSERVER
+    $ sudo chown www-data /admin
+    $ sudo chown www-data /images
 
 
 </pre>
