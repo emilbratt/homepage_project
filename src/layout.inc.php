@@ -649,25 +649,27 @@
         public static function body_image($img, $cat, $align, $cap = null) {
             $cnxn = db_connect();
             $results = ImageSQL::get_image_resize_target($cnxn, $img, $cat);
-
-            echo "<picture>";
             $targets = array();
             foreach($results as $row) {
                 if(in_array($row['long_edge'],Config::IMAGE_RES)) {
                     array_push($targets, $row['resize_target']);
                 }
             }
+            $large_image = $targets[2];
+            $medium_image = $targets[1];
+            $small_image = $targets[0];
             if($align == 'center' and isset($cap)) {
+                echo "<picture>";
                 echo '<source media="('.Display::$media_query_large.')" '.
-                'loading="lazy" srcset="'.$targets[2].
+                'loading="lazy" srcset="'.$large_image.
                 '">';
 
                 echo '<source media="('.Display::$media_query_medium.')" '.
-                'loading="lazy" srcset="'.$targets[1].
+                'loading="lazy" srcset="'.$medium_image.
                 '">';
 
                 echo '<img class="greybox_img_'.$align.
-                '" src="'.$targets[0].'" loading="lazy">';
+                '" src="'.$small_image.'" loading="lazy">';
 
                 echo <<<EOT
                 <figcaption class="greybox_img_$align" style="margin-top: -20px;">
@@ -677,16 +679,17 @@
                 }
 
             else {
+                echo "<picture>";
                 echo '<source media="('.Display::$media_query_large.')" '.
-                'loading="lazy" srcset="'.$targets[2].
+                'loading="lazy" srcset="'.$large_image.
                 '">';
 
                 echo '<source media="('.Display::$media_query_medium.')" '.
-                'loading="lazy" srcset="'.$targets[1].
+                'loading="lazy" srcset="'.$medium_image.
                 '">';
 
                 echo '<img class="greybox_img_'.$align.
-                '" src="'.$targets[0].'" loading="lazy">';
+                '" src="'.$small_image.'" loading="lazy">';
 
                 if($cap) {
                     switch ($align) {
