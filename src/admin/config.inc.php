@@ -2,9 +2,6 @@
 
     class Config {
 
-        // IS TRUE IF INSTALLED, CHANGES TO FALSE IN PRODUCTION
-        public const INSTALL = false;
-
         // setup.php WILL ONLY LOAD IF TRUE, SET TO false IF IN PRODUCTION
         public const SETUP_ENABLE = true;
 
@@ -58,16 +55,10 @@
         ];
 
     }
-?>
 
-
-
-
-<?php
 
     // ALLOW REMOTE CONNECTION TO REQUEST CONFIG VALUES WITH HTTP GET
     // SENSITIVE DATA SHOULD BE CAREFULLY CONSIDERED BEFORE LISTED HERE
-
     if(isset($_GET['config']) and
     in_array($_SERVER['REMOTE_ADDR'] , Config::CONFIG_FETCH_ALLOWED_HOSTS)
     ) {
@@ -86,12 +77,7 @@
     }
 
 
-?>
-
-<?php
-
     // ALLOW FETCHING CONFIG VALUES FROM SHELL COMMAND (PHP CLI)
-
     if(isset($argv[1])) {
         $arg = $argv[1];
 
@@ -101,4 +87,3 @@
             }
         }
     }
-?>
