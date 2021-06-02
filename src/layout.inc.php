@@ -512,18 +512,10 @@
                 enctype="multipart/form-data">
                 <label><h3>Upload</h3></label>
                 <input type="hidden" name="profile_pic" value="upload">
-
                 <input class="" type="file" name="file" >
-
-                <!-- <div class="stack">
-                    <label id="stack_top" class="standalone_button_1" for="file">Chose File</label>
-                    <input class="input_theme_1" id="stack_bottom" type="file" name="file" >
-                </div> -->
-
                 <br><br>
                 <input class="standalone_button_1" type="submit" value="Upload">
                 </form>
-
 
                 <form action="<?php echo htmlentities($_SERVER['SCRIPT_NAME']) ;?>"
                 method="post" id="in_line_position_greyboxbody">
