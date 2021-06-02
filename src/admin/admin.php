@@ -13,10 +13,6 @@ if(Credential::verify_session() == false) {
 }
 
 $message = null;
-?>
-
-<?php
-
 if(isset($_POST['change_usr'])) {
     if(Credential::verify_credential($_SESSION['usr'], $_POST['pwd'])) {
         Credential::change_user($_POST['usr_change']);
@@ -41,9 +37,7 @@ if(isset($_POST['change_pwd'])) {
     }
 
 }
-?>
 
-<?php
 Starthtml::show('Adminpage');
 Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 ?>
@@ -60,19 +54,11 @@ Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
     echo Account::start();
     Account::change_usr_form($message);
     echo Account::end();
-?>
 
-<?php
     echo Account::start();
     Account::change_pwd_form($message);
     echo Account::end();
-?>
 
 
-
-?>
-
-<?php
 Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
-?>
