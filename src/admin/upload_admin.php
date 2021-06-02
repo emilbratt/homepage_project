@@ -5,18 +5,6 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/admin/database.inc.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/admin/upload.inc.php";
 Starthtml::show('File Uploads');
 Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
-?>
 
-
-<?php
-Display::start();
-
-
-Display::end();
-?>
-
-
-<?php
 Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
-?>

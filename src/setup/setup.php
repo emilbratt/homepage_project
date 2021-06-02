@@ -263,7 +263,7 @@ ADD WRITE PERMISSIONS FOR WEBSERVER
 </div>
 
 <?php
-Display::start();
+echo Display::start();
 echo '<div class="greyboxbody">';
 echo '<h1>$_SERVER dump</h1>';
 foreach($_SERVER as $k => $v) {
@@ -272,7 +272,7 @@ foreach($_SERVER as $k => $v) {
 }
 
 echo '</div>';
-Display::end();
+echo Display::end();
 ?>
 
 

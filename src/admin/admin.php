@@ -57,21 +57,18 @@ Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
 
 <?php
 
-    Account::start();
+    echo Account::start();
     Account::change_usr_form($message);
-    Account::end();
+    echo Account::end();
 ?>
 
 <?php
-    Account::start();
+    echo Account::start();
     Account::change_pwd_form($message);
-    Account::end();
+    echo Account::end();
 ?>
 
-<?php
-if(Config::INSTALL) {
-    // run install script /setup script etc..
-}
+
 
 ?>
 

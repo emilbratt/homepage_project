@@ -121,18 +121,18 @@ if(isset($_POST['profile_pic'])) {
 
 <?php
 // DISPLAY FORMS FOR CONTENT
-Frontpage_content::start();
+echo Frontpage_content::start();
 Frontpage_content::text_field_left_form();
-Frontpage_content::end();
+echo Frontpage_content::end();
 
-Frontpage_content::start();
+echo Frontpage_content::start();
 Frontpage_content::profile_pic_form();
-Frontpage_content::end();
+echo Frontpage_content::end();
 
 
-Frontpage_content::start();
+echo Frontpage_content::start();
 Frontpage_content::social_network_form();
-Frontpage_content::end();
+echo Frontpage_content::end();
 ?>
 
 <?php

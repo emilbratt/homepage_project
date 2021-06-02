@@ -191,7 +191,7 @@ else if(isset($_POST['description']) and
     // if($stmt->rowCount() > 0) {
     if($result != null) {
         // IF EXISTS, END SCRIPT AFTER SHOWING CONTENT
-        Blogpost::start();
+        echo Blogpost::start();
         Blogpost::main_title('Blog Already Exists','left');
         Blogpost::body_title('Blog description');
         Blogpost::body_text($result['description']);
@@ -212,7 +212,7 @@ else if(isset($_POST['description']) and
         EOT;
         Blogpost::body_text($form);
 
-        Blogpost::end();
+        echo Blogpost::end();
         Footer::show(basename($_SERVER['SCRIPT_NAME']));
         Endhtml::show();
         $cnxn = null;

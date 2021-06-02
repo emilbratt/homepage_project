@@ -11,11 +11,11 @@
             ORDER BY content_number ASC
         ");
     } catch (Exception $e) {
-        Frontpage::start();
+        echo Frontpage::start();
         Frontpage::body_title('No content found, is your database installed?');
         Frontpage::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE DATABASE"');
         Frontpage::end();
-        Endhtml::show();
+        echo Endhtml::show();
         exit;
     }
     $stmt->execute();
@@ -71,19 +71,19 @@
         $main_title = $latest_blogpost['main_title'];
     }
 
-    Frontpage::start();
+    echo Frontpage::start();
     Frontpage::main_title($user_data['full_name'], 'center');
     Frontpage::text_field($front_page_data);
     Frontpage::profile_pic($profile_pic_name);
-    Frontpage::end();
+    echo Frontpage::end();
 
-    Frontpage::start('left');
+    echo Frontpage::start('left');
     Frontpage::latest_blogpost($id_blog, $main_title);
-    Frontpage::end();
+    echo Frontpage::end();
 
-    Frontpage::start('right');
+    echo Frontpage::start('right');
     Frontpage::contact_field($user_data['email']);
-    Frontpage::end();
+    echo Frontpage::end();
 
     $cnxn = null;
     $user_data = null;

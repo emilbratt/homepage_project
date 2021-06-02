@@ -180,11 +180,10 @@
         public static function start($align = null) {
             if($align) {
                 // LEFT OR RIGHT GREYBOX
-                echo '<div class="greybox_'.$align.'">';
-                return null;
+                return '<div class="greybox_'.$align.'">';
             }
             // STANDARD GERYBOX
-            echo '<div class="greybox">';
+            return '<div class="greybox">';
         }
 
 
@@ -207,7 +206,7 @@
         }
 
         public static function end() {
-            echo '</div>';
+            return '</div>';
         }
 
         public static function table() {
@@ -221,11 +220,12 @@
 
 
         public static function login_form() {
-            ?>
+            $script = htmlentities($_SERVER['SCRIPT_NAME']);
+            return <<<EOT
             <div class="greyboxbody">
                 <h3>Log in</h3>
                 <form id="in_line_position_greyboxbody"
-                action=<?php echo htmlentities($_SERVER['SCRIPT_NAME']);?>
+                action="$script"
                 method="post" >
                     <input type="hidden" name="login" value="true">
                     <input type="text" onfocus="this.select()"
@@ -240,7 +240,8 @@
                     <input type="submit" class="submit_theme_1" value="Log in">
                 </form>
             </div>
-            <?php
+            EOT;
+
         }
 
         public static function change_usr_form() {
@@ -645,9 +646,6 @@
 
     class Blogpost extends Display {
 
-
-
-
         public static function body_image($img, $cat, $align, $cap = null) {
             $cnxn = db_connect();
             $results = ImageSQL::get_image_resize_target($cnxn, $img, $cat);
@@ -737,7 +735,7 @@
             }
 
 
-            Blogpost::start();
+            echo Blogpost::start();
             echo <<<EOT
             <div class="greyboxbody">
             EOT;
@@ -796,7 +794,7 @@
             </form>
             </div>
             EOT;
-            Blogpost::end();
+            echo Blogpost::end();
 
         }
 
@@ -807,7 +805,7 @@
             $result = BlogSQL::get_blog_content($cnxn, $id_blog);
 
             if($result != false) {
-                Blogpost::start();
+                echo Blogpost::start();
                 foreach($result as $row) {
                     // ITERATE OVER BLOG TYPE AND CHOSE CORRECT ILLUSTRATION METHOD
                     switch($row['id_type']) {
@@ -896,7 +894,7 @@
 
                     }
                 }
-                Blogpost::end();
+                echo Blogpost::end();
             }
             $cnxn = null;
         }

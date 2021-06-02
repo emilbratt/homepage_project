@@ -28,9 +28,9 @@ Starthtml::show('Adminpage');
 ?>
 
 <?php
-Display::start();
-Account::login_form();
-Display::end();
+echo Display::start();
+echo Account::login_form();
+echo Display::end();
 ?>
 
 
