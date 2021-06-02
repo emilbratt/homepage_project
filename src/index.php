@@ -17,7 +17,7 @@
     } catch (Exception $e) {
         Frontpage::start();
         Frontpage::body_title('No content found, is your database installed?');
-        Frontpage::body_text('Open host_or_ip/setup/setup.php in your browser and click "CREATE DATABASE"');
+        Frontpage::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE DATABASE"');
         Frontpage::end();
         Endhtml::show();
         exit;
