@@ -42,7 +42,7 @@ WEB SERVER DEPENDENCIES
             provided in the repository for debian stable..
             ..changes in debian stable repos might occur
             ..try another version number if package is not found
-            .. you can search the repository with the command provided command
+            .. you can search the repository with the command provided below
                 $ apt-cache search sqlite3 | grep php
 
 IMAGE RESIZE SCRIPT DEPENDENCIES
