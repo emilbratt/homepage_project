@@ -9,10 +9,19 @@
 
 <?php
     $cnxn = db_connect();
-    $stmt = $cnxn->prepare("
-        SELECT body_title, body_text FROM front_page
-        ORDER BY content_number ASC
-    ");
+    try {
+        $stmt = $cnxn->prepare("
+            SELECT body_title, body_text FROM front_page
+            ORDER BY content_number ASC
+        ");
+    } catch (Exception $e) {
+        Frontpage::start();
+        Frontpage::body_title('No content found, is your database installed?');
+        Frontpage::body_text('Open host_or_ip/setup/setup.php in your browser and click "CREATE DATABASE"');
+        Frontpage::end();
+        Endhtml::show();
+        exit;
+    }
     $stmt->execute();
     $front_page_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if($front_page_data == null) {
