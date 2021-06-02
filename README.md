@@ -29,7 +29,7 @@ Things that I intend to work on and implement is written down in
 the "todo.txt" file.
 </pre>
 
-<h3>----------------INSTALL FOR DEBIAN BUSTER STABLE----------------</h3>
+<h3>Install for Debia Buster Stable<h3>
 <pre>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
@@ -64,7 +64,7 @@ ADD WRITE PERMISSIONS FOR WEBSERVER
     $ sudo chown www-data /images
 </pre>
 
-<h3>----------------INSTALL FOR RASPBERRY PI OS LITE----------------</h3>
+<h3>Install for Rasbperry Pi OS Lite</h3>
 <pre>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
