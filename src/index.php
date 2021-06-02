@@ -11,10 +11,10 @@
             ORDER BY content_number ASC
         ");
     } catch (Exception $e) {
-        echo Frontpage::start();
-        Frontpage::body_title('No content found, is your database installed?');
-        Frontpage::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE DATABASE"');
-        Frontpage::end();
+        echo Display::start();
+        Display::body_title('No content found, is your database installed?');
+        Display::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE DATABASE"');
+        Display::end();
         echo Endhtml::show();
         exit;
     }
@@ -71,19 +71,19 @@
         $main_title = $latest_blogpost['main_title'];
     }
 
-    echo Frontpage::start();
-    Frontpage::main_title($user_data['full_name'], 'center');
-    Frontpage::text_field($front_page_data);
-    Frontpage::profile_pic($profile_pic_name);
-    echo Frontpage::end();
+    echo Display::start();
+    Display::main_title($user_data['full_name'], 'center');
+    Display::text_field($front_page_data);
+    Display::profile_pic($profile_pic_name);
+    echo Display::end();
 
-    echo Frontpage::start('left');
-    Frontpage::latest_blogpost($id_blog, $main_title);
-    echo Frontpage::end();
+    echo Display::start('left');
+    Display::latest_blogpost($id_blog, $main_title);
+    echo Display::end();
 
-    echo Frontpage::start('right');
-    Frontpage::contact_field($user_data['email']);
-    echo Frontpage::end();
+    echo Display::start('right');
+    Display::contact_field($user_data['email']);
+    echo Display::end();
 
     $cnxn = null;
     $user_data = null;

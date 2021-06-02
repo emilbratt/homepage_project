@@ -86,10 +86,19 @@ if(!(isset($_GET['id_blog']))) {
     $previous = null;
 
     $cnxn = db_connect();
-    $stmt = $cnxn->prepare("
-        SELECT id_blog FROM blog WHERE id_status = '2'
-        ORDER BY id_blog DESC LIMIT 2
-    ");
+    try {
+        $stmt = $cnxn->prepare("
+            SELECT id_blog FROM blog WHERE id_status = '2'
+            ORDER BY id_blog DESC LIMIT 2
+        ");
+    } catch (Exception $e) {
+        echo Frontpage::start();
+        Display::body_title('No content found, is your database installed?');
+        Display::body_text('Open "yourhost/setup/setup.php" in your browser and click "CREATE DATABASE"');
+        Display::end();
+        echo Endhtml::show();
+        exit;
+    }
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
