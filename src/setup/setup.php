@@ -32,11 +32,6 @@ Starthtml::show('Website Setup');
 <div class="greybox">
     <div class="greyboxbody">
         <h1>Image Setup</h1>
-        <form action="setup.php" method="post" id="in_line_position_greyboxbody">
-            <input type="hidden" name="setup" value="image_resize">
-            <h3>Batch resize all images</h3>
-            <input type="submit" style="width: 270px; " value="Resize All Images">
-        </form>
 
         <form action="setup.php" method="post" id="in_line_position_greyboxbody">
             <input type="hidden" name="setup" value="image_delete_all_files">
@@ -105,21 +100,6 @@ if(isset($_POST['setup'])) {
             echo '    <div class="greyboxbody">';
             unlink($db_path);
             echo '<h2 style="text-align: center;">DATABASE DELETED</h2>';
-            echo '</div>';
-            break;
-        case 'image_resize';
-            echo <<<EOT
-            <div class="greyboxbody">
-            <h1>This might take a some time</h1>
-
-            EOT;
-            $output_value = null; // FOR DEBUGGING
-            $return_value = null; // FOR DEBUGGING
-            exec('python3 ../images/batch_resize.py', $output_value, $return_value);
-            // exec('python3 ../images/batch_resize_images.py', $output_value, $return_value);
-            foreach($output_value as $v) {
-                echo '<h2 style="text-align: center;">'.$v.'</h2>';
-            }
             echo '</div>';
             break;
         case 'image_delete_all_files';
