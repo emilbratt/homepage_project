@@ -3,14 +3,9 @@ require_once "layout.inc.php";
 require_once "admin/database.inc.php";
 Starthtml::show('Emils Blog');
 Header::show(basename(htmlentities($_SERVER['SCRIPT_NAME'])));
-?>
-
-
-
-<?php
 
 function blogpost_menubar($b = null,$f = null) {
-    // DISPLAY MENUBAR FOR JUMPING TO NEXT OR PREVIOUS BLOGPOST
+    // DISPLAY BOTTOM MENUBAR FOR JUMPING TO NEXT OR PREVIOUS BLOGPOST
     echo <<<EOT
     <footer>
     <div class="bottombar" style="margin-top: 20px;">
@@ -33,7 +28,7 @@ function blogpost_menubar($b = null,$f = null) {
     EOT;
 }
 
-// HANDLES THE GET REQUEST FROM PRESSING A URL BUTTON
+// SHOW BLOGPOST FOR ID IF BLOG ID WAS PASSED VIA URL
 if(isset($_GET['id_blog'])) {
 
     // ONLY HANLDE IF ACTUAL VALUE GOT PASSED AND NOT NULL
@@ -115,11 +110,6 @@ if(!(isset($_GET['id_blog']))) {
     $cnxn = null;
 
 }
-?>
 
-
-
-<?php
-// Footer::show(basename($_SERVER['SCRIPT_NAME']));
 Endhtml::show();
 ?>
