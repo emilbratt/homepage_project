@@ -27,9 +27,10 @@ file provided.
 
 Things that I intend to work on and implement is written down in
 the "todo.txt" file.
-
+</pre>
 
 <h3>----------------INSTALL FOR DEBIAN BUSTER STABLE----------------</h3>
+<pre>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
     $ sudo apt install apache2 -y
@@ -61,9 +62,10 @@ ADD/CHANGE LINES IN PHP CONFIG -> php.ini
 ADD WRITE PERMISSIONS FOR WEBSERVER
     $ sudo chown www-data /admin
     $ sudo chown www-data /images
-
+</pre>
 
 <h3>----------------INSTALL FOR RASPBERRY PI OS LITE----------------</h3>
+<pre>
 WEB SERVER DEPENDENCIES
     $ sudo apt update
     $ sudo apt-get install apache2 -y
