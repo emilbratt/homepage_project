@@ -232,13 +232,13 @@ WEB SERVER
     $ sudo apt-get install apache2 -y
     $ sudo apt-get install php -y
     $ sudo apt install libapache2-mod-php
+    $ sudo apt install sqlite3
+    $ sudo apt install php-sqlite3 -y
     $ sudo systemctl restart apache2
     $ a2enmod php
 
 IMAGE SCRIPT DEPENDENCIES
     $ sudo apt update
-    $ sudo apt install sqlite3
-    $ sudo apt install php-sqlite3 -y
     $ sudo apt install python3-pip -y
     $ sudo python3 -m pip install --upgrade pip
     $ sudo python3 -m pip install --upgrade Pillow
