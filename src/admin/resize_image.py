@@ -12,7 +12,8 @@ except ModuleNotFoundError:
 
 
 ############## SETTINGS #######################################################
-global max_limit, category, target_path, format, config_URL, log_insert_query
+global script, max_limit, category, target_path, format, config_URL, log_insert_query, port
+script = '/admin/config.inc.php'
 max_limit = 500000000 # ADJUST IF YOU GET DECOMPRESSION BOMB WARNING
 db_name = 'database.sqlite' # SET DATABASE NAME AND DIRECTORY
 target_path = '../images/converted' # SET OUTPUT DIRECTORY
@@ -22,7 +23,10 @@ if(len(sys.argv) >= 4): # OPTIONALLY PASS CATEGORY NME AS 3RD ARGUMENT
 format = "png" # SET OUTPUT FORMAT
 if(len(sys.argv) >= 5): # OPTIONALLY PASS FORMAT TYPE AS 4TH ARGUMENT
     format = sys.argv[4]
-config_URL = 'http://localhost:81/admin/config.inc.php?config=IMAGE_RES'
+port = '80'
+if(len(sys.argv) >= 6): # OPTIONALLY PASS FORMAT TYPE AS 4TH ARGUMENT
+    port = sys.argv[5]
+config_URL = 'http://localhost:' + port + script + '?config=IMAGE_RES'
 log_insert_query = '''
     INSERT INTO logging
         (message, id_log_level, subject)
@@ -43,7 +47,7 @@ def fetch_website_res():
         for v in res:
             resolutions.append(int(res[v]))
 
-    if response.status_code != 200:
+    if resolutions == []:
         # FALLBACK TO USING SHELL COMMAND AND STDOUT
         stdout = subprocess.Popen("php config.inc.php IMAGE_RES", stdout=subprocess.PIPE, shell=True)
         stdout_grab = stdout.communicate()
@@ -237,6 +241,9 @@ def script_execute():
 
     Image.MAX_IMAGE_PIXELS = max_limit
     resolutions = fetch_website_res()
+    if resolutions == []:
+        print('Could not load resolutions from ' + script)
+        exit()
 
     if len(sys.argv) < 3:
         cnxn = sqlite3.connect(db_name)

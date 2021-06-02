@@ -145,8 +145,9 @@ class Upload {
 
             $output_value = null; // FOR DEBUGGING
             $return_value = null; // FOR DEBUGGING
+            $port = $_SERVER['SERVER_PORT'];
             Log::debug("command: python3 $script '$image_name' '$target' '$category' jpg", '1');
-            exec("python3 $script '$image_name' '$target' '$category' jpg", $output_value, $return_value);
+            exec("python3 $script '$image_name' '$target' '$category' jpg '$port'", $output_value, $return_value);
 
             foreach($output_value as $v) {
                 echo <<<EOT
