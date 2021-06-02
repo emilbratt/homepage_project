@@ -659,11 +659,11 @@
             }
             if($align == 'center' and isset($cap)) {
                 echo '<source media="('.Display::$media_query_large.')" '.
-                'loading="lazy" srcset="'.$targets[1].
+                'loading="lazy" srcset="'.$targets[2].
                 '">';
 
                 echo '<source media="('.Display::$media_query_medium.')" '.
-                'loading="lazy" srcset="'.$targets[2].
+                'loading="lazy" srcset="'.$targets[1].
                 '">';
 
                 echo '<img class="greybox_img_'.$align.
@@ -678,11 +678,11 @@
 
             else {
                 echo '<source media="('.Display::$media_query_large.')" '.
-                'loading="lazy" srcset="'.$targets[1].
+                'loading="lazy" srcset="'.$targets[2].
                 '">';
 
                 echo '<source media="('.Display::$media_query_medium.')" '.
-                'loading="lazy" srcset="'.$targets[2].
+                'loading="lazy" srcset="'.$targets[1].
                 '">';
 
                 echo '<img class="greybox_img_'.$align.
