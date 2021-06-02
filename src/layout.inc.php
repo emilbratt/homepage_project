@@ -11,19 +11,13 @@
         public static $main_pagess = array(
             'Home' => 'index.php',
             'Blog' => 'blog.php',
-            // 'Gallery' => 'gallery.php',
-            // 'About' => 'about.php',
-            // 'CV' => 'cv.php',
         );
 
         public static $admin_pagess = array(
             'Admin' => 'admin.php',
-            // 'Upload' => 'upload_admin.php',
             'Frontpage' => 'frontpage_admin.php',
             'Blog' => 'blog_admin.php',
             'Create' => 'blog_create.php',
-            // 'Preview' => 'blog_preview.php',
-            // 'Scan Photos' => 'image_scan.php',
             'Activity' => 'log_admin.php',
             'Preview' => 'blog_preview.php',
             'Log in' => 'login.php',
