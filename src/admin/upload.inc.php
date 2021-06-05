@@ -12,7 +12,7 @@ class Upload {
         $file = str_replace(' ', '_', $_FILES[$ref_key]["name"]);
 
         if(!(is_dir($root_path.Config::IMAGE_PATHS['upload']))) {
-            mkdir($root_path.Config::IMAGE_PATHS['upload'], 0770);
+            mkdir($root_path.Config::IMAGE_PATHS['upload'], 0775);
         }
 
         $upload_path = $root_path.Config::IMAGE_PATHS['upload'].$category.'/';
