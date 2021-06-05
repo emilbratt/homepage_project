@@ -73,16 +73,16 @@
 
     echo Display::start();
     Display::main_title($user_data['full_name'], 'center');
-    Display::text_field($front_page_data);
-    Display::profile_pic($profile_pic_name);
+    Frontpage::text_field($front_page_data);
+    Frontpage::profile_pic($profile_pic_name);
     echo Display::end();
 
     echo Display::start('left');
-    Display::latest_blogpost($id_blog, $main_title);
+    Frontpage::latest_blogpost($id_blog, $main_title);
     echo Display::end();
 
     echo Display::start('right');
-    Display::contact_field($user_data['email']);
+    Frontpage::contact_field($user_data['email']);
     echo Display::end();
 
     $cnxn = null;
