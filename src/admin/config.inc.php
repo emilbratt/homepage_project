@@ -59,8 +59,9 @@
 
     // ALLOW REMOTE CONNECTION TO REQUEST CONFIG VALUES WITH HTTP GET
     // SENSITIVE DATA SHOULD BE CAREFULLY CONSIDERED BEFORE LISTED HERE
-    if(isset($_GET['config']) and
-    in_array($_SERVER['REMOTE_ADDR'] , Config::CONFIG_FETCH_ALLOWED_HOSTS)
+    if(
+        isset($_GET['config']) and
+        in_array($_SERVER['REMOTE_ADDR'] , Config::CONFIG_FETCH_ALLOWED_HOSTS)
     ) {
 
         // URL ./admin/config.inc.php?config=IMAGE_MAX_FILESIZE
