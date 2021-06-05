@@ -63,10 +63,10 @@ memory_limit = 256M ;max amount of memory a single php script can consume
 ADD WRITE PERMISSIONS FOR WEBSERVER
 $ sudo chown www-data /admin
 $ sudo chown www-data /images
+</p>
 </pre>
 
 <h3>Install for Rasbperry Pi OS Lite</h3>
-</p>
 <pre>
 <p>
 WEB SERVER DEPENDENCIES
