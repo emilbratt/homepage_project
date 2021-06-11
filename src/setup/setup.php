@@ -33,7 +33,7 @@ Starthtml::show('Website Setup');
         <form action="setup.php" method="post" id="in_line_position_greyboxbody">
             <input type="hidden" name="setup" value="image_delete_all_files">
             <h3>Delete all image files</h3>
-            <input type="submit" style="width: 270px; margin-top: 0px;" value="Delete Images">
+            <input type="submit" style="width: 270px; margin-top: 0px;" value="Delete">
         </form>
     </div>
 </div>
