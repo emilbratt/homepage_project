@@ -188,21 +188,27 @@
 
 
         public static function main_title($title, $alignment = 'center') {
-            echo '<div class="greybox_title_'.$alignment.'">';
-            echo '<h3>'.$title.'</h3>';
-            echo '</div>';
+            return <<<EOT
+            <div class="greybox_title_$alignment">
+            <h3>$title</h3>
+            </div>
+            EOT;
         }
 
         public static function body_title($title) {
-            echo '<div class="greyboxbody">';
-            echo '<h3>'.$title.'</h3>';
-            echo '</div>';
+            return <<<EOT
+            <div class="greyboxbody">
+            <h3>$title</h3>
+            </div>
+            EOT;
         }
 
         public static function body_text($message) {
-            echo '<div class="greyboxbody">';
-            echo '<p>'.$message.'</p>';
-            echo '</div>';
+            return <<<EOT
+            <div class="greyboxbody">
+            <p>$message</p>
+            </div>
+            EOT;
         }
 
         public static function end() {
@@ -646,7 +652,7 @@
 
     class Blogpost extends Display {
 
-        public static function body_image($img, $cat, $align, $cap = null) {
+        public static function blog_body_image($img, $cat, $align, $cap = null) {
             $cnxn = db_connect();
             $results = ImageSQL::get_image_resize_target($cnxn, $img, $cat);
             $targets = array();
@@ -655,61 +661,36 @@
                     array_push($targets, $row['resize_target']);
                 }
             }
+
+            $media_query_large = Display::$media_query_large;
+            $media_query_medium = Display::$media_query_medium;
             $large_image = $targets[2];
             $medium_image = $targets[1];
             $small_image = $targets[0];
-            if($align == 'center' and isset($cap)) {
-                echo "<picture>";
-                echo '<source media="('.Display::$media_query_large.')" '.
-                'loading="lazy" srcset="'.$large_image.
-                '">';
+            $html = '<picture>';
 
-                echo '<source media="('.Display::$media_query_medium.')" '.
-                'loading="lazy" srcset="'.$medium_image.
-                '">';
+            $html .= '<source media="('.$media_query_large.')" loading="lazy" srcset="'.$large_image.'">';
+            $html .= '<source media="('.$media_query_medium.')" loading="lazy" srcset="'.$medium_image.'">';
+            $html .= '<img class="greybox_img_'.$align.'" src="'.$small_image.'" loading="lazy">';
 
-                echo '<img class="greybox_img_'.$align.
-                '" src="'.$small_image.'" loading="lazy">';
-
-                echo <<<EOT
-                <figcaption class="greybox_img_$align" style="margin-top: -20px;">
-                $cap
-                </figcaption>
-                EOT;
+            if($cap) {
+                switch ($align) {
+                    case 'right';
+                        $align = 'left';
+                        break;
+                    case 'left';
+                        $align = 'right';
+                        break;
+                    default;
+                        $align = 'center';
                 }
-
-            else {
-                echo "<picture>";
-                echo '<source media="('.Display::$media_query_large.')" '.
-                'loading="lazy" srcset="'.$large_image.
-                '">';
-
-                echo '<source media="('.Display::$media_query_medium.')" '.
-                'loading="lazy" srcset="'.$medium_image.
-                '">';
-
-                echo '<img class="greybox_img_'.$align.
-                '" src="'.$small_image.'" loading="lazy">';
-
-                if($cap) {
-                    switch ($align) {
-                        case 'right';
-                            $align = 'left';
-                            break;
-                        case 'left';
-                            $align = 'right';
-                            break;
-                        default;
-                            $align = 'center';
-                    }
-                    echo <<<EOT
-                    <figcaption class="greybox_img_$align">
-                    $cap
-                    </figcaption>
-                    EOT;
-                }
+                $html .= '<figcaption class="greybox_img_'.$align.'">'.$cap.'</figcaption>';
             }
-            echo '</picture>';
+            $html .= '</picture>';
+            return $html;
+
+
+
         }
 
     }
@@ -807,16 +788,17 @@
             $cnxn = db_connect();
             $result = BlogSQL::get_blog_content($cnxn, $id_blog);
 
-            if($result != false) {
+            // if($result != false) { REMOVE IF NO BUGS UNCOMMENTED @ 2020.06.11
+            if($result) { // ADDE DTHIS INSTEAD..
                 echo Blogpost::start();
                 foreach($result as $row) {
                     // ITERATE OVER BLOG TYPE AND CHOSE CORRECT ILLUSTRATION METHOD
                     switch($row['id_type']) {
                         case '1';
-                            Blogpost::main_title($row['main_title'],'center');
+                            echo Display::main_title($row['main_title'],'center');
                             break;
                         case '2';
-                            Blogpost::main_title($row['main_title'],'left');
+                            echo Display::main_title($row['main_title'],'left');
                             break;
                         case '3';
                             if($row['main_title'] === '__date__') {
@@ -844,48 +826,48 @@
                                 }
 
                                 $str = $str . $date;
-                                Blogpost::main_title($str,'right');
+                                echo Display::main_title($str,'right');
 
                             }
                             else {
-                                Blogpost::main_title($row['main_title'],'right');
+                                echo Display::main_title($row['main_title'],'right');
                             }
                             break;
                         case '4';
-                            Blogpost::body_title($row['body_title']);
+                            echo Display::body_title($row['body_title']);
                             break;
                         case '5';
-                            Blogpost::body_text($row['body_text']);
+                            echo Display::body_text($row['body_text']);
                             break;
                         case '6';
-                            Blogpost::body_image(
+                            echo Blogpost::blog_body_image(
                                 $row['img_name'], $row['img_folder'], 'center'
                             );
                             break;
                         case '7';
-                            Blogpost::body_image(
+                            echo Blogpost::blog_body_image(
                                 $row['img_name'], $row['img_folder'], 'left'
                             );
                             break;
                         case '8'; //
-                            Blogpost::body_image(
+                            echo Blogpost::blog_body_image(
                                 $row['img_name'], $row['img_folder'], 'right'
                             );
                             break;
                         case '9';
-                            Blogpost::body_image(
+                            echo Blogpost::blog_body_image(
                                 $row['img_name'], $row['img_folder'], 'center',
                                 $row['img_caption']
                             );
                             break;
                         case '10';
-                            Blogpost::body_image(
+                            echo Blogpost::blog_body_image(
                                 $row['img_name'], $row['img_folder'], 'left',
                                 $row['img_caption']
                             );
                             break;
                         case '11';
-                            Blogpost::body_image(
+                            echo Blogpost::blog_body_image(
                                 $row['img_name'], $row['img_folder'], 'right',
                                 $row['img_caption']
                             );
