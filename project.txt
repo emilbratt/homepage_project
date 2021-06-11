@@ -458,3 +458,13 @@ things when it comes to storing passwords -> password_hash() and password_verify
 I also added several lines to the setup.php so that a random seed (or almost random) for password
 generating when the database is created. I opted for the good old md5 function since it is fast and
 the password is only suppose to be a one-time-use only and should be changed by first login.
+
+
+11.06.2021
+Lots of things to do, so little time for the project. Throwing in some refactoring now and then.
+I have started as a summer intern at my highschool as a junior dev. A whole new platform for
+online learning is in the making. We are working on the openedx platform and I love it so far.
+We are working with the Django web-framework which is the framework that openedx is build upon and
+Since I have had to learn a whole new framework, little time is left to work on this project at this point.
+Right now, I`ll focus on some refactoring. Until I am satisfied with how the codebase look, I will
+continue to do refactoring and small improvements.
