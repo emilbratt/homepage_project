@@ -468,3 +468,13 @@ We are working with the Django web-framework which is the framework that openedx
 Since I have had to learn a whole new framework, little time is left to work on this project at this point.
 Right now, I`ll focus on some refactoring. Until I am satisfied with how the codebase look, I will
 continue to do refactoring and small improvements.
+
+
+22.07.2021
+The summer has been packed with learning developing toolsets.
+Fortunately I am in no way burnt out doing developing. Picking up Docker again, but for real this time.
+So I decided to add a Dockerfile to this very project. I need an efficient way build a test environment.
+Instead of jumping right into docker-compose, I wrote a simple shell-script instead just to learn
+the command syntax for docker.
+Up until now I have had it up and running on my Raspberry Pi to avoid cluttering my main workbench.
+Hopefully I can pick up the pace on this project again when I enroll into my 2nd semester this fall.
