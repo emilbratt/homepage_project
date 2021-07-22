@@ -102,7 +102,7 @@ elif [[ $_OPTN == 10 ]]; then
 elif [[ $_OPTN == 11 ]]; then
   _history
 
-elif [[ $_OPTN == 12s ]]; then
+elif [[ $_OPTN == 12 ]]; then
   _inspect
 
 fi
